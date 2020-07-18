@@ -1,7 +1,17 @@
-import React from "react";
+import React, { Component } from 'react'
+import { observer, inject } from 'mobx-react'
 
-function Page1() {
-  return <h1>Page 1</h1>;
+import { withRouter, RouteComponentProps } from 'react-router-dom'
+import AuthStore from '../../../Authentication/stores/AuthStore'
+interface InjectedProps extends RouteComponentProps {}
+interface Page1Props extends InjectedProps {
+   authStore: AuthStore
 }
 
-export default Page1;
+class Page1 extends Component<Page1Props> {
+   render() {
+      return <div>Page1</div>
+   }
+}
+
+export default withRouter(Page1)

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../../../logo.svg'
-
+import { DASHBOARD_SIGNIN_PAGE } from '../../../Authentication/constants/NavigationalConstants'
 function App() {
    return (
       <div className='App'>
@@ -18,7 +18,7 @@ function App() {
             >
                Learn React{' '}
             </a>
-            <Link to='/page-1'> Page 1 </Link>{' '}
+            <Link to={DASHBOARD_SIGNIN_PAGE}> Resource Management </Link>
          </header>
       </div>
    )

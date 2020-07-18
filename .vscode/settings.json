@@ -1,5 +1,7 @@
 {
   "npm-intellisense.importQuotes": "\"",
   "typescript.preferences.quoteStyle": "double",
-  "javascript.preferences.quoteStyle": "double"
+  "javascript.preferences.quoteStyle": "double",
+  "search.searchEditor.doubleClickBehaviour": "openLocationToSide",
+  "search.showLineNumbers": true
 }
