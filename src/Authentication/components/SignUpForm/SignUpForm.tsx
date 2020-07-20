@@ -91,7 +91,11 @@ class SignUpForm extends React.Component<SignInFormProps> {
                ) : (
                   ''
                )}
-               <Button buttonText={strings.signUp} onClickFunction={onSubmit} />
+               <Button
+                  buttonText={strings.signUp}
+                  onClickFunction={onSubmit}
+                  isLoading={false}
+               />
                <LoginLink>
                   {strings.signInLink} &nbsp;{' '}
                   <LogInPageLink href={DASHBOARD_SIGNIN_PAGE}>

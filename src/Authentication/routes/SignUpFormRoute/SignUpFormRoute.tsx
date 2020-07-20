@@ -3,7 +3,7 @@ import { observable, action } from 'mobx'
 import { observer, inject } from 'mobx-react'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 
-import { SignInForm } from '../../components/SignInForm/SignInForm'
+import SignUpForm from '../../components/SignUpForm/SignUpForm'
 import { DASHBOARD_SIGNIN_PAGE } from '../../constants/NavigationalConstants'
 import { goToSignInPage } from '../../utils/NavigationalUtils'
 import AuthStore from '../../stores/AuthStore'
@@ -60,7 +60,7 @@ class SignInFormRoute extends React.Component<SignInFormRouteProps> {
          if (this.password === this.confirmPassword) {
             onClickSignUpButton()
          } else {
-            this.choosePassword = 'choose a better password'
+            this.choosePassword = 'Enter valid password'
          }
       }
    }
@@ -116,7 +116,7 @@ class SignInFormRoute extends React.Component<SignInFormRouteProps> {
          displayError
       } = this
       return (
-         <SignInForm
+         <SignUpForm
             userName={userName}
             password={password}
             confirmPassword={confirmPassword}

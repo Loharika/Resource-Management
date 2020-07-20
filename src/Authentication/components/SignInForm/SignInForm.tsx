@@ -4,7 +4,7 @@ import { InputField } from '../Common/InputField'
 import { LogoImage } from '../Common/LogoImage'
 import strings from '../../i18n/strings.json'
 import { Button } from '../Common/Button'
-
+import { Button as SignInButton } from '../../../Common/components/Button'
 import { DASHBOARD_SIGNUP_PAGE } from '../../constants/NavigationalConstants'
 import {
    FormType,
@@ -13,8 +13,11 @@ import {
    SignUpPageLink,
    LoginLink as SignUpLink,
    LogInDetailsAlert,
-   LogoImageContainer
+   LogoImageContainer,
+   SignInButtonCss
 } from './styledComponents'
+import TextInput from '../Common/TextInput'
+import { validateUserName, validatePassword } from '../../utils/ValidationUtils'
 
 type SignInFormProps = {
    userName: string
@@ -24,6 +27,7 @@ type SignInFormProps = {
    onSubmit: (event: any) => void
    displayError: boolean
    errorText: string
+   isLoading: boolean
 }
 @observer
 class SignInForm extends React.Component<SignInFormProps> {
@@ -35,8 +39,10 @@ class SignInForm extends React.Component<SignInFormProps> {
          onChangePassword,
          onSubmit,
          displayError,
-         errorText
+         errorText,
+         isLoading
       } = this.props
+
       return (
          <FormDashBoard>
             <FormType>
@@ -44,32 +50,40 @@ class SignInForm extends React.Component<SignInFormProps> {
                   <LogoImage />
                </LogoImageContainer>
                <FormHeading>{strings.signInFormHeading}</FormHeading>
-               <InputField
-                  value={userName}
+               <TextInput
+                  inputText={userName}
                   onChange={onChangeUserName}
-                  type={'text'}
                   placeholderText={'Username'}
+                  validate={validateUserName}
                   displayError={displayError}
                   label={'USERNAME'}
+                  type={'text'}
                />
-               <InputField
-                  value={password}
+               <TextInput
+                  inputText={password}
                   onChange={onChangePassword}
-                  type={'password'}
                   placeholderText={'Password'}
+                  validate={validatePassword}
                   displayError={displayError}
-                  label={'PASSWORD'}
+                  label={'Password'}
+                  type={'password'}
                />
-               {errorText.length !== 0 ? (
+               {errorText.length !== 0 && isLoading ? (
                   <LogInDetailsAlert>{errorText}</LogInDetailsAlert>
                ) : (
                   ''
                )}
-               <Button buttonText={strings.signIn} onClickFunction={onSubmit} />
+               <SignInButton
+                  text={strings.signIn}
+                  onClick={onSubmit}
+                  disabled={isLoading === true}
+                  buttonType={'rectangular'}
+                  buttonVariant={'filled'}
+                  css={SignInButtonCss}
+               />
                <SignUpLink>
                   {strings.signUpLink} &nbsp;{' '}
                   <SignUpPageLink href={DASHBOARD_SIGNUP_PAGE}>
-                     {' '}
                      &nbsp;{strings.signUpLinkText}
                   </SignUpPageLink>
                </SignUpLink>

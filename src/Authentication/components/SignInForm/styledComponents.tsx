@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { css } from '@emotion/core'
 import colors from '../../../Common/Theme/Colors.json'
 import {
    Typo32DarkBlueGreyRubikRegular,
@@ -39,6 +40,15 @@ const LogInDetailsAlert = styled.span`
    width: 100%;
    text-align: center;
    font-size: 13px;
+`
+export const SignInButtonCss = css`
+   width: 100%;
+   height: 40px;
+   border-radius: 4px;
+   background-color: ${colors.brightBlue};
+   color: white;
+   margin: 3px;
+   padding: 3px;
 `
 export {
    FormType,

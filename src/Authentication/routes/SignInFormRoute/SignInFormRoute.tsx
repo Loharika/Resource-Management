@@ -24,10 +24,12 @@ class SignInFormRoute extends React.Component<SignInFormRouteProps> {
    @observable displayError
    @observable errorText
    @observable userNameErrorText
+   @observable isLoading
    constructor(props) {
       super(props)
       this.init()
       this.displayError = false
+      this.isLoading = false
    }
 
    init = () => {
@@ -43,6 +45,7 @@ class SignInFormRoute extends React.Component<SignInFormRouteProps> {
          this.onClickLogInButton(this.userName, this.password)
       } else {
          this.displayError = true
+         this.errorText = 'invalid Credentials'
       }
    }
    onChangeUserName = (event: any) => {
@@ -59,6 +62,7 @@ class SignInFormRoute extends React.Component<SignInFormRouteProps> {
 
    @action.bound
    async onClickLogInButton(userName: string, password: string) {
+      this.isLoading = true
       this.init()
       const {
          authStore: { userSignIn }
@@ -68,12 +72,16 @@ class SignInFormRoute extends React.Component<SignInFormRouteProps> {
          authStore: { access_token, getUserSignInAPIResponse }
       } = this.props
       if (access_token) {
+         this.isLoading = false
          const { history } = this.getInjectedProps()
          if (getUserSignInAPIResponse.is_admin) {
             goToAdminDashboard(history)
          } else {
             goToUserDashboard(history)
          }
+      } else {
+         this.displayError = true
+         this.isLoading = true
       }
    }
 
@@ -85,7 +93,8 @@ class SignInFormRoute extends React.Component<SignInFormRouteProps> {
          onChangePassword,
          errorText,
          onSubmit,
-         displayError
+         displayError,
+         isLoading
       } = this
       return (
          <SignInForm
@@ -96,6 +105,7 @@ class SignInFormRoute extends React.Component<SignInFormRouteProps> {
             onSubmit={onSubmit}
             displayError={displayError}
             errorText={errorText}
+            isLoading={isLoading}
          />
       )
    }

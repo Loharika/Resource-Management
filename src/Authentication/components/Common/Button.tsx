@@ -1,21 +1,25 @@
 import React from 'react'
 import { observer } from 'mobx-react'
 import { ButtonStyle } from '../../styledComponents/styledComponents'
-
-
-type ButtonProps={
-   buttonText: string,
-   onClickFunction: (event:any) => void,
-
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'
+type ButtonProps = {
+   buttonText: string
+   onClickFunction: (event: any) => void
+   isLoading: boolean
 }
-
-
 
 @observer
 class Button extends React.Component<ButtonProps> {
    render() {
-      const { onClickFunction, buttonText } = this.props
-      return <ButtonStyle onClick={onClickFunction}>{buttonText}</ButtonStyle>
+      const { onClickFunction, buttonText, isLoading } = this.props
+      // return <ButtonStyle onClick={onClickFunction}> {buttonText}</ButtonStyle>
+      return (
+         <React.Fragment>
+            <ButtonStyle onClick={onClickFunction}>
+               {!isLoading ? buttonText : <AiOutlineLoading3Quarters />}
+            </ButtonStyle>
+         </React.Fragment>
+      )
    }
 }
 export { Button }
