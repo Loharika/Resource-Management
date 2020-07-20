@@ -11,7 +11,6 @@ import AuthStore from '../../stores/AuthStore'
 interface InjectedProps extends RouteComponentProps {}
 interface SignInFormRouteProps extends InjectedProps {
    authStore: AuthStore
-   goToDashboardHomePage: () => {}
 }
 @inject('authStore')
 @observer

@@ -31,9 +31,17 @@ class AuthStore {
 
    authService
    constructor(authService) {
+      this.init()
+      this.authService = authService
+   }
+   @action.bound
+   init() {
       this.initUserSignInAPI()
       this.initUserProfileDetailsAPI()
-      this.authService = authService
+      this.initUserSignUpAPI()
+      this.initUserSignOutAPI()
+      this.initUpdateProfileDetailsAPI()
+      this.initChangePasswordAPI()
    }
    @action.bound
    initUserSignInAPI() {
@@ -199,6 +207,7 @@ class AuthStore {
 
    @action.bound
    userSignOut(userDetails) {
+      this.initUserSignOutAPI()
       let signOutPromise = this.authService.signOutAPI(userDetails)
       return bindPromiseWithOnSuccess(signOutPromise)
          .to(this.setGetUserSignOutAPIStatus, this.setUserSignOutAPIResponse)
