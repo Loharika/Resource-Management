@@ -31,6 +31,14 @@ type SignInFormProps = {
 }
 @observer
 class SignInForm extends React.Component<SignInFormProps> {
+   userNameField: any
+   constructor(props) {
+      super(props)
+      this.userNameField = React.createRef()
+   }
+   componentDidMount() {
+      this.userNameField.current.setFocus()
+   }
    render() {
       const {
          userName,
@@ -58,6 +66,7 @@ class SignInForm extends React.Component<SignInFormProps> {
                   displayError={displayError}
                   label={'USERNAME'}
                   type={'text'}
+                  ref={this.userNameField}
                />
                <TextInput
                   inputText={password}

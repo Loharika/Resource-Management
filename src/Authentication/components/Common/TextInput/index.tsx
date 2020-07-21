@@ -29,9 +29,14 @@ class TextInput extends React.Component<TextInputProps> {
       showErrorMessage: boolean
       errorMessage: string
    }
+   inputField: any
    constructor(props) {
       super(props)
       this.userNameValidation = { showErrorMessage: false, errorMessage: '' }
+      this.inputField = React.createRef()
+   }
+   setFocus = () => {
+      this.inputField.current.focus()
    }
    onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const { onChange } = this.props
@@ -75,6 +80,7 @@ class TextInput extends React.Component<TextInputProps> {
                   onBlur={this.onBlur}
                   type={type}
                   placeholder={placeholderText}
+                  ref={this.inputField}
                />
                <ErrorSymbol
                   value={inputText}

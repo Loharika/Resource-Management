@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { createRef } from 'react'
 import { observer } from 'mobx-react'
 
 import {
@@ -33,6 +33,14 @@ type SignInFormProps = {
 }
 @observer
 class SignUpForm extends React.Component<SignInFormProps> {
+   userNameField: any
+   constructor(props) {
+      super(props)
+      this.userNameField = createRef()
+   }
+   componentDidMount() {
+      this.userNameField.current.setFocus()
+   }
    render() {
       const {
          userName,
@@ -54,7 +62,9 @@ class SignUpForm extends React.Component<SignInFormProps> {
                   <LogoImage />
                </LogoImageContainer>
                <FormHeading>{strings.signUpFormHeading}</FormHeading>
+
                <InputField
+                  ref={this.userNameField}
                   value={userName}
                   onChange={onChangeUserName}
                   type={'text'}

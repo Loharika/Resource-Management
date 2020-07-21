@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { createRef } from 'react'
 import { observer } from 'mobx-react'
 import { Label } from '../../styleGuides/StyleGuides'
 import {
@@ -22,6 +22,14 @@ type InputFieldProps = {
 }
 @observer
 class InputField extends React.Component<InputFieldProps> {
+   inputField: any
+   constructor(props) {
+      super(props)
+      this.inputField = createRef()
+   }
+   setFocus = () => {
+      this.inputField.current.focus()
+   }
    render() {
       const {
          onChange,
@@ -45,6 +53,7 @@ class InputField extends React.Component<InputFieldProps> {
                   onChange={onChange}
                   type={type}
                   placeholder={placeholderText}
+                  ref={this.inputField}
                />
                <ErrorSymbol
                   value={value}
