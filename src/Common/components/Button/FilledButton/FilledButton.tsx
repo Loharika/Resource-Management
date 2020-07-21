@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled, { css, keyframes } from 'styled-components'
-import { FilledButtonStyle } from './styledComponents'
-import { AiOutlineLoading3Quarters } from 'react-icons/ai'
+import { FilledButtonStyle, loaderCss } from './styledComponents'
+import MoonLoader from 'react-spinners/MoonLoader'
 interface ButtonProps {
    text: String
    textTypo?: any
@@ -14,9 +14,24 @@ interface ButtonProps {
 class FilledButton extends Component<ButtonProps> {
    render() {
       const { text, css, onClick, disabled } = this.props
+     
       return (
-         <FilledButtonStyle buttonStyles={css} onClick={onClick}>
-            {!disabled ? text : <AiOutlineLoading3Quarters />}
+         <FilledButtonStyle
+            buttonStyles={css}
+            onClick={onClick}
+            disabled={disabled}
+            isDisabled={disabled}
+         >
+            {!disabled ? (
+               text
+            ) : (
+               <MoonLoader
+                  size={18}
+                  css={loaderCss}
+                  color={'#ffffff'}
+                  loading={disabled}
+               />
+            )}
          </FilledButtonStyle>
       )
    }

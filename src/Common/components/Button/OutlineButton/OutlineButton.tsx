@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { OutlineButtonStyle } from './styledComponents'
-
+import { OutlineButtonStyle, loaderCss } from './styledComponents'
+import MoonLoader from 'react-spinners/MoonLoader'
 interface ButtonProps {
    text: String
    textTypo?: any
@@ -12,10 +12,25 @@ interface ButtonProps {
 }
 class OutlineButton extends Component<ButtonProps> {
    render() {
-      const { text, css, onClick } = this.props
+      const { text, css, onClick, disabled } = this.props
+
       return (
-         <OutlineButtonStyle buttonStyles={css} onClick={onClick}>
-            {text}
+         <OutlineButtonStyle
+            buttonStyles={css}
+            onClick={onClick}
+            disabled={disabled}
+            isDisabled={disabled}
+         >
+            {!disabled ? (
+               text
+            ) : (
+               <MoonLoader
+                  size={18}
+                  css={loaderCss}
+                  color={'#ffffff'}
+                  loading={disabled}
+               />
+            )}
          </OutlineButtonStyle>
       )
    }

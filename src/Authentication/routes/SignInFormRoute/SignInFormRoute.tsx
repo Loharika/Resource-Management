@@ -63,7 +63,7 @@ class SignInFormRoute extends React.Component<SignInFormRouteProps> {
    @action.bound
    async onClickLogInButton(userName: string, password: string) {
       this.isLoading = true
-      this.init()
+
       const {
          authStore: { userSignIn }
       } = this.props
@@ -73,6 +73,7 @@ class SignInFormRoute extends React.Component<SignInFormRouteProps> {
       } = this.props
       if (access_token) {
          this.isLoading = false
+         this.init()
          const { history } = this.getInjectedProps()
          if (getUserSignInAPIResponse.is_admin) {
             goToAdminDashboard(history)

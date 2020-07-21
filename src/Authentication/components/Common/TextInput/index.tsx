@@ -55,6 +55,7 @@ class TextInput extends React.Component<TextInputProps> {
          ''
       )
    }
+
    render() {
       const {
          inputText,

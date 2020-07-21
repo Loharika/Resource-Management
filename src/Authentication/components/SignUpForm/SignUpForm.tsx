@@ -1,6 +1,6 @@
 import React, { createRef } from 'react'
 import { observer } from 'mobx-react'
-
+import { withTranslation, WithTranslation } from 'react-i18next'
 import {
    FormType,
    FormDashBoard,
@@ -16,9 +16,9 @@ import { InputField } from '../Common/InputField'
 
 import { LogoImage } from '../Common/LogoImage'
 import { Button } from '../Common/Button'
-import strings from '../../i18n/strings.json'
+import strings from '../../../Common/i18n/strings.json'
 
-type SignInFormProps = {
+interface SignUpFormProps {
    userName: string
    password: string
    confirmPassword: string
@@ -31,8 +31,10 @@ type SignInFormProps = {
    onSubmit: (event: any) => void
    displayError: boolean
 }
+
+interface SignUpFormProps extends WithTranslation {}
 @observer
-class SignUpForm extends React.Component<SignInFormProps> {
+class SignUpForm extends React.Component<SignUpFormProps> {
    userNameField: any
    constructor(props) {
       super(props)
@@ -42,6 +44,7 @@ class SignUpForm extends React.Component<SignInFormProps> {
       this.userNameField.current.setFocus()
    }
    render() {
+      const { t } = this.props
       const {
          userName,
          password,
@@ -61,8 +64,7 @@ class SignUpForm extends React.Component<SignInFormProps> {
                <LogoImageContainer>
                   <LogoImage />
                </LogoImageContainer>
-               <FormHeading>{strings.signUpFormHeading}</FormHeading>
-
+               <FormHeading>{t('auth:auth.signUpFormHeading')}</FormHeading>
                <InputField
                   ref={this.userNameField}
                   value={userName}
@@ -102,15 +104,15 @@ class SignUpForm extends React.Component<SignInFormProps> {
                   ''
                )}
                <Button
-                  buttonText={strings.signUp}
+                  buttonText={t('auth:auth.signUp')}
                   onClickFunction={onSubmit}
                   isLoading={false}
                />
                <LoginLink>
-                  {strings.signInLink} &nbsp;{' '}
+                  {t('auth:auth.signInLink')} &nbsp;{' '}
                   <LogInPageLink href={DASHBOARD_SIGNIN_PAGE}>
                      {' '}
-                     &nbsp;{strings.signInLinkText}
+                     &nbsp;{strings.auth.signInLinkText}
                   </LogInPageLink>
                </LoginLink>
             </FormType>
@@ -118,4 +120,4 @@ class SignUpForm extends React.Component<SignInFormProps> {
       )
    }
 }
-export default SignUpForm
+export default withTranslation('translation', { withRef: true })(SignUpForm)

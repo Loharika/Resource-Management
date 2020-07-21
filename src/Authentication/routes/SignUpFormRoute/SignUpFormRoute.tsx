@@ -86,7 +86,6 @@ class SignInFormRoute extends React.Component<SignInFormRouteProps> {
    getInjectedProps = () => this.props as InjectedProps
    @action.bound
    async onClickSignUpButton() {
-      this.init()
       const {
          authStore: { userSignUp }
       } = this.props
@@ -97,6 +96,7 @@ class SignInFormRoute extends React.Component<SignInFormRouteProps> {
       if (access_token) {
          const { history } = this.getInjectedProps()
          goToSignInPage(history)
+         this.init()
       }
    }
 
