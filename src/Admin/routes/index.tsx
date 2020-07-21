@@ -3,7 +3,9 @@ import React from 'react'
 import { Route } from 'react-router-dom'
 import { ADMIN_DASHBOARD } from '../../Authentication/constants/NavigationalConstants'
 import Dashboard from '../components/Dashboard'
+import { ProtectedRoute } from '../../Common/components/ProtectedRoute'
+import DashboardRoute from './DashboardRoute'
 
 export const AdminDashboardRoutes = [
-   <Route exact path={ADMIN_DASHBOARD} component={Dashboard} />
+   <ProtectedRoute exact path={ADMIN_DASHBOARD} component={DashboardRoute} />
 ]

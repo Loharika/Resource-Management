@@ -1,4 +1,3 @@
-import { action } from 'mobx'
 import { create } from 'apisauce'
 
 import { networkCallWithApisauce } from '../../../Common/utils/APIUtils'
@@ -6,10 +5,11 @@ import { apiMethods } from '../../../Common/constants/APIConstants.js'
 
 import AuthServiceInterface from './index'
 class AuthService implements AuthServiceInterface {
-   baseApi
+   baseApi: Record<string, any>
    constructor() {
       this.baseApi = create({
-         baseURL: 'https://1d2c1582fff8.ngrok.io/'
+         baseURL: 'http://2a5bffc1267a.ngrok.io/api/resource_management_user'
+         //baseURL: 'http://488561d7d98e.ngrok.io/api/resource_management_user'
       })
    }
    userSignUpAPI(userDetails) {
@@ -21,13 +21,17 @@ class AuthService implements AuthServiceInterface {
       )
    }
    userSignInAPI(userDetails) {
+      console.log(userDetails)
+      //const obj = { username: 'harika', password: '12345' }
+      const obj = { username: 'rithvik', password: '1@3456789' }
       return networkCallWithApisauce(
          this.baseApi,
-         '__',
-         userDetails,
+         '/login/v1/',
+         obj,
          apiMethods.post
       )
    }
+
    getProfileDetailsAPI(userDetails) {
       return networkCallWithApisauce(
          this.baseApi,

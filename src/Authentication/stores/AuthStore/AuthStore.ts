@@ -48,6 +48,7 @@ class AuthStore {
       this.getUserSignInAPIStatus = API_INITIAL
       this.getUserSignInAPIError = null
       this.access_token = getAccessToken()
+      this.getUserSignInAPIResponse = ''
    }
    @action.bound
    initUserSignUpAPI() {
@@ -77,13 +78,16 @@ class AuthStore {
    }
    @action.bound
    setUserSignInAPIResponse(signInResponse) {
+      console.log(signInResponse)
       const access_token = signInResponse.access_token
       setAccessToken(access_token)
       this.access_token = access_token
+      // console.log(this.access_token)
       this.getUserSignInAPIResponse = signInResponse
    }
    @action.bound
    setGetUserSignInAPIError(apiError) {
+      console.log('error', apiError)
       this.getUserSignInAPIError = apiError
    }
    @action.bound
@@ -207,11 +211,12 @@ class AuthStore {
 
    @action.bound
    userSignOut(userDetails) {
-      this.initUserSignOutAPI()
-      let signOutPromise = this.authService.signOutAPI(userDetails)
-      return bindPromiseWithOnSuccess(signOutPromise)
-         .to(this.setGetUserSignOutAPIStatus, this.setUserSignOutAPIResponse)
-         .catch(this.setGetUserSignOutAPIError)
+      clearUserSession()
+      this.initUserSignInAPI()
+      // let signOutPromise = this.authService.signOutAPI(userDetails)
+      // return bindPromiseWithOnSuccess(signOutPromise)
+      //    .to(this.setGetUserSignOutAPIStatus, this.setUserSignOutAPIResponse)
+      //    .catch(this.setGetUserSignOutAPIError)
    }
 }
 export default AuthStore
