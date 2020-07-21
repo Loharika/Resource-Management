@@ -86,6 +86,7 @@ class SignInForm extends React.Component<SignInFormProps> {
                   text={strings.signIn}
                   onClick={onSubmit}
                   disabled={isLoading === true}
+                  
                   buttonType={'rectangular'}
                   buttonVariant={'filled'}
                   css={SignInButtonCss}
