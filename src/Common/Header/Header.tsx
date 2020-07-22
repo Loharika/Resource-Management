@@ -11,7 +11,10 @@ import {
    UserProfile
 } from './styledComponents'
 import AuthStore from '../../Authentication/stores/AuthStore'
-import { goToUserDashboard } from '../../Authentication/utils/NavigationalUtils'
+import {
+   goToUserDashboard,
+   goToSignInPage
+} from '../../Authentication/utils/NavigationalUtils'
 import { LogoImage } from '../../Authentication/components/Common/LogoImage'
 
 interface HeaderProps extends RouteComponentProps {}
@@ -28,8 +31,10 @@ class Header extends React.Component<HeaderProps> {
       goToUserDashboard(history)
    }
    onClickSignOut = () => {
+      const { history } = this.getInjectedProps()
+      goToSignInPage(history)
       const {
-         authStore: { userSignOut, getUserSignInAPIResponse, access_token }
+         authStore: { userSignOut, getUserSignInAPIResponse }
       } = this.getInjectedProps()
       const object = { user_id: getUserSignInAPIResponse.user_id }
       userSignOut(object)

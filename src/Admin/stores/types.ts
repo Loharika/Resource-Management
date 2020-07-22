@@ -1,12 +1,16 @@
-import React, { Component } from 'react'
-
-class types extends Component {
-   render() {
-      return <div>hello</div>
-   }
+export interface ResourcesListResponseObject {
+   resource_id: number
+   name: string
+   link: string
+   description: string
+   service: string
+   resource_image: string
 }
-
-export default types //addResource
+export interface ResourcesListResponse {
+   resources_list: Array<ResourcesListResponseObject>
+   total_count: number
+}
+//addResource
 //name
 //link
 //description

@@ -4,10 +4,9 @@ import { observer, inject } from 'mobx-react'
 import { DASHBOARD_SIGNIN_PAGE } from '../../../Authentication/constants/NavigationalConstants'
 import { getAccessToken } from '../../utils/StorageUtils'
 
-const ProtectedRoute = inject('authStore')(
-   observer(({ component: Component, authStore, history, path, ...rest }) => {
-      let accessToken = authStore.access_token
-      //let accessToken = getAccessToken()
+const ProtectedRoute = observer(
+   ({ component: Component, history, path, ...rest }) => {
+      let accessToken = getAccessToken()
       return (
          <Route
             {...rest}
@@ -26,6 +25,6 @@ const ProtectedRoute = inject('authStore')(
             }}
          />
       )
-   })
+   }
 )
 export { ProtectedRoute }
