@@ -5,7 +5,7 @@ import { observer } from 'mobx-react'
 
 interface CheckBoxProps {
    isChecked: boolean
-   onClickCheckBox: (isChecked) => void
+   onClickCheckBox: (isChecked: boolean) => void
 }
 @observer
 class CheckBox extends Component<CheckBoxProps> {
@@ -16,7 +16,6 @@ class CheckBox extends Component<CheckBoxProps> {
       this.isChecked = isChecked
    }
    onClickCheckBox = isChecked => {
-      console.log(isChecked)
       this.isChecked = isChecked
       const { onClickCheckBox } = this.props
       onClickCheckBox(this.isChecked)

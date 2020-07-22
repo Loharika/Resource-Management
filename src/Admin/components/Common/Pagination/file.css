@@ -1,0 +1,42 @@
+.pagination {
+    padding: 3px;
+    width: 400px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border: 2px solid black;
+    color: black;
+}
+
+.active {
+    padding: 3px 5px;
+    border: 2px solid black;
+}
+
+.pages {
+
+    padding: 3px 5px;
+
+}
+
+.previous {
+    padding: 5px;
+    color: black;
+}
+
+.previous:focus {
+    padding: 5px;
+    outline: none
+}
+
+.next {
+    padding: 10px;
+    color: black;
+}
+
+.break-me {
+    width: 25px;
+    display: flex;
+    justify-content: space-around;
+
+}

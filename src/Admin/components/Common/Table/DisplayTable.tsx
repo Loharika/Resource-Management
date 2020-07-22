@@ -6,28 +6,34 @@ import { TableStyle } from './styledComponents'
 interface DisplayTableProps {
    headers: Array<String>
 }
+
+const data = [
+   { title: 1, description: 2, link: 3 },
+   { title: 1, description: 2, link: 3 },
+   { title: 1, description: 2, link: 3 }
+]
 @observer
 class DisplayTable extends Component<DisplayTableProps> {
    render() {
+      const { headers } = this.props
       return (
          <TableStyle>
-            <Table celled striped>
+            <Table>
                <Table.Header>
                   <Table.Row>
-                     <Table.HeaderCell colSpan='3'>
-                        Git Repository
-                     </Table.HeaderCell>
+                     {headers.map(option => {
+                        return <Table.HeaderCell>{option}</Table.HeaderCell>
+                     })}
                   </Table.Row>
                </Table.Header>
-
                <Table.Body>
-                  <Table.Row>
-                     <Table.Cell>
-                        <Icon name='file outline' /> Gruntfile.js
-                     </Table.Cell>
-                     <Table.Cell>Initial commit</Table.Cell>
-                     <Table.Cell textAlign='right'>10 hours ago</Table.Cell>
-                  </Table.Row>
+                  {data.map(option => (
+                     <Table.Row>
+                        <Table.Cell>{option.title}</Table.Cell>
+                        <Table.Cell>{option.description}</Table.Cell>
+                        <Table.Cell>{option.link}</Table.Cell>
+                     </Table.Row>
+                  ))}
                </Table.Body>
             </Table>
          </TableStyle>

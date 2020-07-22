@@ -10,7 +10,9 @@ import DateTime from '../Common/DateTime'
 import { SortOptions, FilterOptions } from '../../constants/DropDownConstants'
 import Filter from '../../../Common/Icons/Filter'
 import DisplayTable from '../Common/Table'
-import { ResourceItemsHeaders } from "../../constants/TableHeaders"
+import { ResourceItemsHeaders } from '../../constants/TableHeaders'
+import ModalClose from '../Common/Modal'
+import Pagination from '../Common/Pagination'
 class ResourcesList extends Component {
    render() {
       return (
@@ -47,6 +49,11 @@ class ResourcesList extends Component {
             />
             <DateTime onChangeTime={() => {}} label={'DATE AND TIME'} />
             <DisplayTable headers={ResourceItemsHeaders} />
+            <ModalClose />
+            <Pagination
+               onChangePageNumber={(pageNumber: number) => {}}
+               totalPages={10}
+            />
          </React.Fragment>
       )
    }
