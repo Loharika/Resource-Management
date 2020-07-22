@@ -4,6 +4,13 @@ import InputField from '../Common/InputField'
 import SearchField from '../Common/SearchField'
 import TextAreaField from '../Common/TextAreaField'
 import ImageUpload from '../Common/ImageUpload'
+import Checkbox from '../Common/CheckBox'
+import DropDownComponent from '../Common/DropDownComponent/DropDownComponent'
+import DateTime from '../Common/DateTime'
+import { SortOptions, FilterOptions } from '../../constants/DropDownConstants'
+import Filter from '../../../Common/Icons/Filter'
+import DisplayTable from '../Common/Table'
+import { ResourceItemsHeaders } from "../../constants/TableHeaders"
 class ResourcesList extends Component {
    render() {
       return (
@@ -25,6 +32,21 @@ class ResourcesList extends Component {
                placeholderText={'Description'}
             />
             <ImageUpload />
+            <Checkbox
+               onClickCheckBox={(isChecked: boolean) => {}}
+               isChecked={true}
+            />
+            <DropDownComponent
+               data={{
+                  listTitle: 'Sort',
+                  placeholder: 'Sort',
+                  listItems: SortOptions
+               }}
+               onChange={value => {}}
+               icon={<Filter />}
+            />
+            <DateTime onChangeTime={() => {}} label={'DATE AND TIME'} />
+            <DisplayTable headers={ResourceItemsHeaders} />
          </React.Fragment>
       )
    }

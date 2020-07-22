@@ -23,6 +23,7 @@ class TextAreaField extends Component<TextAreaFieldProps> {
             cols={50}
             placeholder={placeholderText}
             css={'width:300px'}
+            value={value}
          >
             {value}
          </TextAreaFieldStyle>
