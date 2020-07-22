@@ -1,12 +1,8 @@
 import AuthServiceInterface from './index'
-import { resolveWithTimeout } from '../../utils/TestUtils'
+import { resolveWithTimeout } from '../../../Common/utils/TestUtils'
 import getUserSignInResponse from '../../fixtures/getUserSignUpResponse.json'
 import getUserProfileDetails from '../../fixtures/userProfile.fixture.json'
 class AuthService implements AuthServiceInterface {
-   baseApi
-   constructor() {
-      this.baseApi = ''
-   }
    userSignUpAPI(userDetails) {
       return resolveWithTimeout({})
    }

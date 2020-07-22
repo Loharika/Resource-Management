@@ -1,7 +1,7 @@
 import CounterStore from './CounterStore'
 import AuthStore from '../../Authentication/stores/AuthStore'
 
-import AuthService from '../../Authentication/services/AuthService/index.api'
+import AuthService from '../../Authentication/services/AuthService/index.fixture'
 const counterStore = new CounterStore()
 const authService = new AuthService()
 const authStore = new AuthStore(authService)

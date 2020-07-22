@@ -71,7 +71,7 @@ class SignInFormRoute extends React.Component<SignInFormRouteProps> {
       const {
          authStore: { access_token, getUserSignInAPIResponse }
       } = this.props
-      console.log(getUserSignInAPIResponse)
+      // console.log(getUserSignInAPIResponse)
       if (access_token) {
          this.isLoading = false
          this.init()
