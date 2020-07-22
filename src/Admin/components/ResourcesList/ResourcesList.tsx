@@ -1,6 +1,12 @@
 import React, { Component } from 'react'
+import { observer } from "mobx-react"
+interface ResourcesListProps{
+   getResourceListAPIError:any
+      getResourceListAPIStatus:any
+}
 
-class ResourcesList extends Component {
+@observer
+class ResourcesList extends Component<ResourcesListProps> {
    render() {
       return <div>ResourcesList</div>
    }

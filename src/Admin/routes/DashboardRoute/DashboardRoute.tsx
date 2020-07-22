@@ -9,10 +9,13 @@ import { RouteComponentProps } from 'react-router-dom'
 import AdminStore from '../../stores/AdminStore'
 import AuthStore from '../../../Authentication/stores/AuthStore'
 
-interface InjectedProps extends RouteComponentProps {}
-interface DashboardRouteProps extends InjectedProps {
+interface InjectedProps extends RouteComponentProps {
    authStore: AuthStore
    adminStore: AdminStore
+}
+
+interface DashboardRouteProps extends InjectedProps {
+   
 }
 @inject('authStore', 'adminStore')
 @observer
@@ -50,9 +53,13 @@ class DashboardRoute extends Component<DashboardRouteProps> {
    }
    @action.bound
    renderChildComponent() {
+      const {adminStore:{getResourceListAPIError,
+      getResourceListAPIStatus}}=this.props
       switch (this.selector) {
          case 'Resources': {
-            return <ResourcesList />
+            return <ResourcesList 
+               getResourceListAPIError={getResourceListAPIError}
+               getResourceListAPIStatus={getResourceListAPIStatus} />
          }
          case 'Requests': {
             return <RequestsList />
@@ -66,18 +73,15 @@ class DashboardRoute extends Component<DashboardRouteProps> {
       const {
          adminStore: {
             resourcesListResponse,
-            getResourceListAPIError,
-            getResourceListAPIStatus
          }
-      } = this.props
-      console.log(resourcesListResponse)
+      } = this.getInjectedProps()
+      
       return (
          <Dashboard
             onClickSelector={this.onClickSelector}
             childComponent={this.renderChildComponent()}
             selector={this.selector}
-            getResourceListAPIError={getResourceListAPIError}
-            getResourceListAPIStatus={getResourceListAPIStatus}
+            
          />
       )
    }
