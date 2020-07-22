@@ -30,7 +30,6 @@ class AdminStore {
    }
    @action.bound
    getResourceList() {
-      console.log('store')
       const getResourcesPromise = this.adminService.getResourceListAPI()
       return bindPromiseWithOnSuccess(getResourcesPromise)
          .to(

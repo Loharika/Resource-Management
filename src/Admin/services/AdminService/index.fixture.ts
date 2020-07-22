@@ -4,7 +4,7 @@ import getResourcesListResponse from '../../fixtures/getResourcesListResponse.js
 
 class AdminService implements AdminServiceInterface {
    getResourceListAPI() {
-      console.log('fixture')
+      
       return resolveWithTimeout(getResourcesListResponse)
    }
 }

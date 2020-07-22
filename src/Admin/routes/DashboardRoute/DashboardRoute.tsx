@@ -38,7 +38,6 @@ class DashboardRoute extends Component<DashboardRouteProps> {
       switch (this.selector) {
          case 'Resources': {
             this.doNetWorkCallsForResourceList()
-
             return
          }
          case 'Requests': {
@@ -65,7 +64,11 @@ class DashboardRoute extends Component<DashboardRouteProps> {
    }
    render() {
       const {
-         adminStore: { resourcesListResponse }
+         adminStore: {
+            resourcesListResponse,
+            getResourceListAPIError,
+            getResourceListAPIStatus
+         }
       } = this.props
       console.log(resourcesListResponse)
       return (
@@ -73,6 +76,8 @@ class DashboardRoute extends Component<DashboardRouteProps> {
             onClickSelector={this.onClickSelector}
             childComponent={this.renderChildComponent()}
             selector={this.selector}
+            getResourceListAPIError={getResourceListAPIError}
+            getResourceListAPIStatus={getResourceListAPIStatus}
          />
       )
    }
