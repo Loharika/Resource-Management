@@ -1,35 +1,43 @@
 import React, { Component, ReactComponentElement } from 'react'
-import { Header } from '../../../Common/Header'
 import { observer } from 'mobx-react'
+import { Header } from '../../../Common/Header'
 import { DashboardStyle, SelectorTab, Selectors } from './styledComponents'
 interface DashboardProps {
-   onClickSelector: (selectedTab: string) => void
    childComponent: any
    selector: string
+   onClickResources: () => void
+   onClickRequests: () => void
+   onClickUsers: () => void
 }
 @observer
 class Dashboard extends Component<DashboardProps> {
    render() {
-      const { childComponent, onClickSelector, selector } = this.props
+      const {
+         childComponent,
+         onClickUsers,
+         onClickResources,
+         onClickRequests,
+         selector
+      } = this.props
       return (
          <DashboardStyle>
             <Header />
             <Selectors>
                <SelectorTab
-                  onClick={() => onClickSelector('Resources')}
-                  isSelected={selector === 'Resources' ? true : false}
+                  onClick={onClickResources}
+                  isSelected={selector === 'resources' ? true : false}
                >
                   Resources
                </SelectorTab>
                <SelectorTab
-                  onClick={() => onClickSelector('Requests')}
-                  isSelected={selector === 'Requests' ? true : false}
+                  onClick={onClickRequests}
+                  isSelected={selector === 'requests' ? true : false}
                >
                   Requests
                </SelectorTab>
                <SelectorTab
-                  onClick={() => onClickSelector('Users')}
-                  isSelected={selector === 'Users' ? true : false}
+                  onClick={onClickUsers}
+                  isSelected={selector === 'users' ? true : false}
                >
                   Users
                </SelectorTab>

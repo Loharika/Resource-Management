@@ -8,7 +8,8 @@ import { SignInForm } from '../../components/SignInForm'
 
 import {
    goToAdminDashboard,
-   goToUserDashboard
+   goToUserDashboard,
+   goToAdminDashboardResources
 } from '../../utils/NavigationalUtils'
 import AuthStore from '../../stores/AuthStore/index'
 
@@ -77,7 +78,7 @@ class SignInFormRoute extends React.Component<SignInFormRouteProps> {
          this.init()
          const { history } = this.getInjectedProps()
          if (getUserSignInAPIResponse.is_admin) {
-            goToAdminDashboard(history)
+            goToAdminDashboardResources(history)
          } else {
             goToUserDashboard(history)
          }

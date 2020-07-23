@@ -1,29 +1,35 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import { observable, action } from 'mobx'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
+
 import Dashboard from '../../components/Dashboard'
 import ResourcesList from '../../components/ResourcesList'
 import RequestsList from '../../components/RequestsList'
 import UsersList from '../../components/UsersList'
-import { RouteComponentProps } from 'react-router-dom'
+
 import AdminStore from '../../stores/AdminStore'
-import AuthStore from '../../../Authentication/stores/AuthStore'
+
+import {
+   goToAdminDashboardResources,
+   goToAdminDashboardRequests,
+   goToAdminDashboardUsers
+} from '../../utils/NavigationalUtils'
+import { ADMIN_DASHBOARD_RESOURCES } from '../../../Authentication/constants/NavigationalConstants'
 
 interface InjectedProps extends RouteComponentProps {
-   authStore: AuthStore
    adminStore: AdminStore
+   history: any
 }
 
-interface DashboardRouteProps extends InjectedProps {
-   
-}
+interface DashboardRouteProps extends InjectedProps {}
 @inject('authStore', 'adminStore')
 @observer
 class DashboardRoute extends Component<DashboardRouteProps> {
    @observable selector: string
    constructor(props) {
       super(props)
-      this.selector = 'Resources'
+      this.selector = this.getSelectedTab()
    }
    componentDidMount() {
       this.doNetWorkCallsForResourceList()
@@ -31,60 +37,81 @@ class DashboardRoute extends Component<DashboardRouteProps> {
    getInjectedProps = () => this.props as InjectedProps
    doNetWorkCallsForResourceList() {
       const {
-         adminStore: { getResourceList }
+         adminStore: {
+            resourcesListPaginationStore: { getListOfItems }
+         }
       } = this.props
-      getResourceList()
+      getListOfItems()
    }
    @action.bound
-   onClickSelector(selectedTab: string): void {
-      this.selector = selectedTab
-      switch (this.selector) {
-         case 'Resources': {
-            this.doNetWorkCallsForResourceList()
-            return
-         }
-         case 'Requests': {
-            return
-         }
-         case 'Users': {
-            return
-         }
-      }
+   getSelectedTab() {
+      const {
+         history: { location }
+      } = this.props
+      return location.pathname.split('/')[
+         location.pathname.split('/').length - 1
+      ]
+   }
+   @action.bound
+   onClickResources() {
+      const { history } = this.getInjectedProps()
+      goToAdminDashboardResources(history)
+      this.selector = this.getSelectedTab()
+      this.doNetWorkCallsForResourceList()
+   }
+   @action.bound
+   onClickRequests() {
+      const { history } = this.getInjectedProps()
+      goToAdminDashboardRequests(history)
+      this.selector = this.getSelectedTab()
+   }
+   @action.bound
+   onClickUsers() {
+      const { history } = this.getInjectedProps()
+      goToAdminDashboardUsers(history)
+      this.selector = this.getSelectedTab()
    }
    @action.bound
    renderChildComponent() {
-      const {adminStore:{getResourceListAPIError,
-      getResourceListAPIStatus}}=this.props
+      const {
+         adminStore: { resourcesListPaginationStore }
+      } = this.getInjectedProps()
+      const { onClickResourceCard } = this
       switch (this.selector) {
-         case 'Resources': {
-            return <ResourcesList 
-               getResourceListAPIError={getResourceListAPIError}
-               getResourceListAPIStatus={getResourceListAPIStatus} />
+         case 'resources': {
+            return (
+               <ResourcesList
+                  resourcesListInstance={resourcesListPaginationStore}
+                  onClickResourceCard={onClickResourceCard}
+               />
+            )
          }
-         case 'Requests': {
+         case 'requests': {
             return <RequestsList />
          }
-         case 'Users': {
+         case 'users': {
             return <UsersList />
          }
       }
    }
+   onClickResourceCard = resourceId => {
+      const { history } = this.getInjectedProps()
+      history.push(`${ADMIN_DASHBOARD_RESOURCES}/${resourceId}`)
+   }
    render() {
       const {
-         adminStore: {
-            resourcesListResponse,
-         }
+         adminStore: {}
       } = this.getInjectedProps()
-      
       return (
          <Dashboard
-            onClickSelector={this.onClickSelector}
+            onClickResources={this.onClickResources}
+            onClickRequests={this.onClickRequests}
+            onClickUsers={this.onClickUsers}
             childComponent={this.renderChildComponent()}
             selector={this.selector}
-            
          />
       )
    }
 }
 
-export default DashboardRoute
+export default withRouter(DashboardRoute)
