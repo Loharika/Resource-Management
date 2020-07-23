@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import colors from '../../../../Common/Theme/Colors.json'
+import { Label } from '../InputField/styledComponents'
 
 interface CssProps {
    css?: any
@@ -8,8 +9,15 @@ export const TextAreaFieldStyle = styled.textarea`
    border: 2px solid ${colors.lightBlueGrey};
    background-color: white;
    padding: 10px;
+   width: 100%;
    :focus {
       outline: none;
    }
    ${(props: CssProps) => props.css};
+`
+export { Label }
+export const TextAreaWithLabel = styled.div`
+   display: flex;
+   flex-direction: column;
+   ${(props: CssProps) => props.css}
 `

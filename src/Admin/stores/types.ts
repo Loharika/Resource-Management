@@ -51,4 +51,14 @@ export interface ResourcesListResponse {
 //service
 //resource_image
 
-//total_count:interger
+//total_count:integer
+
+//resources page -->emptyStrings
+
+//Keys
+//limit
+//offset
+//sort
+//sortBy
+//filter
+//filterBy

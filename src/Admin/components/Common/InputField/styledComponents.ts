@@ -3,7 +3,7 @@ import colors from '../../../../Common/Theme/Colors.json'
 import { Typo12SteelHKGroteskSemiBold } from '../../../../Common/styleGuides/Typos'
 
 interface CssProps {
-   css: any
+   css?: any
 }
 export const InputFieldStyle = styled.input`
    border: 2px solid ${colors.lightBlueGrey};

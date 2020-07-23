@@ -6,7 +6,6 @@ class AdminService implements AdminServiceInterface {
    getResourceListAPI(requestObject) {
       let endIndex = requestObject.limit + requestObject.offset + 1
       let startIndex = requestObject.offset
-
       let response = {
          resources_list: getResourcesListResponse.resources_list.slice(
             startIndex,

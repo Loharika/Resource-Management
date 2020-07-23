@@ -6,6 +6,7 @@ const USER_DASHBOARD = '/resource-management/user'
 const ADMIN_DASHBOARD_RESOURCES = '/resource-management/admin/resources'
 const ADMIN_DASHBOARD_REQUESTS = '/resource-management/admin/requests'
 const ADMIN_DASHBOARD_USERS = '/resource-management/admin/users'
+const ADD_RESOURCE = '/resource-management/admin/add-resource'
 export const DASHBOARD_SIGNUP_PAGE: string = `${DASHBOARD_PREFIX}/signup`
 export const DASHBOARD_SIGNIN_PAGE: string = `${DASHBOARD_PREFIX}/signin`
 export const DASHBOARD_USERPROFILE: string = `${DASHBOARD_PREFIX}/user-profile`
@@ -14,5 +15,6 @@ export {
    USER_DASHBOARD,
    ADMIN_DASHBOARD_RESOURCES,
    ADMIN_DASHBOARD_REQUESTS,
-   ADMIN_DASHBOARD_USERS
+   ADMIN_DASHBOARD_USERS,
+   ADD_RESOURCE
 }

@@ -14,7 +14,7 @@ class InputField extends Component<InputFieldProps> {
    render() {
       const { value, onChangeField, label, placeholderText } = this.props
       return (
-         <InputFieldWithLabel css={'width:250px'}>
+         <InputFieldWithLabel>
             <Label>{label}</Label>
             <InputFieldStyle
                type='text'

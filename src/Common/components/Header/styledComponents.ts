@@ -1,6 +1,9 @@
 import styled from '@emotion/styled'
 import colors from '../../Theme/Colors.json'
-
+import { css } from '@emotion/core'
+interface ProfileAndSignOutProps {
+   showAddButton: boolean
+}
 export const Requests = styled.div`
    padding: 5px;
 
@@ -33,10 +36,9 @@ export const RiderInfo = styled.div`
    justify-content: center;
 `
 export const UserProfileIconElement = styled.img`
-   width: 50px;
-   height: 50px;
+   width: 40px;
+   height: 40px;
    border-radius: 50%;
-   margin: 5px 30px;
 `
 export const LogoImageContainer = styled.div`
    margin: 5px 30px;
@@ -47,20 +49,30 @@ export const SignOutButton = styled.button`
    background-color: ${colors.brightBlue};
    border-radius: 5px;
 `
-export const ProfileAndSignOut = styled.div`
+export const ProfileAndSignOut = styled.div<ProfileAndSignOutProps>`
+   width: 200px;
    display: flex;
-   justify-content: start;
+   justify-content: ${props =>
+      props.showAddButton ? 'space-between' : 'flex-end'};
    align-items: center;
-   width: 100px;
-   margin-top: -10px;
+   margin-right: 60px;
+   transition: all;
 `
 export const UserProfile = styled.img`
-   width: 50px;
-   height: 50px;
+   width: 40px;
+   height: 40px;
    border-radius: 20px;
-   align-self: center;
+   margin-top: -10px;
 `
 export const HomePage = styled.button`
    padding: 5px 10px;
    border-radius: 5px;
+`
+export const ButtonCss = css`
+   height: 40px;
+   border-radius: 4px;
+   background-color: ${colors.brightBlue};
+   color: white;
+   font-weight: bold;
+   padding: 0px 15px;
 `

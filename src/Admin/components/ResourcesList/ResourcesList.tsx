@@ -28,14 +28,13 @@ class ResourcesList extends Component<ResourcesListProps> {
    @action.bound
    onChangeSearchField = searchInput => {
       this.searchInput = searchInput
-      console.log(searchInput)
    }
    renderResourceCards = () => {
       const {
          resourcesListInstance: { results, pageNumber },
          onClickResourceCard
       } = this.props
-      console.log(results.get(pageNumber))
+
       return (
          <ResourceListCards>
             {results.get(pageNumber).map(resource => {

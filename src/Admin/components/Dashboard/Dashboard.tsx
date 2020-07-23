@@ -1,22 +1,28 @@
-import React, { Component, ReactComponentElement } from 'react'
+import React, {
+   Component,
+   ReactComponentElement,
+   FunctionComponent
+} from 'react'
 import { observer } from 'mobx-react'
 import { Header } from '../../../Common/components/Header'
 import { DashboardStyle, SelectorTab, Selectors } from './styledComponents'
 interface DashboardProps {
-   childComponent: any
+   renderChildComponent: () => any
    selector: string
    onClickResources: () => void
    onClickRequests: () => void
    onClickUsers: () => void
+   onClickAddResource: () => void
 }
 @observer
 class Dashboard extends Component<DashboardProps> {
    render() {
       const {
-         childComponent,
+         renderChildComponent,
          onClickUsers,
          onClickResources,
          onClickRequests,
+         onClickAddResource,
          selector
       } = this.props
       return (
@@ -42,7 +48,7 @@ class Dashboard extends Component<DashboardProps> {
                   Users
                </SelectorTab>
             </Selectors>
-            {childComponent}
+            {renderChildComponent()}
          </DashboardStyle>
       )
    }

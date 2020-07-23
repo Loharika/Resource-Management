@@ -38,6 +38,9 @@ class Pagination extends Component<PaginationProps> {
                subContainerClassName={'pages pagination'}
                activeClassName={'active'}
                activePage={pageNumber}
+               pageLinkClassName={
+                  'p-10 border border-solid border-red text-red-900'
+               }
             />
          </PaginationStyle>
       )

@@ -32,7 +32,6 @@ class SearchField extends Component<SearchFieldProps> {
    }
    render() {
       const { placeholderText, css, isDisabled } = this.props
-      console.log(isDisabled)
       return (
          <SearchFieldStyle css={css} isDisabled={isDisabled}>
             <SearchIcon />

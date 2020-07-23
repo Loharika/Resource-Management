@@ -34,3 +34,12 @@ export const Typo12SteelHKGroteskRegular = styled.span`
    letter-spacing: normal;
    color: #7e858e;
 `
+export const Typo32DarkBlueGreyRubikRegular = styled.span`
+   font-size: 32px;
+   font-weight: normal;
+   font-stretch: normal;
+   font-style: normal;
+   line-height: 1.25;
+   letter-spacing: normal;
+   color: ${colors.darkBlueGrey};
+`

@@ -4,8 +4,11 @@ import { observer } from 'mobx-react'
 import { ImageUploadStyle } from './styledComponents'
 import { observable } from 'mobx'
 
+interface ImageUploadProps {
+   onUploadImage: (imageLink) => any
+}
 @observer
-class ImageUpload extends Component {
+class ImageUpload extends Component<ImageUploadProps> {
    @observable image: any
    constructor(props) {
       super(props)
@@ -21,6 +24,8 @@ class ImageUpload extends Component {
             this.image = reader.result
          }
       }
+      const { onUploadImage } = this.props
+      onUploadImage(this.image)
    }
 
    render() {

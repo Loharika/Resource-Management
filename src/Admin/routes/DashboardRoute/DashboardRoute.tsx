@@ -13,7 +13,8 @@ import AdminStore from '../../stores/AdminStore'
 import {
    goToAdminDashboardResources,
    goToAdminDashboardRequests,
-   goToAdminDashboardUsers
+   goToAdminDashboardUsers,
+   goToAddResourcePage
 } from '../../utils/NavigationalUtils'
 import { ADMIN_DASHBOARD_RESOURCES } from '../../../Authentication/constants/NavigationalConstants'
 
@@ -98,16 +99,20 @@ class DashboardRoute extends Component<DashboardRouteProps> {
       const { history } = this.getInjectedProps()
       history.push(`${ADMIN_DASHBOARD_RESOURCES}/${resourceId}`)
    }
+   onClickAddResource = () => {
+      alert('addResource')
+      const { history } = this.getInjectedProps()
+      goToAddResourcePage(history)
+   }
    render() {
-      const {
-         adminStore: {}
-      } = this.getInjectedProps()
+      const { onClickAddResource } = this
       return (
          <Dashboard
             onClickResources={this.onClickResources}
             onClickRequests={this.onClickRequests}
             onClickUsers={this.onClickUsers}
-            childComponent={this.renderChildComponent()}
+            onClickAddResource={onClickAddResource}
+            renderChildComponent={this.renderChildComponent}
             selector={this.selector}
          />
       )

@@ -13,13 +13,23 @@ import DisplayTable from '../Common/Table'
 import { ResourceItemsHeaders } from '../../constants/TableHeaders'
 import ModalClose from '../Common/Modal'
 import Pagination from '../Common/Pagination'
-import Template from '../Common/Template'
+import { action } from 'mobx'
 class RequestsList extends Component {
+   @action.bound
+   renderChild() {
+      return (
+         <SearchField
+            value={'harika'}
+            onChangeField={() => {}}
+            placeholderText={'Search'}
+         />
+      )
+   }
    render() {
       return (
          <React.Fragment>
             <div>RequestsList</div>
-            <Template buttonText={'Requests'} />
+
             <InputField
                value={'harika'}
                onChangeField={(_value): void => {}}
@@ -35,7 +45,7 @@ class RequestsList extends Component {
                onChangeField={() => {}}
                placeholderText={'Description'}
             />
-            <ImageUpload />
+
             <Checkbox
                onClickCheckBox={(isChecked: boolean) => {}}
                isChecked={true}
