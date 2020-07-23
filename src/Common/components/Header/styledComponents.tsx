@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import colors from '../Theme/Colors.json'
+import colors from '../../Theme/Colors.json'
 
 export const Requests = styled.div`
    padding: 5px;

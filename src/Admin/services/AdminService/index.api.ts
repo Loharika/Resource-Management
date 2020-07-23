@@ -7,7 +7,7 @@ class AdminService implements AdminServiceInterface {
    constructor(parameters) {
       this.baseApi = create({ baseURL: 'https://1d2c1582fff8.ngrok.io/' })
    }
-   getResourceListAPI() {
+   getResourceListAPI(requestObject) {
       return networkCallWithApisauce(this.baseApi, '___', {}, apiMethods.get)
    }
 }

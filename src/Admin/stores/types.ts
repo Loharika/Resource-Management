@@ -1,3 +1,9 @@
+export interface ResourcesListRequestObject {
+   limit: number
+   offset: number
+   sort: string
+   filter: string
+}
 export interface ResourcesListResponseObject {
    resource_id: number
    name: string

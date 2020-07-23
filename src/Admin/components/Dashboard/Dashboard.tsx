@@ -1,6 +1,6 @@
 import React, { Component, ReactComponentElement } from 'react'
 import { observer } from 'mobx-react'
-import { Header } from '../../../Common/Header'
+import { Header } from '../../../Common/components/Header'
 import { DashboardStyle, SelectorTab, Selectors } from './styledComponents'
 interface DashboardProps {
    childComponent: any

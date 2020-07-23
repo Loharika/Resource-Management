@@ -7,12 +7,14 @@ import {
    LoginLink,
    LogInPageLink,
    PasswordAlert,
-   LogoImageContainer
+   LogoImageContainer,
+   SignUpButtonCss
 } from './styledComponents'
 import { DASHBOARD_SIGNIN_PAGE } from '../../constants/NavigationalConstants'
 import { FormHeading } from '../../styledComponents/styledComponents'
 
 import { InputField } from '../Common/InputField'
+import { Button as SignUpButton } from '../../../Common/components/Button'
 
 import { LogoImage } from '../Common/LogoImage'
 import { Button } from '../Common/Button'
@@ -22,14 +24,13 @@ interface SignUpFormProps {
    userName: string
    password: string
    confirmPassword: string
-   mobileNumber: string
    choosePassword: string
    onChangeUserName: (event: any) => void
    onChangePassword: (event: any) => void
-   onChangeMobileNumber: (event: any) => void
    onChangeConfirmPassword: (event: any) => void
    onSubmit: (event: any) => void
    displayError: boolean
+   isLoading: boolean
 }
 
 interface SignUpFormProps extends WithTranslation {}
@@ -49,14 +50,13 @@ class SignUpForm extends React.Component<SignUpFormProps> {
          userName,
          password,
          confirmPassword,
-         mobileNumber,
          choosePassword,
          onChangeUserName,
          onChangePassword,
-         onChangeMobileNumber,
          onChangeConfirmPassword,
          onSubmit,
-         displayError
+         displayError,
+         isLoading
       } = this.props
       return (
          <FormDashBoard>
@@ -90,23 +90,19 @@ class SignUpForm extends React.Component<SignUpFormProps> {
                   displayError={displayError}
                   label={'CONFIRM PASSWORD'}
                />
-               <InputField
-                  value={mobileNumber}
-                  onChange={onChangeMobileNumber}
-                  type={'text'}
-                  placeholderText={'Mobile Number'}
-                  displayError={displayError}
-                  label={'MOBILE NUMBER'}
-               />
+
                {choosePassword.length !== 0 ? (
                   <PasswordAlert>{choosePassword}</PasswordAlert>
                ) : (
                   ''
                )}
-               <Button
-                  buttonText={t('auth:auth.signUp')}
-                  onClickFunction={onSubmit}
-                  isLoading={false}
+               <SignUpButton
+                  text={t('auth:auth.signIn')}
+                  onClick={onSubmit}
+                  disabled={isLoading === true}
+                  buttonType={'rectangular'}
+                  buttonVariant={'outline'}
+                  css={SignUpButtonCss}
                />
                <LoginLink>
                   {t('auth:auth.signInLink')} &nbsp;{' '}

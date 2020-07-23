@@ -4,13 +4,13 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    border: 2px solid black;
+
     color: black;
 }
 
 .active {
     padding: 3px 5px;
-    border: 2px solid black;
+    border: 2px solid #4886c6;
 }
 
 .pages {

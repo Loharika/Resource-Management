@@ -10,12 +10,12 @@ import {
    ProfileAndSignOut,
    UserProfile
 } from './styledComponents'
-import AuthStore from '../../Authentication/stores/AuthStore'
+import AuthStore from '../../../Authentication/stores/AuthStore'
 import {
    goToUserDashboard,
    goToSignInPage
-} from '../../Authentication/utils/NavigationalUtils'
-import { LogoImage } from '../../Authentication/components/Common/LogoImage'
+} from '../../../Authentication/utils/NavigationalUtils'
+import { LogoImage } from '../../../Authentication/components/Common/LogoImage'
 
 interface HeaderProps extends RouteComponentProps {}
 

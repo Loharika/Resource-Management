@@ -1,5 +1,5 @@
-import { ResourcesListResponse } from '../../stores/types'
+import { ResourcesListResponse, ResourcesListRequestObject } from '../../stores/types'
 
 export interface AdminServiceInterface {
-   getResourceListAPI: () => Promise<ResourcesListResponse>
+   getResourceListAPI: (requestObject:ResourcesListRequestObject) => Promise<ResourcesListResponse>
 }

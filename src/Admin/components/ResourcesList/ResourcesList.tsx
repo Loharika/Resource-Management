@@ -1,35 +1,73 @@
 import React, { Component } from 'react'
 import { observer } from 'mobx-react'
+import { action, observable } from 'mobx'
 import LoadingWrapperWithFailure from '../../../Common/components/common/LoadingWrapperWithFailure'
-import { action, runInAction } from 'mobx'
+
 import ResourceCard from '../ResourceCard'
-import { ResourceListStyle } from './styledComponents'
+import {
+   ResourceListStyle,
+   SearchFieldCss,
+   ResourceListCards,
+   PaginationCss
+} from './styledComponents'
+import Pagination from '../Common/Pagination'
+import SearchField from '../Common/SearchField'
 
 interface ResourcesListProps {
    resourcesListInstance: any
-   onClickResourceCard: (resourceId:number) => void
+   onClickResourceCard: (resourceId: number) => void
 }
 
 @observer
 class ResourcesList extends Component<ResourcesListProps> {
-   renderSuccessUI = () => {
+   @observable searchInput
+   constructor(props) {
+      super(props)
+      this.searchInput = ''
+   }
+   @action.bound
+   onChangeSearchField = searchInput => {
+      this.searchInput = searchInput
+      console.log(searchInput)
+   }
+   renderResourceCards = () => {
       const {
-         resourcesListInstance: { listOfItems }, onClickResourceCard
+         resourcesListInstance: { results, pageNumber },
+         onClickResourceCard
       } = this.props
+      console.log(results.get(pageNumber))
       return (
-         <React.Fragment>
-            <ResourceListStyle>
-               {listOfItems.map(resource => {
-                  return (
-                     <ResourceCard
-                        resourceDetails={resource}
-                        key={resource.resourceId}
-                        onClickResourceCard={onClickResourceCard}
-                     />
-                  )
-               })}
-            </ResourceListStyle>
-         </React.Fragment>
+         <ResourceListCards>
+            {results.get(pageNumber).map(resource => {
+               return (
+                  <ResourceCard
+                     resourceDetails={resource}
+                     key={resource.resourceId}
+                     onClickResourceCard={onClickResourceCard}
+                  />
+               )
+            })}
+         </ResourceListCards>
+      )
+   }
+   @action.bound
+   renderPagination() {
+      const {
+         resourcesListInstance: {
+            onChangePageNumber,
+            totalNumberOfPages,
+            pageNumber
+         }
+      } = this.props
+      return totalNumberOfPages > 0 ? (
+         <Pagination
+            onChangePageNumber={onChangePageNumber}
+            totalPages={totalNumberOfPages}
+            pageNumber={pageNumber}
+            css={PaginationCss}
+         />
+      ) : (
+         ''
       )
    }
 
@@ -37,14 +75,23 @@ class ResourcesList extends Component<ResourcesListProps> {
       const {
          resourcesListInstance: { getApiStatus, getApiError, getListOfItems }
       } = this.props
-      const { renderSuccessUI } = this
+      const { renderResourceCards } = this
       return (
-         <LoadingWrapperWithFailure
-            apiStatus={getApiStatus}
-            renderSuccessUI={renderSuccessUI}
-            onRetryClick={getListOfItems}
-            apiError={getApiError}
-         />
+         <ResourceListStyle>
+            <SearchField
+               isDisabled={getApiStatus !== 200}
+               value={this.searchInput}
+               onChangeField={this.onChangeSearchField}
+               css={SearchFieldCss}
+            />
+            <LoadingWrapperWithFailure
+               apiStatus={getApiStatus}
+               renderSuccessUI={renderResourceCards}
+               onRetryClick={getListOfItems}
+               apiError={getApiError}
+            />
+            {this.renderPagination()}
+         </ResourceListStyle>
       )
    }
 }

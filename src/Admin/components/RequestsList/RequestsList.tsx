@@ -13,11 +13,13 @@ import DisplayTable from '../Common/Table'
 import { ResourceItemsHeaders } from '../../constants/TableHeaders'
 import ModalClose from '../Common/Modal'
 import Pagination from '../Common/Pagination'
+import Template from '../Common/Template'
 class RequestsList extends Component {
    render() {
       return (
          <React.Fragment>
             <div>RequestsList</div>
+            <Template buttonText={'Requests'} />
             <InputField
                value={'harika'}
                onChangeField={(_value): void => {}}
@@ -53,6 +55,7 @@ class RequestsList extends Component {
             <Pagination
                onChangePageNumber={(pageNumber: number) => {}}
                totalPages={10}
+               pageNumber={1}
             />
          </React.Fragment>
       )

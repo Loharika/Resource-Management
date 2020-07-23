@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import colors from '../../../Common/Theme/Colors.json'
 export const ResourceCardStyle = styled.div`
-   width: 330px;
+   width: 300px;
    height: 150px;
 
    border: 1px solid ${colors.lightBlueGrey};

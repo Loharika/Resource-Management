@@ -16,7 +16,7 @@ class AdminStore {
          ResourceCardModel,
          this.adminService.getResourceListAPI,
          ['resources_list', 'total_count'],
-         10
+         9
       )
       this.intiResourceListAPI()
    }

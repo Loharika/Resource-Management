@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { css } from '@emotion/core'
 import {
    Logo,
    LogoImageContainer,
@@ -37,6 +38,16 @@ const LogInPageLink = styled.a`
 const PasswordAlert = styled.span`
    color: ${colors.neonRed};
    font-size: 13px;
+`
+export const SignUpButtonCss = css`
+   width: 100%;
+   height: 40px;
+
+   border-radius: 4px;
+   background-color: ${colors.brightBlue};
+   color: white;
+   margin: 3px;
+   padding: 3px;
 `
 export {
    FormType,

@@ -17,43 +17,36 @@ interface SignInFormRouteProps extends InjectedProps {
 class SignInFormRoute extends React.Component<SignInFormRouteProps> {
    @observable userName
    @observable password
-   @observable mobileNumber
    @observable confirmPassword
    @observable displayError
    @observable choosePassword
+   @observable isLoading
    constructor(props) {
       super(props)
       this.init()
       this.displayError = false
+      this.isLoading = false
    }
    init() {
       this.userName = ''
       this.password = ''
-      this.mobileNumber = ''
+
       this.confirmPassword = ''
       this.choosePassword = ''
    }
    onSubmit = (event: any) => {
       event.preventDefault()
-      let {
-         userName,
-         password,
-         onClickSignUpButton,
-         confirmPassword,
-         mobileNumber
-      } = this
+      let { userName, password, onClickSignUpButton, confirmPassword } = this
       if (
          userName.length === 0 ||
          password.length === 0 ||
-         confirmPassword.length === 0 ||
-         mobileNumber.length === 0
+         confirmPassword.length === 0
       ) {
          this.displayError = true
       } else if (
          userName.length !== 0 &&
          password.length !== 0 &&
-         confirmPassword.length !== 0 &&
-         mobileNumber.length !== 0
+         confirmPassword.length !== 0
       ) {
          this.displayError = false
          if (this.password === this.confirmPassword) {
@@ -78,25 +71,26 @@ class SignInFormRoute extends React.Component<SignInFormRouteProps> {
       this.choosePassword = ''
       this.displayError = false
    }
-   onChangeMobileNumber = (event: any) => {
-      this.mobileNumber = event.target.value
-      this.choosePassword = ''
-      this.displayError = false
-   }
+
    getInjectedProps = () => this.props as InjectedProps
    @action.bound
    async onClickSignUpButton() {
+      this.isLoading = true
       const {
          authStore: { userSignUp }
       } = this.props
       await userSignUp({ username: this.userName, password: this.password })
       const {
-         authStore: { access_token }
+         authStore: { getUserSignUpAPIStatus }
       } = this.props
-      if (access_token) {
+      if (getUserSignUpAPIStatus === 200) {
+         this.isLoading = false
          const { history } = this.getInjectedProps()
          goToSignInPage(history)
          this.init()
+      } else {
+         this.displayError = true
+         this.isLoading = true
       }
    }
 
@@ -105,14 +99,13 @@ class SignInFormRoute extends React.Component<SignInFormRouteProps> {
          userName,
          password,
          confirmPassword,
-         mobileNumber,
          choosePassword,
          onChangeUserName,
          onChangePassword,
          onChangeConfirmPassword,
-         onChangeMobileNumber,
          onSubmit,
-         displayError
+         displayError,
+         isLoading
       } = this
       return (
          <SignUpForm
@@ -122,11 +115,10 @@ class SignInFormRoute extends React.Component<SignInFormRouteProps> {
             onChangeUserName={onChangeUserName}
             onChangePassword={onChangePassword}
             onChangeConfirmPassword={onChangeConfirmPassword}
-            onChangeMobileNumber={onChangeMobileNumber}
             onSubmit={onSubmit}
             displayError={displayError}
-            mobileNumber={mobileNumber}
             choosePassword={choosePassword}
+            isLoading={isLoading}
          />
       )
    }

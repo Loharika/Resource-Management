@@ -38,10 +38,10 @@ class DashboardRoute extends Component<DashboardRouteProps> {
    doNetWorkCallsForResourceList() {
       const {
          adminStore: {
-            resourcesListPaginationStore: { getListOfItems }
+            resourcesListPaginationStore: { getData }
          }
       } = this.props
-      getListOfItems()
+      getData()
    }
    @action.bound
    getSelectedTab() {

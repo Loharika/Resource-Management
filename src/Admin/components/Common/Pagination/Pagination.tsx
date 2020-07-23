@@ -7,39 +7,39 @@ import { observable } from 'mobx'
 import { observer } from 'mobx-react'
 import './file.css'
 import { MdChevronLeft, MdChevronRight, MdAccountCircle } from 'react-icons/md'
+import { PaginationStyle } from './styledComponents'
 
 interface PaginationProps {
    totalPages: number
+   pageNumber: number
    onChangePageNumber: (pageNumber: number) => void
+   css?: any
 }
 @observer
 class Pagination extends Component<PaginationProps> {
-   @observable pageCount: number
-   constructor(props) {
-      super(props)
-      this.pageCount = 10
-   }
    handlePageClick = value => {
-      console.log(value.selected)
-      const { onChangePageNumber } = this.props
-      onChangePageNumber(value.selected)
+      const { onChangePageNumber, pageNumber } = this.props
+      onChangePageNumber(value.selected + 1)
    }
    render() {
-      const { totalPages } = this.props
+      const { totalPages, pageNumber, css } = this.props
       return (
-         <ReactPaginate
-            previousLabel={<MdChevronLeft />}
-            nextLabel={<MdChevronRight />}
-            breakLabel={'. . . .'}
-            breakClassName={'break-me'}
-            pageCount={totalPages}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
-            onPageChange={this.handlePageClick}
-            containerClassName={'pagination'}
-            subContainerClassName={'pages pagination'}
-            activeClassName={'active'}
-         />
+         <PaginationStyle css={css}>
+            <ReactPaginate
+               previousLabel={<MdChevronLeft />}
+               nextLabel={<MdChevronRight />}
+               breakLabel={'. . . .'}
+               breakClassName={'break-me'}
+               pageCount={totalPages}
+               marginPagesDisplayed={2}
+               pageRangeDisplayed={3}
+               onPageChange={this.handlePageClick}
+               containerClassName={'pagination'}
+               subContainerClassName={'pages pagination'}
+               activeClassName={'active'}
+               activePage={pageNumber}
+            />
+         </PaginationStyle>
       )
    }
 }
