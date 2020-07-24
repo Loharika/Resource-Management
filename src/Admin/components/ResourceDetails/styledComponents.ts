@@ -8,12 +8,12 @@ import {
    Typo14SteelHKGroteskRegular
 } from '../../../Common/styleGuides/Typos'
 export const ButtonCss = css`
-   height: 40px;
    border-radius: 4px;
    background-color: ${colors.brightBlue};
    color: white;
    font-weight: bold;
-   padding: 0px 15px;
+   padding: 7px 10px;
+   margin: 0px 10px;
 `
 export const ResourceDetailsPage = styled.div`
    display: flex;
@@ -47,8 +47,9 @@ export const ResourceNameIdLink = styled.div`
 export const Name = styled(Typo32DarkBlueGreyHKGroteskRegular)``
 export const Id = styled(Typo16SteelHKGroteskRegular)``
 export const Link = styled(Typo14BrightBlueHKGroteskRegular)``
-export const LinkTag=styled.a``
+export const LinkTag = styled.a``
 export const Description = styled(Typo14SteelHKGroteskRegular)`
    margin: 15px;
    width: 50%;
 `
+export const FooterButtons = styled.div``

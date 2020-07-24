@@ -21,3 +21,7 @@ export const TextAreaWithLabel = styled.div`
    flex-direction: column;
    ${(props: CssProps) => props.css}
 `
+export const ErrorMessage = styled.span`
+   color: ${colors.neonRed};
+   font-size: 10px;
+`

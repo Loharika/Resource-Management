@@ -39,44 +39,49 @@ export interface ResourceItemResponse {
    resource_items: Array<ResourceItemObject>
    total_count: number
 }
-//addResource
-//name
-//link
-//description
-//service
-//resource_image
-//
 
-//statusCode-201 ==>No Response
-
-//update Resource
-//resource_id- (As)  pathParameter
-//name
-//link
-//description
-//service
-//resource_image
-
-//statusCode-200 ==>No Response
-
-//delResource
-
-//resource_id- (As)  pathParameter
-
-//statusCode-200 ==>No Response
-
-//resources_list:[list of obj]
-
-//resource_id
-//name
-//link
-//description
-//service
-//resource_image
-
-//total_count:integer
-
-//resources page -->emptyStrings
+export interface AddResourceRequestObject {
+   name: string
+   link: string
+   description: string
+   service: string
+   resource_image: string
+}
+export interface AddResourceResponse {
+   resource_id: number
+}
+export interface UpdateResourceRequestObject {
+   resourceId: number //resource_id
+   resourceDetails: {
+      name: string
+      link: string
+      description: string
+      service: string
+      resource_image: string
+   }
+}
+export interface DeleteResourceRequestObject {
+   resource_id: number
+}
+export interface AddResourceItemRequestObject {
+   name: string
+   link: string
+   description: string
+}
+export interface AddResourceItemResponse {
+   item_id: number
+}
+export interface UpdateResourceItemObject {
+   resourceItemId: number //item_id
+   resourceItemDetails: {
+      name: string
+      link: string
+      description: string
+   }
+}
+export interface DeleteResourceItemsRequestObject {
+   item_ids: Array<number>
+}
 
 //Keys
 //limit
@@ -85,3 +90,4 @@ export interface ResourceItemResponse {
 //sortBy
 //filter
 //filterBy
+//searchInput

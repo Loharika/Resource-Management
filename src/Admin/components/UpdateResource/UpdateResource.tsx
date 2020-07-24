@@ -32,12 +32,14 @@ class UpdateResource extends Component<UpdateResourceProps> {
    @observable link: string
    @observable description: string
    @observable imageLink: string
+   @observable service: string
    constructor(props) {
       super(props)
       this.name = ''
       this.link = ''
       this.description = ''
       this.imageLink = ''
+      this.service = ''
    }
    componentDidMount() {
       const {
@@ -60,6 +62,9 @@ class UpdateResource extends Component<UpdateResourceProps> {
    }
    onChangeLink = link => {
       this.link = link
+   }
+   onChangeService = service => {
+      this.service = service
    }
    onChangeDescription = description => {
       this.description = description
@@ -91,6 +96,12 @@ class UpdateResource extends Component<UpdateResourceProps> {
                label={'LINK'}
                placeholderText={'Link'}
             />
+            <InputField
+               value={this.service}
+               onChangeField={this.onChangeService}
+               label={'SERVICE'}
+               placeholderText={'Service'}
+            />
             <TextAreaField
                label={'DESCRIPTION'}
                value={this.description}
@@ -98,7 +109,6 @@ class UpdateResource extends Component<UpdateResourceProps> {
                onChangeField={this.onChangeDescription}
             />
             <ImageUpload onUploadImage={this.onUploadImage} />
-
             <Button
                text={'Update'}
                onClick={this.onClickUpdateButton}

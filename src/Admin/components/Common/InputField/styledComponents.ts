@@ -25,3 +25,7 @@ export const LabelWithTypo = styled(Typo12SteelHKGroteskSemiBold)`
    padding: 5px 0px;
 `
 export const Label = styled(LabelWithTypo)``
+export const ErrorMessage = styled.span`
+   color: ${colors.neonRed};
+   font-size: 10px;  
+`

@@ -2,8 +2,19 @@ import React, { Component } from 'react'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { observer, inject } from 'mobx-react'
 import { action } from 'mobx'
-import { Button as UpdateResource } from '../../../Common/components/Button'
+import {
+   Button as UpdateResource,
+   Button as DeleteButton
+} from '../../../Common/components/Button'
+import LoadingWrapperWithFailure from '../../../Common/components/common/LoadingWrapperWithFailure'
+import withHeader from '../../../Common/Hocs'
 import AdminStore from '../../stores/AdminStore'
+import {
+   goToUpdateResource,
+   goToAdminDashboardResources
+} from '../../utils/NavigationalUtils'
+import ResourceItemsList from '../ResourceItemsList'
+import PreviousPageButton from '../Common/PreviousPageButton'
 import {
    ButtonCss,
    ResourceDetailsStyle,
@@ -16,24 +27,9 @@ import {
    ResourceDetailsPage,
    ResourceDetailsPageStyle,
    Description,
-   LinkTag
+   LinkTag,
+   FooterButtons
 } from './styledComponents'
-import {
-   goToUpdateResource,
-   goToAdminDashboardResources
-} from '../../utils/NavigationalUtils'
-import ResourceItemsList from '../ResourceItemsList'
-import LoadingWrapperWithFailure from '../../../Common/components/common/LoadingWrapperWithFailure'
-import colors from '../../../Common/Theme/Colors.json'
-import withHeader from '../../../Common/Hocs'
-import {
-   HeaderButton,
-   GoBackButton,
-   ButtonText
-} from '../../../Common/styledComponents/styledComponents'
-import { MdChevronLeft } from 'react-icons/md'
-import PreviousPageButton from '../Common/PreviousPageButton'
-
 interface InjectedProps extends RouteComponentProps {
    adminStore: AdminStore
 }
@@ -63,12 +59,12 @@ class ResourceDetails extends Component<ResourceDetails> {
    }
    @action.bound
    onClickUpdateResource() {
-      const {
-         match: { params }
-      } = this.getInjectedProps()
-      let resourceId = params['resourceId']
       const { history } = this.props
-      goToUpdateResource(history, resourceId)
+      goToUpdateResource(history, this.getResourceId())
+   }
+   @action.bound
+   onClickDeleteResource = () => {
+      alert('delete')
    }
    onClickResourcesButton = () => {
       const { history } = this.props
@@ -117,14 +113,23 @@ class ResourceDetails extends Component<ResourceDetails> {
                   renderSuccessUI={this.renderResourceDetails}
                   onRetryClick={this.doNetWorkCallForResourceDetails}
                />
-               <ResourceItemsList />
-               <UpdateResource
-                  text={'Update'}
-                  onClick={this.onClickUpdateResource}
-                  buttonType={'rectangular'}
-                  buttonVariant={'filled'}
-                  css={ButtonCss}
-               />
+
+               <FooterButtons>
+                  <UpdateResource
+                     text={'Update'}
+                     onClick={this.onClickUpdateResource}
+                     buttonType={'rectangular'}
+                     buttonVariant={'filled'}
+                     css={ButtonCss}
+                  />
+                  <DeleteButton
+                     text={'Delete'}
+                     onClick={this.onClickDeleteResource}
+                     buttonType={'rectangular'}
+                     buttonVariant={'filled'}
+                     css={ButtonCss}
+                  />
+               </FooterButtons>
                <ResourceItemsList />
             </ResourceDetailsPageStyle>
          </ResourceDetailsPage>

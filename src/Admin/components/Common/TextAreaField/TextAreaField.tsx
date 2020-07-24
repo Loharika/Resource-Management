@@ -3,7 +3,8 @@ import { observer } from 'mobx-react'
 import {
    TextAreaFieldStyle,
    TextAreaWithLabel,
-   Label
+   Label,
+   ErrorMessage
 } from './styledComponents'
 
 interface TextAreaFieldProps {
@@ -11,10 +12,19 @@ interface TextAreaFieldProps {
    onChangeField: (value: string) => void
    placeholderText?: string
    label?: string
+   displayError?: boolean
 }
 
 @observer
 class TextAreaField extends Component<TextAreaFieldProps> {
+   renderErrorMessage = () => {
+      const { displayError, value } = this.props
+      if (displayError && value.length === 0) {
+         return <ErrorMessage>Required</ErrorMessage>
+      } else {
+         return <ErrorMessage> &nbsp;</ErrorMessage>
+      }
+   }
    onChangeField = value => {
       const { onChangeField } = this.props
       onChangeField(value)
@@ -33,6 +43,7 @@ class TextAreaField extends Component<TextAreaFieldProps> {
             >
                {value}
             </TextAreaFieldStyle>
+            {this.renderErrorMessage()}
          </TextAreaWithLabel>
       )
    }

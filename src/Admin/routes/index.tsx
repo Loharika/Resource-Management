@@ -42,13 +42,13 @@ export const AdminDashboardRoutes = [
       key={ADD_RESOURCE}
       exact
       path={ADD_RESOURCE}
-      component={AddResource}
+      component={AddResourceItem}
    />,
    <ProtectedRoute
       key={ADD_RESOURCE_ITEM}
       exact
       path={ADD_RESOURCE_ITEM}
-      component={AddResource}
+      component={AddResourceItem}
    />,
 
    <ProtectedRoute

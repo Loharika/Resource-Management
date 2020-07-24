@@ -16,5 +16,27 @@ class AdminService implements AdminServiceInterface {
    getResourceItemsAPI(requestObject) {
       return networkCallWithApisauce(this.baseApi, '___', {}, apiMethods.get)
    }
+   addResourceAPI(requestObject) {
+      return networkCallWithApisauce(this.baseApi, '___', {}, apiMethods.get)
+   }
+   updateResourceAPI(requestObject) {
+      const resourceId = requestObject.resourceId
+      const resourceDetails = requestObject.resourceDetails
+      return networkCallWithApisauce(this.baseApi, '___', {}, apiMethods.get)
+   }
+   deleteResourceAPI(requestObject) {
+      return networkCallWithApisauce(this.baseApi, '___', {}, apiMethods.delete)
+   }
+   addResourceItemAPI(requestObject) {
+      return networkCallWithApisauce(this.baseApi, '___', {}, apiMethods.get)
+   }
+   updateResourceItemAPI(requestObject) {
+      const resourceItemId = requestObject.resourceItemId
+      const resourceItemDetails = requestObject.resourceItemDetails
+      return networkCallWithApisauce(this.baseApi, '___', {}, apiMethods.get)
+   }
+   deleteResourceItemAPI(requestObject) {
+      return networkCallWithApisauce(this.baseApi, '___', {}, apiMethods.delete)
+   }
 }
 export default AdminService

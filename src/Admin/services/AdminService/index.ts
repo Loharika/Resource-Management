@@ -4,7 +4,15 @@ import {
    ResourceDetailsRequestObject,
    ResourcesDetailsResponse,
    ResourcesItemsRequestObject,
-   ResourceItemResponse
+   ResourceItemResponse,
+   AddResourceRequestObject,
+   AddResourceResponse,
+   UpdateResourceRequestObject,
+   DeleteResourceRequestObject,
+   AddResourceItemRequestObject,
+   AddResourceItemResponse,
+   UpdateResourceItemObject,
+   DeleteResourceItemsRequestObject
 } from '../../stores/types'
 
 export interface AdminServiceInterface {
@@ -17,4 +25,22 @@ export interface AdminServiceInterface {
    getResourceItemsAPI: (
       requestObject: ResourcesItemsRequestObject
    ) => Promise<ResourceItemResponse>
+   addResourceAPI: (
+      requestObject: AddResourceRequestObject
+   ) => Promise<AddResourceResponse>
+   updateResourceAPI: (
+      requestObject: UpdateResourceRequestObject
+   ) => Promise<{}>
+   deleteResourceAPI: (
+      requestObject: DeleteResourceRequestObject
+   ) => Promise<{}>
+   addResourceItemAPI: (
+      requestObject: AddResourceItemRequestObject
+   ) => Promise<AddResourceItemResponse>
+   updateResourceItemAPI: (
+      requestObject: UpdateResourceItemObject
+   ) => Promise<{}>
+   deleteResourceItemAPI: (
+      requestObject: DeleteResourceItemsRequestObject
+   ) => Promise<{}>
 }

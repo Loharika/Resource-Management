@@ -22,5 +22,24 @@ class AdminService implements AdminServiceInterface {
    getResourceItemsAPI(requestObject) {
       return resolveWithTimeout(getResourceItemsList)
    }
+   addResourceAPI(requestObject) {
+      console.log(requestObject)
+      return resolveWithTimeout({ resource_id: 56789 })
+   }
+   updateResourceAPI(requestObject) {
+      return resolveWithTimeout({})
+   }
+   deleteResourceAPI(requestObject) {
+      return resolveWithTimeout({})
+   }
+   addResourceItemAPI(requestObject) {
+      return resolveWithTimeout({ item_id: 5678909 })
+   }
+   updateResourceItemAPI(requestObject) {
+      return resolveWithTimeout({})
+   }
+   deleteResourceItemAPI(requestObject) {
+      return resolveWithTimeout({})
+   }
 }
 export default AdminService

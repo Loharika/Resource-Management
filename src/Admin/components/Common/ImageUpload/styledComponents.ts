@@ -31,3 +31,8 @@ export const DefaultImage = styled.img`
    margin-right: 10px;
    border-radius: 5px;
 `
+
+export const ErrorMessage = styled.span`
+   color: ${colors.neonRed};
+   font-size: 10px;
+`
