@@ -2,20 +2,24 @@ import { observable, action, computed } from 'mobx'
 import { API_INITIAL } from '@ib/api-constants'
 import { bindPromiseWithOnSuccess } from '@ib/mobx-promise'
 
+interface K {}
+interface V {}
 class PaginationStore {
    @observable pageNumber!: number
-   @observable getApiStatus
-   @observable getApiError
-   @observable getApiResponse
-   @observable results
-   @observable totalResults
-   @observable sort
-   @observable filter
-   @observable searchInput
-   apiService
-   limit
-   apiResponseKeys
-   model
+   @observable getApiStatus!: number
+   @observable getApiError!: any
+   @observable getApiResponse!: object
+   @observable results!: Map<K, V>
+   @observable totalResults!: number
+   @observable sort!: string
+   @observable sortBy!: string
+   @observable filter!: string
+   @observable filterBy!: string
+   @observable searchInput!: string
+   apiService: (requestObject: object) => Promise<any>
+   limit: number
+   apiResponseKeys: Array<any>
+   model: any
    constructor(Model, apiService, apiResponseKeys, limit) {
       this.apiService = apiService
       this.limit = limit
@@ -30,16 +34,31 @@ class PaginationStore {
       this.getApiError = null
       this.results = new Map()
       this.totalResults = 0
-      this.sort = 'RECENTLY ADDED' //ASCENDING DESCENDING
+      this.sort = ''
+      this.sortBy = ''
       this.filter = ''
+      this.filterBy = ''
+      this.searchInput = ''
    }
    @action.bound
    onChangeFilter(filter) {
       this.filter = filter
    }
    @action.bound
+   onChangeFilterBy(filterBy) {
+      this.filterBy = filterBy
+   }
+   @action.bound
    onChangeSort(sort) {
       this.sort = sort
+   }
+   @action.bound
+   onChangeSortBy(sortBy) {
+      this.sortBy = sortBy
+   }
+   @action.bound
+   onChangeSearchInput(searchInput) {
+      this.searchInput = searchInput
    }
    @action.bound
    setGetAPIStatus(apiStatus) {

@@ -1,14 +1,19 @@
 import styled from '@emotion/styled'
-import { Typo12SteelHKGroteskRegular } from '../../../../Common/styleGuides/Typos'
-
 export const TemplateStyle = styled.div`
    width: 100%;
    display: flex;
+   flex-wrap: wrap;
    justify-content: center;
    align-items: center;
 `
 export const TemplateImage = styled.img`
    width: 45%;
+`
+export const TemplateCard = styled.div`
+   width: 90%;
+   flex-wrap: wrap;
+   display: flex;
+   align-self: center;
 `
 export const Details = styled.div`
    width: 50%;
@@ -17,22 +22,4 @@ export const Details = styled.div`
    flex-direction: column;
 
    align-items: center;
-`
-export const GoBackButton = styled.button`
-   display: flex;
-   align-items: center;
-   padding: 2px;
-   outline: none;
-   margin-top: 30px;
-`
-export const ButtonText = styled(Typo12SteelHKGroteskRegular)``
-export const TemplateCard = styled.div`
-   width: 85%;
-   display: flex;
-   align-self: center;
-   flex-wrap: wrap;
-`
-export const HeaderButton = styled.div`
-   display: flex;
-   width: 100%;
 `

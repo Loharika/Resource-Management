@@ -22,7 +22,6 @@ class Dashboard extends Component<DashboardProps> {
          onClickUsers,
          onClickResources,
          onClickRequests,
-         onClickAddResource,
          selector
       } = this.props
       return (

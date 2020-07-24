@@ -2,7 +2,8 @@ import {
    ADMIN_DASHBOARD_RESOURCES,
    ADMIN_DASHBOARD_REQUESTS,
    ADMIN_DASHBOARD_USERS,
-   ADD_RESOURCE
+   ADD_RESOURCE,
+   UPDATE_RESOURCE
 } from '../../Authentication/constants/NavigationalConstants'
 
 export function goToAdminDashboardResources(history) {
@@ -18,4 +19,10 @@ export function goToAdminDashboardUsers(history) {
 }
 export function goToAddResourcePage(history) {
    history.push(ADD_RESOURCE)
+}
+export function goToResourceDetails(history, resourceId) {
+   history.push(`${ADMIN_DASHBOARD_RESOURCES}/${resourceId}`)
+}
+export function goToUpdateResource(history, resourceId) {
+   history.push(`${UPDATE_RESOURCE}/${resourceId}`)
 }

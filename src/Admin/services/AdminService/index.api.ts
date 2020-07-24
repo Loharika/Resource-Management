@@ -10,5 +10,11 @@ class AdminService implements AdminServiceInterface {
    getResourceListAPI(requestObject) {
       return networkCallWithApisauce(this.baseApi, '___', {}, apiMethods.get)
    }
+   getResourceDetailsAPI(requestObject) {
+      return networkCallWithApisauce(this.baseApi, '___', {}, apiMethods.get)
+   }
+   getResourceItemsAPI(requestObject) {
+      return networkCallWithApisauce(this.baseApi, '___', {}, apiMethods.get)
+   }
 }
 export default AdminService

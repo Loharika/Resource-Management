@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 
 import ReactPaginate from 'react-paginate'
-import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
-import { observable } from 'mobx'
 import { observer } from 'mobx-react'
 import './file.css'
 import { MdChevronLeft, MdChevronRight, MdAccountCircle } from 'react-icons/md'
@@ -38,9 +35,7 @@ class Pagination extends Component<PaginationProps> {
                subContainerClassName={'pages pagination'}
                activeClassName={'active'}
                activePage={pageNumber}
-               pageLinkClassName={
-                  'p-10 border border-solid border-red text-red-900'
-               }
+               pageLinkClassName={'page-number'}
             />
          </PaginationStyle>
       )

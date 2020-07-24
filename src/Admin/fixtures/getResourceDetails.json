@@ -1,0 +1,8 @@
+{
+    "resource_id": 123456,
+    "name": "slack",
+    "link": "www.google.co.in",
+    "description": "Google LLC is an American multinational technology company that specializes in Internet-related services and products, which include online advertising technologies, a search engine, cloud computing, software, and hardware.",
+    "service": "Cloud Services",
+    "resource_image": "https://cdn.zeplin.io/5d0afc9102b7fa56760995cc/assets/bacc8218-5885-4594-9d8b-af57bf3c256a@2x.png"
+}

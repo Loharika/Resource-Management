@@ -10,18 +10,17 @@
 
 .active {
     padding: 3px 5px;
+    background-color: aliceblue;
     border: 2px solid #4886c6;
 }
 
 .pages {
-
     padding: 3px 5px;
-
 }
 
 .previous {
     padding: 5px;
-    color: black;
+    color: rgb(0, 0, 0);
 }
 
 .previous:focus {
@@ -38,5 +37,10 @@
     width: 25px;
     display: flex;
     justify-content: space-around;
+}
 
+.page-number {
+    padding: 5px;
+    color: #4886c6;
+    outline: none;
 }

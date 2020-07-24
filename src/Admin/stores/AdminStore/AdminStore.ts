@@ -1,15 +1,16 @@
 import { action, observable } from 'mobx'
 import { bindPromiseWithOnSuccess } from '@ib/mobx-promise'
-import { API_INITIAL, API_FETCHING } from '@ib/api-constants'
+import { API_INITIAL } from '@ib/api-constants'
 import PaginationStore from '../../../Common/stores/PaginationStore'
 import ResourceCardModel from '../Model/ResourceCardModel'
 
 class AdminStore {
-   @observable getResourceListAPIStatus
-   @observable getResourceListAPIError
-   @observable resourcesListResponse
+   @observable getResourceDetailsAPIStatus
+   @observable getResourceDetailsAPIError
+   @observable resourcesDetailsResponse
    adminService
    resourcesListPaginationStore
+   resourceDetailsPaginationStore
    constructor(adminService) {
       this.adminService = adminService
       this.resourcesListPaginationStore = new PaginationStore(
@@ -18,35 +19,40 @@ class AdminStore {
          ['resources_list', 'total_count'],
          9
       )
-      this.intiResourceListAPI()
+      // this.resourceDetailsPaginationStore = new PaginationStore(
+
+      // )
+      this.intiResourceDetailsAPI()
    }
    @action.bound
-   intiResourceListAPI() {
-      this.getResourceListAPIStatus = API_INITIAL
-      this.getResourceListAPIError = null
-      this.resourcesListResponse = []
+   intiResourceDetailsAPI() {
+      this.getResourceDetailsAPIStatus = API_INITIAL
+      this.getResourceDetailsAPIError = null
+      this.resourcesDetailsResponse = ''
    }
    @action.bound
-   setGetResourceListAPIStatus(apiStatus) {
-      this.getResourceListAPIStatus = apiStatus
+   setGetResourceDetailsAPIStatus(apiStatus) {
+      this.getResourceDetailsAPIStatus = apiStatus
    }
    @action.bound
-   setGetResourceListAPIResponse(apiResponse) {
-      this.resourcesListResponse = apiResponse
+   setGetResourceDetailsAPIResponse(apiResponse) {
+      this.resourcesDetailsResponse = apiResponse
    }
    @action.bound
-   setGetResourceListAPIError(apiError) {
-      this.getResourceListAPIError = apiError
+   setGetResourceDetailsAPIError(apiError) {
+      this.getResourceDetailsAPIError = apiError
    }
    @action.bound
-   getResourceList() {
-      const getResourcesPromise = this.adminService.getResourceListAPI()
+   getResourceDetails(requestObject) {
+      const getResourcesPromise = this.adminService.getResourceDetailsAPI(
+         requestObject
+      )
       return bindPromiseWithOnSuccess(getResourcesPromise)
          .to(
-            this.setGetResourceListAPIStatus,
-            this.setGetResourceListAPIResponse
+            this.setGetResourceDetailsAPIStatus,
+            this.setGetResourceDetailsAPIResponse
          )
-         .catch(this.setGetResourceListAPIError)
+         .catch(this.setGetResourceDetailsAPIError)
    }
 }
 export default AdminStore

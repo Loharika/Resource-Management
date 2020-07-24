@@ -14,7 +14,8 @@ import {
    goToAdminDashboardResources,
    goToAdminDashboardRequests,
    goToAdminDashboardUsers,
-   goToAddResourcePage
+   goToAddResourcePage,
+   goToResourceDetails
 } from '../../utils/NavigationalUtils'
 import { ADMIN_DASHBOARD_RESOURCES } from '../../../Authentication/constants/NavigationalConstants'
 
@@ -97,7 +98,7 @@ class DashboardRoute extends Component<DashboardRouteProps> {
    }
    onClickResourceCard = resourceId => {
       const { history } = this.getInjectedProps()
-      history.push(`${ADMIN_DASHBOARD_RESOURCES}/${resourceId}`)
+      goToResourceDetails(history, resourceId)
    }
    onClickAddResource = () => {
       alert('addResource')

@@ -16,6 +16,29 @@ export interface ResourcesListResponse {
    resources_list: Array<ResourcesListResponseObject>
    total_count: number
 }
+export interface ResourceDetailsRequestObject {
+   resource_id: number
+}
+export interface ResourcesDetailsResponse {
+   resource_id: number
+   name: string
+   link: string
+   description: string
+   service: string
+   resource_image: string
+}
+export interface ResourcesItemsRequestObject
+   extends ResourceDetailsRequestObject {}
+export interface ResourceItemObject {
+   item_id: number
+   title: string
+   description: string
+   link: string
+}
+export interface ResourceItemResponse {
+   resource_items: Array<ResourceItemObject>
+   total_count: number
+}
 //addResource
 //name
 //link

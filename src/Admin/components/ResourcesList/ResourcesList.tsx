@@ -1,18 +1,17 @@
 import React, { Component } from 'react'
 import { observer } from 'mobx-react'
-import { action, observable } from 'mobx'
-import LoadingWrapperWithFailure from '../../../Common/components/common/LoadingWrapperWithFailure'
+import { action } from 'mobx'
 
+import LoadingWrapperWithFailure from '../../../Common/components/common/LoadingWrapperWithFailure'
 import ResourceCard from '../ResourceCard'
+import Pagination from '../Common/Pagination'
+import SearchField from '../Common/SearchField'
 import {
    ResourceListStyle,
    SearchFieldCss,
    ResourceListCards,
    PaginationCss
 } from './styledComponents'
-import Pagination from '../Common/Pagination'
-import SearchField from '../Common/SearchField'
-
 interface ResourcesListProps {
    resourcesListInstance: any
    onClickResourceCard: (resourceId: number) => void
@@ -20,14 +19,12 @@ interface ResourcesListProps {
 
 @observer
 class ResourcesList extends Component<ResourcesListProps> {
-   @observable searchInput
-   constructor(props) {
-      super(props)
-      this.searchInput = ''
-   }
    @action.bound
    onChangeSearchField = searchInput => {
-      this.searchInput = searchInput
+      const {
+         resourcesListInstance: { onChangeSearchInput }
+      } = this.props
+      onChangeSearchInput(searchInput)
    }
    renderResourceCards = () => {
       const {
@@ -72,14 +69,19 @@ class ResourcesList extends Component<ResourcesListProps> {
 
    render() {
       const {
-         resourcesListInstance: { getApiStatus, getApiError, getListOfItems }
+         resourcesListInstance: {
+            getApiStatus,
+            getApiError,
+            getListOfItems,
+            searchInput
+         }
       } = this.props
       const { renderResourceCards } = this
       return (
          <ResourceListStyle>
             <SearchField
                isDisabled={getApiStatus !== 200}
-               value={this.searchInput}
+               value={searchInput}
                onChangeField={this.onChangeSearchField}
                css={SearchFieldCss}
             />

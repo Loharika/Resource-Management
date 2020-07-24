@@ -1,8 +1,15 @@
 import React, { Component } from 'react'
 import ImageUploadIcon from '../../../../Common/Icons/ImageUpload'
 import { observer } from 'mobx-react'
-import { ImageUploadStyle } from './styledComponents'
-import { observable } from 'mobx'
+import {
+   ImageUploadStyle,
+   InputImageFile,
+   UploadButton,
+   InputImageWithIcon,
+   DefaultImage
+} from './styledComponents'
+import { observable, action } from 'mobx'
+import defaultImage from '../../../../Common/Images/2bf7775d-7a9e-40de-896f-edc48ce9832d@3x.png'
 
 interface ImageUploadProps {
    onUploadImage: (imageLink) => any
@@ -12,11 +19,11 @@ class ImageUpload extends Component<ImageUploadProps> {
    @observable image: any
    constructor(props) {
       super(props)
-      this.image = ''
+      this.image = defaultImage
    }
 
    onImageChange = event => {
-      if (event.target.files && event.target.files[0]) {
+      if (event.target.files) {
          let img = event.target.files[0]
          let reader = new FileReader()
          reader.readAsDataURL(img)
@@ -24,27 +31,31 @@ class ImageUpload extends Component<ImageUploadProps> {
             this.image = reader.result
          }
       }
+   }
+   @action.bound
+   uploadImage() {
       const { onUploadImage } = this.props
       onUploadImage(this.image)
    }
-
    render() {
       return (
-         <div>
-            <img src={this.image} />
+         <ImageUploadStyle>
             <ImageUploadStyle>
-               <ImageUploadIcon />
-
-               <input
-                  type='file'
-                  name='myImage'
-                  onChange={this.onImageChange}
-               />
-               <button type={'button'} onClick={() => console.log(this.image)}>
+               <InputImageWithIcon>
+                  <DefaultImage src={defaultImage} />
+                  <ImageUploadIcon />
+                  <InputImageFile
+                     type='file'
+                     name='myImage'
+                     onChange={this.onImageChange}
+                     accept='image/png, image/jpeg'
+                  />
+               </InputImageWithIcon>
+               <UploadButton type={'button'} onClick={this.uploadImage}>
                   upload
-               </button>
+               </UploadButton>
             </ImageUploadStyle>
-         </div>
+         </ImageUploadStyle>
       )
    }
 }
