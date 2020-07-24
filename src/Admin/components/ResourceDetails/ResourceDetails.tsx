@@ -39,6 +39,7 @@ interface ResourceDetails extends InjectedProps {}
 class ResourceDetails extends Component<ResourceDetails> {
    getInjectedProps = () => this.props as InjectedProps
    componentDidMount() {
+      
       this.doNetWorkCallForResourceDetails()
    }
    @action.bound
@@ -49,6 +50,15 @@ class ResourceDetails extends Component<ResourceDetails> {
       return params['resourceId']
    }
    doNetWorkCallForResourceDetails = () => {
+      const {
+         adminStore: { getResourceDetails }
+      } = this.getInjectedProps()
+      let requestObject = {
+         resource_id: this.getResourceId()
+      }
+      getResourceDetails(requestObject)
+   }
+   doNetWorkCallForResourceItems = () => {
       const {
          adminStore: { getResourceDetails }
       } = this.getInjectedProps()

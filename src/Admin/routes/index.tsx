@@ -18,6 +18,7 @@ import AddResource from '../components/AddResource'
 import UpdateResource from '../components/UpdateResource'
 import UpdateResourceItem from '../components/UpdateResourceItem/UpdateResourceItem'
 import AddResourceItem from '../components/AddResourceItem'
+import UpdateResourceRoute from './UpdateResourceRoute'
 
 export const AdminDashboardRoutes = [
    <ProtectedRoute
@@ -42,19 +43,19 @@ export const AdminDashboardRoutes = [
       key={ADD_RESOURCE}
       exact
       path={ADD_RESOURCE}
-      component={AddResourceItem}
+      component={AddResource}
+   />,
+   <ProtectedRoute
+      key={Math.random()}
+      exact
+      path={UPDATE_RESOURCE + '/:resourceId'}
+      component={UpdateResourceRoute}
    />,
    <ProtectedRoute
       key={ADD_RESOURCE_ITEM}
       exact
       path={ADD_RESOURCE_ITEM}
       component={AddResourceItem}
-   />,
-
-   <ProtectedRoute
-      exact
-      path={UPDATE_RESOURCE + '/:resourceId'}
-      component={UpdateResource}
    />,
    <ProtectedRoute
       key={ADMIN_DASHBOARD_RESOURCES}

@@ -6,10 +6,12 @@ interface CssProps {
    css?: any
 }
 export const TextAreaFieldStyle = styled.textarea`
+   width: 100%;
+   min-height: 100px;
    border: 2px solid ${colors.lightBlueGrey};
    background-color: white;
    padding: 10px;
-   width: 100%;
+
    :focus {
       outline: none;
    }

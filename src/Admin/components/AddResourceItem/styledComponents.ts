@@ -4,7 +4,7 @@ import { css } from '@emotion/core'
 import colors from '../../../Common/Theme/Colors.json'
 export const AddResourceStyle = styled.div`
    width: 50%;
-   height: 550px;
+   height: 600px;
    display: flex;
    flex-direction: column;
    justify-content: space-around;

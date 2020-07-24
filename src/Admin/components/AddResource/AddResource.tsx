@@ -3,9 +3,7 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Template from '../Common/Template'
 import withHeader from '../../../Common/Hocs'
-import {
-   goToAdminDashboardResources,
-} from '../../utils/NavigationalUtils'
+import { goToAdminDashboardResources } from '../../utils/NavigationalUtils'
 import InputField from '../Common/InputField'
 import TextAreaField from '../Common/TextAreaField'
 import { observable, action } from 'mobx'
@@ -16,7 +14,7 @@ import ImageUpload from '../Common/ImageUpload'
 import { Button } from '../../../Common/components/Button'
 import AdminStore from '../../stores/AdminStore'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
-import { getUserDisplayableErrorMessage } from "../../../Common/utils/APIUtils"
+import { getUserDisplayableErrorMessage } from '../../../Common/utils/APIUtils'
 toast.configure()
 interface InjectedProps extends RouteComponentProps {
    adminStore: AdminStore
@@ -31,6 +29,7 @@ class AddResource extends Component<AddResourceProps> {
    @observable imageLink: string
    @observable service: string
    @observable displayError: boolean
+   @observable isLoading: boolean
    constructor(props) {
       super(props)
       this.name = ''
@@ -40,6 +39,7 @@ class AddResource extends Component<AddResourceProps> {
          'https://cdn.zeplin.io/5d0afc9102b7fa56760995cc/assets/bacc8218-5885-4594-9d8b-af57bf3c256a@2x.png'
       this.service = ''
       this.displayError = false
+      this.isLoading = false
    }
    getInjectedProps = () => this.props as InjectedProps
    onChangeName = name => {
@@ -88,20 +88,22 @@ class AddResource extends Component<AddResourceProps> {
       }
    }
    async addResourceDetails(requestObject) {
+      this.isLoading = true
       const {
          adminStore: { addResource }
       } = this.getInjectedProps()
       await addResource(requestObject)
       const {
-         adminStore: { getAddResourceAPIStatus, getAddResourceAPIError }
-      } = this.props
-      if (getAddResourceAPIStatus === 201) {
+         adminStore: { getAddResourceAPIStatus, getAddResourceAPIError: error }
+      } = this.getInjectedProps()
+      if (getAddResourceAPIStatus === 200) {
+         this.isLoading = false
+         this.displayToaster('Added Successfully')
          const { history } = this.getInjectedProps()
          goToAdminDashboardResources(history)
-      }
-      else {
-         getUserDisplayableErrorMessage(getAddResourceAPIError)
-
+      } else {
+         this.displayToaster(getUserDisplayableErrorMessage(error))
+         this.isLoading = false
       }
    }
    displayToaster(status) {
@@ -156,6 +158,7 @@ class AddResource extends Component<AddResourceProps> {
                buttonType={'rectangular'}
                buttonVariant={'filled'}
                css={ButtonCss}
+               disabled={this.isLoading}
             />
          </AddResourceStyle>
       )

@@ -14,7 +14,6 @@ interface ButtonProps {
 class FilledButton extends Component<ButtonProps> {
    render() {
       const { text, css, onClick, disabled } = this.props
-     
       return (
          <FilledButtonStyle
             buttonStyles={css}

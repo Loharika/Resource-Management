@@ -36,9 +36,7 @@ class TextAreaField extends Component<TextAreaFieldProps> {
             <Label>{label}</Label>
             <TextAreaFieldStyle
                onChange={e => this.onChangeField(e.target.value)}
-               rows={3}
                placeholder={placeholderText}
-               css={'width:300px'}
                value={value}
             >
                {value}

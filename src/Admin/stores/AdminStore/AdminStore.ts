@@ -40,7 +40,7 @@ class AdminStore {
          9
       )
       // this.resourceDetailsPaginationStore = new PaginationStore(
-
+      //    ResourceItemModel,
       // )
       this.init()
    }
@@ -109,6 +109,7 @@ class AdminStore {
    }
    @action.bound
    getResourceDetails(requestObject) {
+      console.log('store')
       const getResourcesPromise = this.adminService.getResourceDetailsAPI(
          requestObject
       )
@@ -133,7 +134,6 @@ class AdminStore {
    }
    @action.bound
    addResource(requestObject) {
-      console.log(requestObject)
       const addResourcePromise = this.adminService.addResourceAPI(requestObject)
       return bindPromiseWithOnSuccess(addResourcePromise)
          .to(this.setGetAddResourceAPIStatus, this.setGetAddResourceAPIResponse)

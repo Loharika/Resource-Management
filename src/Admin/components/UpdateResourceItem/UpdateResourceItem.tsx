@@ -1,24 +1,28 @@
 import React, { Component } from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
-import Template from '../Common/Template'
+import { observable, action } from 'mobx'
+import { observer, inject } from 'mobx-react'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
+import { getUserDisplayableErrorMessage } from '../../../Common/utils/APIUtils'
 import withHeader from '../../../Common/Hocs'
+import { Button } from '../../../Common/components/Button'
+import AdminStore from '../../stores/AdminStore'
+
 import {
    goToAdminDashboardResources,
    goToResourceDetails
 } from '../../utils/NavigationalUtils'
 import InputField from '../Common/InputField'
 import TextAreaField from '../Common/TextAreaField'
-import { observable } from 'mobx'
-import { observer, inject } from 'mobx-react'
+import Template from '../Common/Template'
 
 import {
-   AddResourceStyle,
+   AddResourceStyle as UpdateResourceStyle,
    Heading,
    ButtonCss
 } from '../AddResourceItem/styledComponents'
-import ImageUpload from '../Common/ImageUpload'
-import { Button } from '../../../Common/components/Button'
-import AdminStore from '../../stores/AdminStore'
 
 interface InjectedProps extends RouteComponentProps {
    adminStore: AdminStore
@@ -33,6 +37,7 @@ class UpdateResourceItem extends Component<UpdateResourceProps> {
    @observable link: string
    @observable description: string
    @observable resourceType: string
+   @observable displayError: boolean
    constructor(props) {
       super(props)
       this.itemName = ''
@@ -40,21 +45,13 @@ class UpdateResourceItem extends Component<UpdateResourceProps> {
       this.link = ''
       this.description = ''
       this.resourceType = ''
+      this.displayError = false
    }
    componentDidMount() {
       const {
          match: { params },
          history
       } = this.getInjectedProps()
-      let resourceId = params['resourceId']
-      const {
-         adminStore: { resourcesListPaginationStore }
-      } = this.getInjectedProps()
-      console.log(resourcesListPaginationStore.results)
-      //   let resourceDetails = resourcesListPaginationStore.results.filter(
-      //      resource => resource.resourceId === resourceId
-      //   )
-      //   console.log(resourceDetails)
    }
    getInjectedProps = () => this.props as InjectedProps
    onChangeItemName = itemName => {
@@ -72,47 +69,95 @@ class UpdateResourceItem extends Component<UpdateResourceProps> {
    onChangeResourceType = resourceType => {
       this.resourceType = resourceType
    }
+   @action.bound
+   isValidateAddResourceDetails(): boolean {
+      let details = [this.itemName, this.link, this.description]
+      let notFilledFields = details.filter(
+         eachDetail => eachDetail.length === 0
+      )
+      return notFilledFields.length === 0
+   }
    onClickUpdateButton = () => {
+      if (this.isValidateAddResourceDetails()) {
+         this.displayError = false
+         let requestObject = {
+            name: this.itemName,
+            link: this.link,
+            description: this.description
+         }
+         this.updateResourceItemDetails(requestObject)
+      } else {
+         this.displayError = true
+      }
+   }
+   async updateResourceItemDetails(requestObject) {
       const {
-         match: { params },
-         history
-      } = this.getInjectedProps()
-      let resourceId = params['resourceId']
-      goToResourceDetails(history, resourceId)
+         adminStore: { updateResourceItem }
+      } = this.props
+      await updateResourceItem(requestObject)
+      const {
+         adminStore: {
+            getUpdateResourceItemAPIStatus,
+            getUpdateResourceItemAPIError: error
+         }
+      } = this.props
+      console.log(getUpdateResourceItemAPIStatus)
+      if (getUpdateResourceItemAPIStatus) {
+         this.displayToaster('Added Successfully')
+         // const { resourceId, history } = this.getInjectedProps()
+         const { history } = this.getInjectedProps()
+         const resourceId = 1234543
+         goToResourceDetails(history, resourceId)
+      } else {
+         this.displayToaster(getUserDisplayableErrorMessage(error))
+      }
+   }
+   displayToaster(status) {
+      toast(<div className='text-black font-bold'>{status}</div>, {
+         position: 'top-center',
+         autoClose: 3000,
+         closeButton: false,
+         hideProgressBar: true
+      })
    }
    renderSuccessUI = () => {
       return (
-         <AddResourceStyle>
+         <UpdateResourceStyle>
             <Heading>Item Details</Heading>
             <InputField
                value={this.itemName}
                onChangeField={this.onChangeItemName}
                label={'NAME'}
                placeholderText={'Name'}
+               displayError={this.displayError}
             />
             <InputField
                value={this.link}
                onChangeField={this.onChangeLink}
                label={'LINK'}
                placeholderText={'Link'}
+               displayError={this.displayError}
             />
             <InputField
                value={this.itemId}
                onChangeField={this.onChangeItemId}
                label={"ITEM I'D"}
                placeholderText={'Name'}
+               displayError={this.displayError}
             />
             <InputField
                label={'RESOURCE NAME'}
-               value={this.description}
+               value={this.resourceType}
                placeholderText={'Resource NAME'}
                onChangeField={this.onChangeResourceType}
+               displayError={this.displayError}
             />
             <TextAreaField
                label={'DESCRIPTION'}
                value={this.description}
                placeholderText={'DESCRIPTION'}
                onChangeField={this.onChangeDescription}
+               displayError={this.displayError}
             />
             <Button
                text={'Update'}
@@ -121,7 +166,7 @@ class UpdateResourceItem extends Component<UpdateResourceProps> {
                buttonVariant={'filled'}
                css={ButtonCss}
             />
-         </AddResourceStyle>
+         </UpdateResourceStyle>
       )
    }
    render() {
