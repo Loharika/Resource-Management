@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import { observable, action } from 'mobx'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
-
+import { ADMIN_RESOURCE_DETAILS } from '../../../Authentication/constants/NavigationalConstants'
 import Dashboard from '../../components/Dashboard'
 import ResourcesList from '../../components/ResourcesList'
-import RequestsList from '../../components/RequestsList'
+import RequestsListRoute from '../RequestsListRoute'
 import UsersList from '../../components/UsersList'
 
 import AdminStore from '../../stores/AdminStore'
@@ -14,10 +14,8 @@ import {
    goToAdminDashboardResources,
    goToAdminDashboardRequests,
    goToAdminDashboardUsers,
-   goToAddResourcePage,
-   goToResourceDetails
+   goToAddResourcePage
 } from '../../utils/NavigationalUtils'
-import { ADMIN_DASHBOARD_RESOURCES } from '../../../Authentication/constants/NavigationalConstants'
 
 interface InjectedProps extends RouteComponentProps {
    adminStore: AdminStore
@@ -45,6 +43,14 @@ class DashboardRoute extends Component<DashboardRouteProps> {
       } = this.props
       getData()
    }
+   doNetWorkCallsForRequestsList() {
+      const {
+         adminStore: {
+            requestsListPaginationStore: { getData }
+         }
+      } = this.props
+      getData()
+   }
    @action.bound
    getSelectedTab() {
       const {
@@ -66,6 +72,7 @@ class DashboardRoute extends Component<DashboardRouteProps> {
       const { history } = this.getInjectedProps()
       goToAdminDashboardRequests(history)
       this.selector = this.getSelectedTab()
+      this.doNetWorkCallsForRequestsList()
    }
    @action.bound
    onClickUsers() {
@@ -76,7 +83,10 @@ class DashboardRoute extends Component<DashboardRouteProps> {
    @action.bound
    renderChildComponent() {
       const {
-         adminStore: { resourcesListPaginationStore }
+         adminStore: {
+            resourcesListPaginationStore,
+            requestsListPaginationStore
+         }
       } = this.getInjectedProps()
       const { onClickResourceCard } = this
       switch (this.selector) {
@@ -89,7 +99,12 @@ class DashboardRoute extends Component<DashboardRouteProps> {
             )
          }
          case 'requests': {
-            return <RequestsList />
+            this.doNetWorkCallsForRequestsList()
+            return (
+               <RequestsListRoute
+                  requestsListInstance={requestsListPaginationStore}
+               />
+            )
          }
          case 'users': {
             return <UsersList />
@@ -99,7 +114,11 @@ class DashboardRoute extends Component<DashboardRouteProps> {
 
    onClickResourceCard = resourceId => {
       const { history } = this.getInjectedProps()
-      goToResourceDetails(history, resourceId)
+      history.push({
+         pathname: `${ADMIN_RESOURCE_DETAILS}`,
+         search: `?resourceId=${resourceId}`
+      })
+      // goToResourceDetails(history, resourceId)
    }
    onClickAddResource = () => {
       alert('addResource')

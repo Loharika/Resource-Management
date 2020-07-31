@@ -8,7 +8,8 @@ import {
    ADD_RESOURCE,
    UPDATE_RESOURCE,
    ADD_RESOURCE_ITEM,
-   UPDATE_RESOURCE_ITEM
+   UPDATE_RESOURCE_ITEM,
+   ADMIN_RESOURCE_DETAILS
 } from '../../Authentication/constants/NavigationalConstants'
 
 import { ProtectedRoute } from '../../Common/components/ProtectedRoute'
@@ -58,10 +59,15 @@ export const AdminDashboardRoutes = [
       path={ADD_RESOURCE_ITEM}
       component={AddResourceItem}
    />,
+   // <ProtectedRoute
+   //    key={ADMIN_DASHBOARD_RESOURCES}
+   //    exact
+   //    path={ADMIN_DASHBOARD_RESOURCES + '/:resourceId'}
+   //    component={ResourceDetailsRoute}
+   // />,
    <ProtectedRoute
       key={ADMIN_DASHBOARD_RESOURCES}
-      exact
-      path={ADMIN_DASHBOARD_RESOURCES + '/:resourceId'}
+      path={ADMIN_RESOURCE_DETAILS}
       component={ResourceDetailsRoute}
    />,
    <ProtectedRoute

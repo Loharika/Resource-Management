@@ -4,6 +4,7 @@ import { API_INITIAL } from '@ib/api-constants'
 import PaginationStore from '../../../Common/stores/PaginationStore'
 import ResourceCardModel from '../Model/ResourceCardModel'
 import ResourceItemModel from '../Model/ResourceItemModel'
+import RequestModel from '../Model/RequestModel'
 
 class AdminStore {
    @observable getResourceDetailsAPIStatus
@@ -37,12 +38,19 @@ class AdminStore {
    adminService
    resourcesListPaginationStore
    resourceDetailsPaginationStore
+   requestsListPaginationStore
    constructor(adminService) {
       this.adminService = adminService
       this.resourcesListPaginationStore = new PaginationStore(
          ResourceCardModel,
          this.adminService.getResourceListAPI,
          ['resources_list', 'total_count'],
+         9
+      )
+      this.requestsListPaginationStore = new PaginationStore(
+         RequestModel,
+         this.adminService.getRequestListAPI,
+         ['requests_list', 'total_count'],
          9
       )
       this.resourceDetailsPaginationStore = new PaginationStore(

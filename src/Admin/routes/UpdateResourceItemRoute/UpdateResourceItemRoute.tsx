@@ -34,21 +34,21 @@ class UpdateResourceItemRoute extends Component<UpdateResourceRouteProps> {
       }
    }
    getInjectedProps = () => this.props as InjectedProps
-   doNetWorkCallForResourceItemDetails = async () => {
+   doNetWorkCallForResourceItemDetails = () => {
       const {
          adminStore: { getResourceItemDetails }
       } = this.getInjectedProps()
       let requestObject = {
          resource_id: this.getResourceItemId()
       }
-      await getResourceItemDetails(requestObject)
+      getResourceItemDetails(requestObject)
    }
 
    getResourceItemId = () => {
       const {
          match: { params }
       } = this.getInjectedProps()
-      let resourceId = params['resourceId']
+      let resourceId = params['resourceItemId']
       return resourceId
    }
    @action.bound
@@ -66,8 +66,9 @@ class UpdateResourceItemRoute extends Component<UpdateResourceRouteProps> {
       if (getUpdateResourceAPIStatus === 200) {
          this.displayToaster('Added Successfully')
          const { history } = this.props
-
-         goToResourceDetails(history, this.getResourceItemId())
+         const resourceId = window.localStorage.getItem('resourceId')
+         console.log(resourceId)
+         goToResourceDetails(history, resourceId)
       } else {
          this.displayToaster(getUserDisplayableErrorMessage(error))
       }
@@ -88,7 +89,7 @@ class UpdateResourceItemRoute extends Component<UpdateResourceRouteProps> {
             resourcesItemDetailsResponse
          }
       } = this.getInjectedProps()
-      console.log(resourcesItemDetailsResponse)
+
       return (
          <UpdateResourceItem
             doNetWorkCalls={this.doNetWorkCallForResourceItemDetails}

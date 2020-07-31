@@ -12,12 +12,30 @@ export interface ResourcesListResponseObject {
    service: string
    resource_image: string
 }
+
 export interface ResourcesListResponse {
    resources_list: Array<ResourcesListResponseObject>
    total_count: number
 }
 export interface ResourceDetailsRequestObject {
    resource_id: number
+}
+export interface RequestsListRequestObject {
+   limit: number
+   offset: number
+   sort: string
+   filter: string
+}
+export interface RequestsListResponseObject {
+   person_name: string
+   resource: string
+   item: string
+   access_level: string
+   due_date_time: string
+}
+export interface RequestsListResponse {
+   requests_list: Array<RequestsListResponseObject>
+   total_count: number
 }
 export interface ResourcesDetailsResponse {
    resource_id: number

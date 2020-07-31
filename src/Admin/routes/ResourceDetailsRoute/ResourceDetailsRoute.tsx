@@ -30,6 +30,7 @@ class ResourceDetailsRoute extends Component<ResourceDetailsProps> {
    }
    getInjectedProps = () => this.props as InjectedProps
    componentDidMount() {
+      this.getResourceId()
       window.localStorage.setItem('resourceId', this.getResourceId())
 
       this.doNetWorkCallForResourceDetails()
@@ -40,6 +41,11 @@ class ResourceDetailsRoute extends Component<ResourceDetailsProps> {
       const {
          match: { params }
       } = this.getInjectedProps()
+      const {
+         history: { location }
+      } = this.getInjectedProps()
+      // console.log(params)
+      // console.log(location.search)
       return params['resourceId']
    }
    @action.bound
@@ -101,9 +107,13 @@ class ResourceDetailsRoute extends Component<ResourceDetailsProps> {
    }
    @action.bound
    onClickUpdateResourceItem(resourceItemId) {
+      console.log(resourceItemId)
+      console.log(this.getResourceId())
+
       const { history } = this.props
       goToUpdateResourceItem(history, resourceItemId)
       window.localStorage.setItem('isOpenedUpdateResourceItemPage', 'yes')
+      window.localStorage.setItem('resourceId', this.getResourceId())
    }
    onClickCheckBox = selectedItemId => {
       if (this.selectedResourceItems.includes(selectedItemId)) {

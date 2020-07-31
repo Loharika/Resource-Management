@@ -106,7 +106,7 @@ class UpdateResource extends Component<UpdateResourceProps> {
          this.displayError = true
       }
    }
-   renderResources = () => {
+   renderUpdateResource = () => {
       return (
          <AddResourceStyle>
             <Heading>Update Resource</Heading>
@@ -157,7 +157,7 @@ class UpdateResource extends Component<UpdateResourceProps> {
          <Template
             buttonText={'Resources'}
             onClickButton={goToAdminDashboardResources}
-            renderChildComponent={this.renderResources}
+            renderChildComponent={this.renderUpdateResource}
          />
       )
    }
@@ -165,8 +165,7 @@ class UpdateResource extends Component<UpdateResourceProps> {
       const {
          doNetWorkCalls,
          getResourceDetailsAPIError,
-         getResourceDetailsAPIStatus,
-         resourcesDetailsResponse
+         getResourceDetailsAPIStatus
       } = this.props
 
       return (

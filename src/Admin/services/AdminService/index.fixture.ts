@@ -4,6 +4,7 @@ import getResourcesListResponse from '../../fixtures/getResourcesListResponse.js
 import getResourceDetails from '../../fixtures/getResourceDetails.json'
 import getResourceItemsList from '../../fixtures/getResourceItemsList.json'
 import getResourceItemDetails from '../../fixtures/getResourceItemDetails.json'
+import getRequestsListDetails from '../../fixtures/getRequestsListDetails.json'
 class AdminService implements AdminServiceInterface {
    getResourceListAPI(requestObject) {
       // console.log(requestObject)
@@ -15,6 +16,18 @@ class AdminService implements AdminServiceInterface {
             endIndex
          ),
          total_count: getResourcesListResponse.total_count
+      }
+      return resolveWithTimeout(response)
+   }
+   getRequestListAPI(requestObject) {
+      let endIndex = requestObject.limit + requestObject.offset + 1
+      let startIndex = requestObject.offset
+      let response = {
+         requests_list: getRequestsListDetails.requests_list.slice(
+            startIndex,
+            endIndex
+         ),
+         total_count: getRequestsListDetails.total_count
       }
       return resolveWithTimeout(response)
    }

@@ -1,73 +1,137 @@
 import React, { Component } from 'react'
-
-import InputField from '../Common/InputField'
-import SearchField from '../Common/SearchField'
-import TextAreaField from '../Common/TextAreaField'
-import ImageUpload from '../Common/ImageUpload'
-import Checkbox from '../Common/CheckBox'
-import DropDownComponent from '../Common/DropDownComponent/DropDownComponent'
-import DateTime from '../Common/DateTime'
+import { Table, Checkbox } from 'semantic-ui-react'
+import { observer } from 'mobx-react'
+import LoadingWrapperWithFailure from '../../../Common/components/common/LoadingWrapperWithFailure'
+import { RequestsTableHeader } from '../../constants/TableHeaders'
 import { SortOptions, FilterOptions } from '../../constants/DropDownConstants'
-import Filter from '../../../Common/Icons/Filter'
-import DisplayTable from '../Common/Table'
-import { ResourceItemsHeaders } from '../../constants/TableHeaders'
-import ModalClose from '../Common/Modal'
+import SearchField from '../Common/SearchField'
 import Pagination from '../Common/Pagination'
-import { action } from 'mobx'
-class RequestsList extends Component {
-   @action.bound
-   renderChild() {
-      return (
-         <SearchField
-            value={'harika'}
-            onChangeField={() => {}}
-            placeholderText={'Search'}
+import DropDownComponent from '../Common/DropDownComponent'
+
+import { PaginationCss } from '../ResourcesList/styledComponents'
+import {
+   TableStyle,
+   RequestsListStyle,
+   SearchFieldCss,
+   SortAndFilter,
+   Header
+} from './styledComponents'
+interface RequestsListProps {
+   requestsListInstance: any
+}
+@observer
+class RequestsList extends Component<RequestsListProps> {
+   onClickCheckbox = requestId => {}
+
+   renderPagination = () => {
+      const {
+         requestsListInstance: {
+            onChangePageNumber,
+            totalNumberOfPages,
+            pageNumber
+         }
+      } = this.props
+      return totalNumberOfPages > 0 ? (
+         <Pagination
+            onChangePageNumber={onChangePageNumber}
+            totalPages={totalNumberOfPages}
+            pageNumber={pageNumber}
+            css={PaginationCss}
          />
+      ) : (
+         ''
+      )
+   }
+
+   renderRequestsList = () => {
+      const {
+         requestsListInstance: { results, pageNumber }
+      } = this.props
+      return (
+         <TableStyle>
+            <Table>
+               <Table.Header>
+                  <Table.Row>
+                     {RequestsTableHeader.map(option => {
+                        return (
+                           <Table.HeaderCell key={Math.random()}>
+                              {option}
+                           </Table.HeaderCell>
+                        )
+                     })}
+                  </Table.Row>
+               </Table.Header>
+               <Table.Body>
+                  {results.get(pageNumber).map(option => (
+                     <Table.Row key={Math.random()}>
+                        <Table.Cell>
+                           <Checkbox
+                              onClick={() =>
+                                 this.onClickCheckbox(option['resourceItemId'])
+                              }
+                           />
+                        </Table.Cell>
+                        <Table.Cell>{option.personName}</Table.Cell>
+                        <Table.Cell>{option.resource}</Table.Cell>
+                        <Table.Cell>{option.item}</Table.Cell>
+                        <Table.Cell>{option.accessLevel}</Table.Cell>
+                        <Table.Cell>{option.dueDateTime}</Table.Cell>
+                     </Table.Row>
+                  ))}
+               </Table.Body>
+            </Table>
+         </TableStyle>
       )
    }
    render() {
+      const {
+         requestsListInstance: {
+            results,
+            pageNumber,
+            getApiStatus,
+            searchInput,
+            onChangeSearchField,
+            onChangeSort,
+            onChangeFilter,
+            getApiError,
+            getData
+         }
+      } = this.props
+      const SortData = {
+         listTitle: 'Sort',
+         listItems: SortOptions,
+         placeholder: 'SORT'
+      }
+      const FilterData = {
+         listTitle: 'Filter',
+         listItems: FilterOptions,
+         placeholder: 'FILTER'
+      }
       return (
-         <React.Fragment>
-            <div>RequestsList</div>
-
-            <InputField
-               value={'harika'}
-               onChangeField={(_value): void => {}}
-               label={'NAME'}
+         <RequestsListStyle>
+            <Header>
+               <SearchField
+                  isDisabled={getApiStatus !== 200}
+                  value={searchInput}
+                  onChangeField={onChangeSearchField}
+                  css={SearchFieldCss}
+               />
+               <SortAndFilter>
+                  <DropDownComponent onChange={onChangeSort} data={SortData} />
+                  <DropDownComponent
+                     onChange={onChangeFilter}
+                     data={FilterData}
+                  />
+               </SortAndFilter>
+            </Header>
+            <LoadingWrapperWithFailure
+               apiStatus={getApiStatus}
+               renderSuccessUI={this.renderRequestsList}
+               onRetryClick={getData}
+               apiError={getApiError}
             />
-            <SearchField
-               value={'harika'}
-               onChangeField={() => {}}
-               placeholderText={'Search'}
-            />
-            <TextAreaField
-               value={''}
-               onChangeField={() => {}}
-               placeholderText={'Description'}
-            />
-
-            <Checkbox
-               onClickCheckBox={(isChecked: boolean) => {}}
-               isChecked={true}
-            />
-            <DropDownComponent
-               data={{
-                  listTitle: 'Sort',
-                  placeholder: 'Sort',
-                  listItems: SortOptions
-               }}
-               onChange={value => {}}
-               icon={<Filter />}
-            />
-            <DateTime onChangeTime={() => {}} label={'DATE AND TIME'} />
-            {/* <DisplayTable headers={ResourceItemsHeaders} /> */}
-            <ModalClose />
-            <Pagination
-               onChangePageNumber={(pageNumber: number) => {}}
-               totalPages={10}
-               pageNumber={1}
-            />
-         </React.Fragment>
+            {this.renderPagination()}
+         </RequestsListStyle>
       )
    }
 }

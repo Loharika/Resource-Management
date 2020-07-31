@@ -23,6 +23,7 @@ import {
    Heading,
    ButtonCss
 } from '../AddResourceItem/styledComponents'
+import LoadingWrapperWithFailure from '../../../Common/components/common/LoadingWrapperWithFailure'
 
 interface UpdateResourceProps extends RouteComponentProps {
    doNetWorkCalls: () => void
@@ -100,7 +101,7 @@ class UpdateResourceItem extends Component<UpdateResourceProps> {
          this.displayError = true
       }
    }
-   renderSuccessUI = () => {
+   renderUpdateResourceItem = () => {
       return (
          <UpdateResourceStyle>
             <Heading>Item Details</Heading>
@@ -149,12 +150,28 @@ class UpdateResourceItem extends Component<UpdateResourceProps> {
          </UpdateResourceStyle>
       )
    }
-   render() {
+   @action.bound
+   renderSuccessUI() {
       return (
          <Template
             buttonText={'Resources'}
             onClickButton={goToAdminDashboardResources}
-            renderChildComponent={this.renderSuccessUI}
+            renderChildComponent={this.renderUpdateResourceItem}
+         />
+      )
+   }
+   render() {
+      const {
+         doNetWorkCalls,
+         getResourceItemDetailsAPIError,
+         getResourceItemDetailsAPIStatus
+      } = this.props
+      return (
+         <LoadingWrapperWithFailure
+            apiStatus={getResourceItemDetailsAPIStatus}
+            apiError={getResourceItemDetailsAPIError}
+            renderSuccessUI={this.renderSuccessUI}
+            onRetryClick={doNetWorkCalls}
          />
       )
    }

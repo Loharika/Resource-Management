@@ -1,6 +1,8 @@
 import {
    ResourcesListResponse,
    ResourcesListRequestObject,
+   RequestsListRequestObject,
+   RequestsListResponse,
    ResourceDetailsRequestObject,
    ResourcesDetailsResponse,
    ResourcesItemsRequestObject,
@@ -19,6 +21,9 @@ export interface AdminServiceInterface {
    getResourceListAPI: (
       requestObject: ResourcesListRequestObject
    ) => Promise<ResourcesListResponse>
+   getRequestListAPI: (
+      requestObject: RequestsListRequestObject
+   ) => Promise<RequestsListResponse>
    getResourceDetailsAPI: (
       requestObject: ResourceDetailsRequestObject
    ) => Promise<ResourcesDetailsResponse>

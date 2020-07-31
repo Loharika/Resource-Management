@@ -30,7 +30,7 @@ import {
 interface ResourceDetailsProps extends RouteComponentProps {
    doNetWorkCallForResourceDetails: () => void
    doNetWorkCallForResourceItems: () => void
-   onClickUpdateResource: () => void
+   onClickUpdateResource: (resourceId) => void
    onClickDeleteResource: () => void
    onClickResourcesButton: () => void
    onClickAddResourceItem: () => void

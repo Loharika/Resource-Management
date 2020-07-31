@@ -44,7 +44,6 @@ const LogInDetailsAlert = styled.span`
 export const SignInButtonCss = css`
    width: 100%;
    height: 40px;
-
    border-radius: 4px;
    background-color: ${colors.brightBlue};
    color: white;

@@ -61,6 +61,7 @@ class UpdateResourceRoute extends Component<UpdateResourceRouteProps> {
             getUpdateResourceAPIError: error
          }
       } = this.getInjectedProps()
+      console.log(this.getResourceId())
       if (getUpdateResourceAPIStatus === 200) {
          this.displayToaster('Added Successfully')
          const { history } = this.props
