@@ -33,11 +33,15 @@ interface ResourceDetailsProps extends RouteComponentProps {
    onClickUpdateResource: () => void
    onClickDeleteResource: () => void
    onClickResourcesButton: () => void
+   onClickAddResourceItem: () => void
+   onClickDeleteResourceItems: (resourceId) => void
+   onClickUpdateResourceItem: () => void
    resourceId: number
    resourcesDetailsResponse: any
    getResourceDetailsAPIStatus: any
    getResourceDetailsAPIError: any
    resourceDetailsPaginationStore: any
+   selectedResourceItemsCount: number
 }
 
 @observer
@@ -65,15 +69,18 @@ class ResourceDetails extends Component<ResourceDetailsProps> {
       const {
          getResourceDetailsAPIStatus,
          getResourceDetailsAPIError,
-         resourcesDetailsResponse,
          resourceDetailsPaginationStore
       } = this.props
       const {
          onClickResourcesButton,
          onClickUpdateResource,
          onClickDeleteResource,
+         onClickAddResourceItem,
+         onClickDeleteResourceItems,
          doNetWorkCallForResourceItems,
-         doNetWorkCallForResourceDetails
+         doNetWorkCallForResourceDetails,
+         selectedResourceItemsCount,
+         onClickUpdateResourceItem
       } = this.props
       return (
          <ResourceDetailsPage>
@@ -96,6 +103,7 @@ class ResourceDetails extends Component<ResourceDetailsProps> {
                      buttonType={'rectangular'}
                      buttonVariant={'filled'}
                      css={ButtonCss}
+                     isLoading={false}
                   />
                   <DeleteButton
                      text={'Delete'}
@@ -103,11 +111,16 @@ class ResourceDetails extends Component<ResourceDetailsProps> {
                      buttonType={'rectangular'}
                      buttonVariant={'filled'}
                      css={ButtonCss}
+                     isLoading={false}
                   />
                </FooterButtons>
                <ResourceItemsList
+                  onClickAddResourceItem={onClickAddResourceItem}
+                  onClickDeleteResourceItems={onClickDeleteResourceItems}
                   resourceItemsDetails={resourceDetailsPaginationStore}
                   doNetWorkCallForResourceItems={doNetWorkCallForResourceItems}
+                  selectedResourceItemsCount={selectedResourceItemsCount}
+                  onClickUpdateResourceItem={onClickUpdateResourceItem}
                />
             </ResourceDetailsPageStyle>
          </ResourceDetailsPage>

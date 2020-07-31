@@ -96,6 +96,7 @@ class DashboardRoute extends Component<DashboardRouteProps> {
          }
       }
    }
+
    onClickResourceCard = resourceId => {
       const { history } = this.getInjectedProps()
       goToResourceDetails(history, resourceId)

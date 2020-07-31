@@ -21,6 +21,7 @@ interface ButtonProps {
    buttonType?: string
    buttonVariant?: string
    css: any
+   isLoading?: boolean
 }
 class Button extends React.Component<ButtonProps> {
    getButtonType = () => {

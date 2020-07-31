@@ -24,11 +24,16 @@ import {
    ButtonCss
 } from '../AddResourceItem/styledComponents'
 
-interface InjectedProps extends RouteComponentProps {
+interface UpdateResourceProps extends RouteComponentProps {
+   doNetWorkCalls: () => void
+   getResourceItemDetailsAPIError: any
+   getResourceItemDetailsAPIStatus: any
+   resourceItemId: number
+   resourcesItemDetailsResponse: any
+}
+interface InjectedProps extends UpdateResourceProps {
    adminStore: AdminStore
 }
-interface UpdateResourceProps extends InjectedProps {}
-
 @inject('adminStore')
 @observer
 class UpdateResourceItem extends Component<UpdateResourceProps> {
@@ -93,14 +98,14 @@ class UpdateResourceItem extends Component<UpdateResourceProps> {
    async updateResourceItemDetails(requestObject) {
       const {
          adminStore: { updateResourceItem }
-      } = this.props
+      } = this.getInjectedProps()
       await updateResourceItem(requestObject)
       const {
          adminStore: {
             getUpdateResourceItemAPIStatus,
             getUpdateResourceItemAPIError: error
          }
-      } = this.props
+      } = this.getInjectedProps()
       console.log(getUpdateResourceItemAPIStatus)
       if (getUpdateResourceItemAPIStatus) {
          this.displayToaster('Added Successfully')

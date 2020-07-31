@@ -8,6 +8,7 @@ const ADMIN_DASHBOARD_REQUESTS = '/resource-management/admin/requests'
 const ADMIN_DASHBOARD_USERS = '/resource-management/admin/users'
 const ADD_RESOURCE = '/resource-management/admin/add-resource'
 const UPDATE_RESOURCE = '/resource-management/admin/resources/update-resource'
+
 const ADD_RESOURCE_ITEM =
    '/resource-management/admin/resources/add-resource-item'
 const UPDATE_RESOURCE_ITEM =

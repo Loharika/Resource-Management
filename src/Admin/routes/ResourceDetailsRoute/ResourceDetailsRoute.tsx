@@ -1,14 +1,18 @@
 import React, { Component } from 'react'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
-import { action } from 'mobx'
+import { action, observable, toJS, computed } from 'mobx'
 import { inject, observer } from 'mobx-react'
-
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { getUserDisplayableErrorMessage } from '../../../Common/utils/APIUtils'
 import ResourceDetails from '../../components/ResourceDetails'
 import AdminStore from '../../stores/AdminStore'
 
 import {
    goToUpdateResource,
-   goToAdminDashboardResources
+   goToAdminDashboardResources,
+   goToAddResourceItem,
+   goToUpdateResourceItem
 } from '../../utils/NavigationalUtils'
 
 interface InjectedProps extends RouteComponentProps {
@@ -19,8 +23,15 @@ interface ResourceDetailsProps extends InjectedProps {}
 @inject('adminStore')
 @observer
 class ResourceDetailsRoute extends Component<ResourceDetailsProps> {
+   @observable selectedResourceItems
+   constructor(props) {
+      super(props)
+      this.selectedResourceItems = []
+   }
    getInjectedProps = () => this.props as InjectedProps
    componentDidMount() {
+      window.localStorage.setItem('resourceId', this.getResourceId())
+
       this.doNetWorkCallForResourceDetails()
       this.doNetWorkCallForResourceItems()
    }
@@ -30,6 +41,13 @@ class ResourceDetailsRoute extends Component<ResourceDetailsProps> {
          match: { params }
       } = this.getInjectedProps()
       return params['resourceId']
+   }
+   @action.bound
+   getResourceItemId() {
+      const {
+         match: { params }
+      } = this.getInjectedProps()
+      return params['resourceItemId']
    }
    doNetWorkCallForResourceDetails = () => {
       const {
@@ -49,6 +67,7 @@ class ResourceDetailsRoute extends Component<ResourceDetailsProps> {
       }
       resourceDetailsPaginationStore.getData()
    }
+
    @action.bound
    onClickUpdateResource() {
       const { history } = this.props
@@ -56,12 +75,65 @@ class ResourceDetailsRoute extends Component<ResourceDetailsProps> {
       goToUpdateResource(history, this.getResourceId())
    }
    @action.bound
-   onClickDeleteResource = () => {
-      alert('delete')
+   async onClickDeleteResource() {
+      const {
+         adminStore: { deleteResource }
+      } = this.getInjectedProps()
+      let requestObject = {
+         resource_id: this.getResourceId()
+      }
+      await deleteResource(requestObject)
+      const {
+         adminStore: { getDeleteResourceAPIStatus, getDeleteResourceAPIError }
+      } = this.getInjectedProps()
+      if (getDeleteResourceAPIStatus === 200) {
+         const { history } = this.getInjectedProps()
+         goToAdminDashboardResources(history)
+      } else {
+         this.displayToaster(
+            getUserDisplayableErrorMessage(getDeleteResourceAPIError)
+         )
+      }
+   }
+   onClickAddResourceItem = () => {
+      const { history } = this.props
+      goToAddResourceItem(history)
+   }
+   @action.bound
+   onClickUpdateResourceItem() {
+      const { history } = this.props
+      window.localStorage.setItem('isOpenedUpdateResourceItemPage', 'yes')
+      goToUpdateResourceItem(history, this.getResourceItemId())
+   }
+   onClickDeleteResourceItems = selectedItemId => {
+      if (this.selectedResourceItems.includes(selectedItemId)) {
+         this.selectedResourceItems = this.selectedResourceItems.filter(
+            itemId => itemId !== selectedItemId
+         )
+      } else {
+         this.selectedResourceItems = [
+            ...this.selectedResourceItems,
+            selectedItemId
+         ]
+      }
+      console.log(this.selectedResourceItems)
+   }
+
+   displayToaster(status) {
+      toast(<div className='text-black font-bold'>{status}</div>, {
+         position: 'top-center',
+         autoClose: 3000,
+         closeButton: false,
+         hideProgressBar: true
+      })
    }
    onClickResourcesButton = () => {
       const { history } = this.props
       goToAdminDashboardResources(history)
+   }
+   @computed
+   get selectedResourceItemsCount() {
+      return this.selectedResourceItems.length
    }
    render() {
       const {
@@ -86,6 +158,10 @@ class ResourceDetailsRoute extends Component<ResourceDetailsProps> {
             getResourceDetailsAPIError={getResourceDetailsAPIError}
             resourcesDetailsResponse={resourcesDetailsResponse}
             resourceDetailsPaginationStore={resourceDetailsPaginationStore}
+            onClickAddResourceItem={this.onClickAddResourceItem}
+            onClickDeleteResourceItems={this.onClickDeleteResourceItems}
+            selectedResourceItemsCount={this.selectedResourceItemsCount}
+            onClickUpdateResourceItem={this.onClickUpdateResourceItem}
          />
       )
    }

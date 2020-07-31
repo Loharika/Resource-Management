@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import AdminStore from '../../stores/AdminStore'
-import UpdateResource from '../../components/UpdateResource'
+import UpdateResourceItem from '../../components/UpdateResourceItem'
 
 interface UpdateResourceRouteProps extends RouteComponentProps {}
 
@@ -13,24 +13,33 @@ interface InjectedProps extends UpdateResourceRouteProps {
 @inject('adminStore')
 @observer
 class UpdateResourceItemRoute extends Component<UpdateResourceRouteProps> {
-   constructor(props) {
-      super(props)
-   }
    componentDidMount() {
-      console.log('route')
-      this.doNetWorkCallForResourceDetails()
+      this.doNetWorkCallForResourceItemDetails()
+      if (
+         window.localStorage.getItem('isOpenedUpdateResourceItemPage') !== 'yes'
+      ) {
+         const {
+            match: { params },
+            history
+         } = this.getInjectedProps()
+         // goToResourceDetails(history, params['resourceId'])
+         history.goBack()
+      } else {
+         window.localStorage.clear()
+      }
    }
    getInjectedProps = () => this.props as InjectedProps
-   doNetWorkCallForResourceDetails = () => {
+   doNetWorkCallForResourceItemDetails = async () => {
       const {
-         adminStore: { getResourceDetails }
+         adminStore: { getResourceItemDetails }
       } = this.getInjectedProps()
       let requestObject = {
-         resource_id: this.getResourceId()
+         resource_id: this.getResourceItemId()
       }
-      getResourceDetails(requestObject)
+      await getResourceItemDetails(requestObject)
    }
-   getResourceId = () => {
+
+   getResourceItemId = () => {
       const {
          match: { params }
       } = this.getInjectedProps()
@@ -40,19 +49,19 @@ class UpdateResourceItemRoute extends Component<UpdateResourceRouteProps> {
    render() {
       const {
          adminStore: {
-            getResourceDetailsAPIError,
-            getResourceDetailsAPIStatus,
-            resourcesDetailsResponse
+            getResourceItemDetailsAPIError,
+            getResourceItemDetailsAPIStatus,
+            resourcesItemDetailsResponse
          }
       } = this.getInjectedProps()
-      console.log(resourcesDetailsResponse)
+      console.log(resourcesItemDetailsResponse)
       return (
-         <UpdateResource
-            doNetWorkCalls={this.doNetWorkCallForResourceDetails}
-            getResourceDetailsAPIError={getResourceDetailsAPIError}
-            getResourceDetailsAPIStatus={getResourceDetailsAPIStatus}
-            resourceId={this.getResourceId()}
-            resourcesDetailsResponse={resourcesDetailsResponse}
+         <UpdateResourceItem
+            doNetWorkCalls={this.doNetWorkCallForResourceItemDetails}
+            getResourceItemDetailsAPIError={getResourceItemDetailsAPIError}
+            getResourceItemDetailsAPIStatus={getResourceItemDetailsAPIStatus}
+            resourceItemId={this.getResourceItemId()}
+            resourcesItemDetailsResponse={resourcesItemDetailsResponse}
          />
       )
    }

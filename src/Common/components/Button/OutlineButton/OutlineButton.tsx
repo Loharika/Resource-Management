@@ -9,10 +9,11 @@ interface ButtonProps {
    buttonType?: string
    buttonVariant?: string
    css: any
+   isLoading?: boolean
 }
 class OutlineButton extends Component<ButtonProps> {
    render() {
-      const { text, css, onClick, disabled } = this.props
+      const { text, css, onClick, disabled, isLoading } = this.props
 
       return (
          <OutlineButtonStyle
@@ -21,7 +22,7 @@ class OutlineButton extends Component<ButtonProps> {
             disabled={disabled}
             isDisabled={disabled}
          >
-            {!disabled ? (
+            {!isLoading ? (
                text
             ) : (
                <MoonLoader

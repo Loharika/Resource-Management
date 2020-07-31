@@ -19,6 +19,9 @@ interface ResourcesListProps {
 
 @observer
 class ResourcesList extends Component<ResourcesListProps> {
+   componentDidMount() {
+      window.localStorage.clear()
+   }
    @action.bound
    onChangeSearchField = searchInput => {
       const {
@@ -76,7 +79,7 @@ class ResourcesList extends Component<ResourcesListProps> {
             searchInput
          }
       } = this.props
-      
+
       const { renderResourceCards } = this
       return (
          <ResourceListStyle>

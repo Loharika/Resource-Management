@@ -9,11 +9,12 @@ interface ButtonProps {
    disabled?: boolean
    buttonType?: string
    buttonVariant?: string
+   isLoading?: boolean
    css: any
 }
 class FilledButton extends Component<ButtonProps> {
    render() {
-      const { text, css, onClick, disabled } = this.props
+      const { text, css, onClick, disabled, isLoading } = this.props
       return (
          <FilledButtonStyle
             buttonStyles={css}
@@ -21,7 +22,7 @@ class FilledButton extends Component<ButtonProps> {
             disabled={disabled}
             isDisabled={disabled}
          >
-            {!disabled ? (
+            {!isLoading ? (
                text
             ) : (
                <MoonLoader

@@ -1,17 +1,16 @@
 import React, { Component } from 'react'
 import { observer } from 'mobx-react'
-import { observable } from 'mobx'
+import { observable, action } from 'mobx'
 import { Table, Checkbox } from 'semantic-ui-react'
 
 import LoadingWrapperWithFailure from '../../../Common/components/common/LoadingWrapperWithFailure'
 
 import { ResourceItemsHeaders } from '../../constants/TableHeaders'
 import { SortOptions } from '../../constants/DropDownConstants'
-
 import {
-   PaginationCss
-} from '../ResourcesList/styledComponents'
-
+   Button as AddButton,
+   Button as DeleteButton
+} from '../../../Common/components/Button'
 import SearchField from '../Common/SearchField'
 import Pagination from '../Common/Pagination'
 import DropDownComponent from '../Common/DropDownComponent'
@@ -23,35 +22,59 @@ import {
    SearchSortFields,
    ResourceItemsStyle,
    SearchFieldStyle,
-   SearchFieldCss
+   SearchFieldCss,
+   DropDownCss,
+   AddButtonGreenCss,
+   AddButtonGreyCss,
+   DelButtonRedCss,
+   DelButtonGreyCss,
+   Footer,
+   Buttons,
+   PaginationCss
 } from './styledComponents'
+import SortIcon from '../../../Common/Icons/Sort'
 interface ResourceItemsListProps {
    resourceItemsDetails: any
    doNetWorkCallForResourceItems: () => void
+   onClickAddResourceItem: () => void
+   onClickDeleteResourceItems: (resourceId) => void
+   selectedResourceItemsCount: number
+   onClickUpdateResourceItem: () => void
 }
 @observer
 class ResourceItemsList extends Component<ResourceItemsListProps> {
-   @observable searchInput!: string
    constructor(props) {
       super(props)
-      this.searchInput = ''
    }
+   @action.bound
    onClickCheckbox(resourceItemId) {
-      alert(resourceItemId)
+      const { onClickDeleteResourceItems } = this.props
+      onClickDeleteResourceItems(resourceItemId)
    }
+   @action.bound
    onChangeSearchField(searchInput) {
-      this.searchInput = searchInput
+      const {
+         resourceItemsDetails: { onChangeSearchInput }
+      } = this.props
+      onChangeSearchInput(searchInput)
    }
+   @action.bound
    onChangeDropdown = value => {
-      alert(value)
+      const {
+         resourceItemsDetails: { onChangeSortBy }
+      } = this.props
+      onChangeSortBy(value)
+   }
+   @action.bound
+   onClickResourceItem(resourceItemId) {
+      const { onClickUpdateResourceItem } = this.props
+      onClickUpdateResourceItem()
    }
    renderResourceDetails = () => {
       const {
          resourceItemsDetails: { results, pageNumber }
       } = this.props
-
-      const keys = ['resourceItemTitle', 'resourceItemLink', 'description']
-
+      const keys = ['resourceItemTitle', 'description', 'resourceItemLink']
       return (
          <TableStyle>
             <Table>
@@ -68,7 +91,12 @@ class ResourceItemsList extends Component<ResourceItemsListProps> {
                </Table.Header>
                <Table.Body>
                   {results.get(pageNumber).map(option => (
-                     <Table.Row key={Math.random()}>
+                     <Table.Row
+                        key={Math.random()}
+                        onClick={() =>
+                           this.onClickResourceItem(option['resourceItemId'])
+                        }
+                     >
                         <Table.Cell>
                            <Checkbox
                               onClick={() =>
@@ -76,13 +104,13 @@ class ResourceItemsList extends Component<ResourceItemsListProps> {
                               }
                            />
                         </Table.Cell>
-                        {keys.map((key, index) => {
-                           return (
-                              <Table.Cell key={option[keys[0]] + Math.random()}>
-                                 {option[keys[index]]}
-                              </Table.Cell>
-                           )
-                        })}
+                        <Table.Cell>{option.resourceItemTitle}</Table.Cell>
+                        <Table.Cell>{option.description}</Table.Cell>
+                        <Table.Cell>
+                           <a href={option.resourceItemLink}>
+                              {option.resourceItemLink}
+                           </a>
+                        </Table.Cell>
                      </Table.Row>
                   ))}
                </Table.Body>
@@ -109,9 +137,46 @@ class ResourceItemsList extends Component<ResourceItemsListProps> {
          ''
       )
    }
+
+   @action.bound
+   renderFooterUI() {
+      const {
+         onClickAddResourceItem,
+         onClickDeleteResourceItems,
+         selectedResourceItemsCount: count
+      } = this.props
+      return (
+         <Footer>
+            <Buttons>
+               <AddButton
+                  disabled={count === 0 ? false : true}
+                  text={'ADD ITEM'}
+                  onClick={onClickAddResourceItem}
+                  buttonType={'rectangular'}
+                  buttonVariant={'filled'}
+                  css={count === 0 ? AddButtonGreenCss : AddButtonGreyCss}
+               />
+               <DeleteButton
+                  disabled={count !== 0 ? false : true}
+                  text={'DELETE'}
+                  onClick={onClickDeleteResourceItems}
+                  buttonType={'rectangular'}
+                  buttonVariant={'filled'}
+                  css={count === 0 ? DelButtonGreyCss : DelButtonRedCss}
+               />
+            </Buttons>
+            {this.renderPagination()}
+         </Footer>
+      )
+   }
    render() {
       const {
-         resourceItemsDetails: { getApiStatus, getApiError, pageNumber },
+         resourceItemsDetails: {
+            getApiStatus,
+            getApiError,
+            pageNumber,
+            searchInput
+         },
          doNetWorkCallForResourceItems
       } = this.props
       const dropdownData = {
@@ -127,7 +192,7 @@ class ResourceItemsList extends Component<ResourceItemsListProps> {
                   <SearchFieldStyle>
                      <SearchField
                         isDisabled={getApiStatus !== 200}
-                        value={this.searchInput}
+                        value={searchInput}
                         onChangeField={this.onChangeSearchField}
                         css={SearchFieldCss}
                         placeholderText={'Search Title'}
@@ -136,6 +201,8 @@ class ResourceItemsList extends Component<ResourceItemsListProps> {
                   <DropDownComponent
                      data={dropdownData}
                      onChange={this.onChangeDropdown}
+                     icon={<SortIcon />}
+                     css={DropDownCss}
                   />
                </SearchSortFields>
             </Header>
@@ -145,7 +212,7 @@ class ResourceItemsList extends Component<ResourceItemsListProps> {
                renderSuccessUI={this.renderResourceDetails}
                onRetryClick={doNetWorkCallForResourceItems}
             />
-            {this.renderPagination()}
+            {this.renderFooterUI()}
          </ResourceItemsStyle>
       )
    }

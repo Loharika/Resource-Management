@@ -43,22 +43,27 @@ class PaginationStore {
    @action.bound
    onChangeFilter(filter) {
       this.filter = filter
+      this.getData()
    }
    @action.bound
    onChangeFilterBy(filterBy) {
       this.filterBy = filterBy
+      this.getData()
    }
    @action.bound
    onChangeSort(sort) {
       this.sort = sort
+      this.getData()
    }
    @action.bound
    onChangeSortBy(sortBy) {
       this.sortBy = sortBy
+      this.getData()
    }
    @action.bound
    onChangeSearchInput(searchInput) {
       this.searchInput = searchInput
+      this.getData()
    }
    @action.bound
    setGetAPIStatus(apiStatus) {
@@ -84,7 +89,10 @@ class PaginationStore {
          limit: this.limit - 1,
          offset: (this.pageNumber - 1) * this.limit,
          sort: this.sort,
-         filter: this.filter
+         sortBy: this.sortBy,
+         filter: this.filter,
+         filterBy: this.filterBy,
+         searchInput: this.searchInput
       }
       let promise = this.apiService(requestObject)
       return bindPromiseWithOnSuccess(promise)

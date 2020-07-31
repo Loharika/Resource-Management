@@ -3,7 +3,7 @@ import { Dropdown, Header } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 import { observer } from 'mobx-react'
 import { observable, action } from 'mobx'
-import { DropDownStyle } from './styledComponents'
+import { DropDownStyle, DropDownIcon } from './styledComponents'
 type DisplayDropDownProps = {
    onChange: (value: string) => void
    data: {
@@ -12,6 +12,7 @@ type DisplayDropDownProps = {
       listItems: { key: string; text: string; value: string }[]
    }
    icon?: any
+   css?: any
 }
 @observer
 class DropDownComponent extends Component<DisplayDropDownProps> {
@@ -29,10 +30,10 @@ class DropDownComponent extends Component<DisplayDropDownProps> {
    }
 
    render() {
-      const { data, icon } = this.props
+      const { data, icon, css } = this.props
       return (
-         <DropDownStyle>
-            {icon}
+         <DropDownStyle css={css}>
+            <DropDownIcon>{icon}</DropDownIcon>
             <Dropdown text={data.listTitle}>
                <Dropdown.Menu>
                   {data.listItems.map(option => {

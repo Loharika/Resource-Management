@@ -10,6 +10,10 @@ class AdminStore {
    @observable getResourceDetailsAPIError
    @observable resourcesDetailsResponse
 
+   @observable getResourceItemDetailsAPIStatus
+   @observable getResourceItemDetailsAPIError
+   @observable resourcesItemDetailsResponse
+
    @observable getAddResourceAPIStatus
    @observable getAddResourceAPIError
    @observable getAddResourceAPIResponse
@@ -30,7 +34,6 @@ class AdminStore {
    @observable getDeleteResourceItemAPIStatus
    @observable getDeleteResourceItemAPIError
 
-   @observable isOpened
    adminService
    resourcesListPaginationStore
    resourceDetailsPaginationStore
@@ -53,6 +56,7 @@ class AdminStore {
    @action.bound
    init() {
       this.intiResourceDetailsAPI()
+      this.intiResourceItemDetailsAPI()
 
       this.initAddResourceAPI()
       this.initUpdateResourceAPI()
@@ -67,6 +71,12 @@ class AdminStore {
       this.getResourceDetailsAPIStatus = API_INITIAL
       this.getResourceDetailsAPIError = null
       this.resourcesDetailsResponse = ''
+   }
+   @action.bound
+   intiResourceItemDetailsAPI() {
+      this.getResourceItemDetailsAPIStatus = API_INITIAL
+      this.getResourceItemDetailsAPIError = null
+      this.resourcesItemDetailsResponse = ''
    }
    @action.bound
    initAddResourceAPI() {
@@ -101,6 +111,7 @@ class AdminStore {
       this.getDeleteResourceItemAPIStatus = API_INITIAL
       this.getDeleteResourceItemAPIError = null
    }
+
    @action.bound
    setGetResourceDetailsAPIStatus(apiStatus) {
       this.getResourceDetailsAPIStatus = apiStatus
@@ -125,6 +136,32 @@ class AdminStore {
          )
          .catch(this.setGetResourceDetailsAPIError)
    }
+
+   @action.bound
+   setGetResourceItemDetailsAPIStatus(apiStatus) {
+      this.getResourceItemDetailsAPIStatus = apiStatus
+   }
+   @action.bound
+   setGetResourceItemDetailsAPIResponse(apiResponse) {
+      this.resourcesItemDetailsResponse = apiResponse
+   }
+   @action.bound
+   setGetResourceItemDetailsAPIError(apiError) {
+      this.getResourceItemDetailsAPIError = apiError
+   }
+   @action.bound
+   getResourceItemDetails(requestObject) {
+      const getResourcesItemPromise = this.adminService.getResourceItemDetailsAPI(
+         requestObject
+      )
+      return bindPromiseWithOnSuccess(getResourcesItemPromise)
+         .to(
+            this.setGetResourceItemDetailsAPIStatus,
+            this.setGetResourceItemDetailsAPIResponse
+         )
+         .catch(this.setGetResourceItemDetailsAPIError)
+   }
+
    @action.bound
    setGetAddResourceAPIStatus(apiStatus) {
       this.getAddResourceAPIStatus = apiStatus

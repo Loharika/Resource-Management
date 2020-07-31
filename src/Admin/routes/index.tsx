@@ -19,6 +19,7 @@ import UpdateResource from '../components/UpdateResource'
 import UpdateResourceItem from '../components/UpdateResourceItem/UpdateResourceItem'
 import AddResourceItem from '../components/AddResourceItem'
 import UpdateResourceRoute from './UpdateResourceRoute'
+import UpdateResourceItemRoute from './UpdateResourceItemRoute'
 
 export const AdminDashboardRoutes = [
    <ProtectedRoute
@@ -66,7 +67,7 @@ export const AdminDashboardRoutes = [
    <ProtectedRoute
       key={UPDATE_RESOURCE_ITEM}
       exact
-      path={UPDATE_RESOURCE_ITEM + '/:resourceId'}
-      component={UpdateResourceItem}
+      path={UPDATE_RESOURCE_ITEM + '/:resourceItemId'}
+      component={UpdateResourceItemRoute}
    />
 ]
