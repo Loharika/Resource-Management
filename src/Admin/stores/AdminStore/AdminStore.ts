@@ -266,7 +266,7 @@ class AdminStore {
    }
    @action.bound
    deleteResourceItem(requestObject) {
-      const deleteResourceItemPromise = this.adminService.deleteResourceAPI(
+      const deleteResourceItemPromise = this.adminService.deleteResourceItemAPI(
          requestObject
       )
       return bindPromiseWithOnSuccess(deleteResourceItemPromise)

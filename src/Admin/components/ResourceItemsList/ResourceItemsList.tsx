@@ -37,9 +37,10 @@ interface ResourceItemsListProps {
    resourceItemsDetails: any
    doNetWorkCallForResourceItems: () => void
    onClickAddResourceItem: () => void
-   onClickDeleteResourceItems: (resourceId) => void
+   onClickCheckBox: (resourceId) => void
+   onClickDeleteResourceItems: () => void
    selectedResourceItemsCount: number
-   onClickUpdateResourceItem: () => void
+   onClickUpdateResourceItem: (resourceItemId: number) => void
 }
 @observer
 class ResourceItemsList extends Component<ResourceItemsListProps> {
@@ -48,8 +49,8 @@ class ResourceItemsList extends Component<ResourceItemsListProps> {
    }
    @action.bound
    onClickCheckbox(resourceItemId) {
-      const { onClickDeleteResourceItems } = this.props
-      onClickDeleteResourceItems(resourceItemId)
+      const { onClickCheckBox } = this.props
+      onClickCheckBox(resourceItemId)
    }
    @action.bound
    onChangeSearchField(searchInput) {
@@ -68,7 +69,7 @@ class ResourceItemsList extends Component<ResourceItemsListProps> {
    @action.bound
    onClickResourceItem(resourceItemId) {
       const { onClickUpdateResourceItem } = this.props
-      onClickUpdateResourceItem()
+      onClickUpdateResourceItem(resourceItemId)
    }
    renderResourceDetails = () => {
       const {
@@ -91,12 +92,7 @@ class ResourceItemsList extends Component<ResourceItemsListProps> {
                </Table.Header>
                <Table.Body>
                   {results.get(pageNumber).map(option => (
-                     <Table.Row
-                        key={Math.random()}
-                        onClick={() =>
-                           this.onClickResourceItem(option['resourceItemId'])
-                        }
-                     >
+                     <Table.Row key={Math.random()}>
                         <Table.Cell>
                            <Checkbox
                               onClick={() =>
@@ -104,9 +100,25 @@ class ResourceItemsList extends Component<ResourceItemsListProps> {
                               }
                            />
                         </Table.Cell>
-                        <Table.Cell>{option.resourceItemTitle}</Table.Cell>
-                        <Table.Cell>{option.description}</Table.Cell>
-                        <Table.Cell>
+                        <Table.Cell
+                           onClick={() =>
+                              this.onClickResourceItem(option['resourceItemId'])
+                           }
+                        >
+                           {option.resourceItemTitle}
+                        </Table.Cell>
+                        <Table.Cell
+                           onClick={() =>
+                              this.onClickResourceItem(option['resourceItemId'])
+                           }
+                        >
+                           {option.description}
+                        </Table.Cell>
+                        <Table.Cell
+                           onClick={() =>
+                              this.onClickResourceItem(option['resourceItemId'])
+                           }
+                        >
                            <a href={option.resourceItemLink}>
                               {option.resourceItemLink}
                            </a>

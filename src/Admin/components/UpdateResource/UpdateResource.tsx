@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { observable, action } from 'mobx'
 import { observer, inject } from 'mobx-react'
-import { toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+
 import { getUserDisplayableErrorMessage } from '../../../Common/utils/APIUtils'
 import LoadingWrapperWithFailure from '../../../Common/components/common/LoadingWrapperWithFailure'
 import { Button } from '../../../Common/components/Button'
@@ -30,6 +29,7 @@ interface UpdateResourceProps extends RouteComponentProps {
    getResourceDetailsAPIStatus: any
    resourceId: number
    resourcesDetailsResponse: any
+   updateResourceDetails: (requestObject: any) => void
 }
 
 interface InjectedProps extends UpdateResourceProps {
@@ -100,38 +100,11 @@ class UpdateResource extends Component<UpdateResourceProps> {
             service: this.service,
             resource_image: this.imageLink
          }
-         this.updateResourceDetails(requestObject)
+         const { updateResourceDetails } = this.props
+         updateResourceDetails(requestObject)
       } else {
          this.displayError = true
       }
-   }
-   async updateResourceDetails(requestObject) {
-      const {
-         adminStore: { updateResource }
-      } = this.getInjectedProps()
-      await updateResource(requestObject)
-      const {
-         adminStore: {
-            getUpdateResourceAPIStatus,
-            getUpdateResourceAPIError: error
-         }
-      } = this.getInjectedProps()
-      if (getUpdateResourceAPIStatus === 200) {
-         this.displayToaster('Added Successfully')
-         const { resourceId, history } = this.props
-
-         goToResourceDetails(history, resourceId)
-      } else {
-         this.displayToaster(getUserDisplayableErrorMessage(error))
-      }
-   }
-   displayToaster(status) {
-      toast(<div className='text-black font-bold'>{status}</div>, {
-         position: 'top-center',
-         autoClose: 3000,
-         closeButton: false,
-         hideProgressBar: true
-      })
    }
    renderResources = () => {
       return (

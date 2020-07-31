@@ -30,6 +30,7 @@ interface UpdateResourceProps extends RouteComponentProps {
    getResourceItemDetailsAPIStatus: any
    resourceItemId: number
    resourcesItemDetailsResponse: any
+   updateResourceItemDetails: (requestObject) => void
 }
 interface InjectedProps extends UpdateResourceProps {
    adminStore: AdminStore
@@ -37,19 +38,23 @@ interface InjectedProps extends UpdateResourceProps {
 @inject('adminStore')
 @observer
 class UpdateResourceItem extends Component<UpdateResourceProps> {
-   @observable itemName: string
-   @observable itemId: string
-   @observable link: string
-   @observable description: string
-   @observable resourceType: string
-   @observable displayError: boolean
+   @observable itemName!: string
+   @observable itemId!: string
+   @observable link!: string
+   @observable description!: string
+   @observable resourceType!: string
+   @observable displayError!: boolean
    constructor(props) {
       super(props)
-      this.itemName = ''
-      this.itemId = ''
-      this.link = ''
-      this.description = ''
-      this.resourceType = ''
+      this.updateDetails()
+   }
+   updateDetails = () => {
+      const { resourcesItemDetailsResponse: details } = this.props
+      this.itemName = details.title
+      this.itemId = details.item_id
+      this.link = details.link
+      this.description = details.description
+      this.resourceType = details.resource_type
       this.displayError = false
    }
    componentDidMount() {
@@ -75,7 +80,7 @@ class UpdateResourceItem extends Component<UpdateResourceProps> {
       this.resourceType = resourceType
    }
    @action.bound
-   isValidateAddResourceDetails(): boolean {
+   isValidateAddResourceDetails() {
       let details = [this.itemName, this.link, this.description]
       let notFilledFields = details.filter(
          eachDetail => eachDetail.length === 0
@@ -90,40 +95,10 @@ class UpdateResourceItem extends Component<UpdateResourceProps> {
             link: this.link,
             description: this.description
          }
-         this.updateResourceItemDetails(requestObject)
+         this.props.updateResourceItemDetails(requestObject)
       } else {
          this.displayError = true
       }
-   }
-   async updateResourceItemDetails(requestObject) {
-      const {
-         adminStore: { updateResourceItem }
-      } = this.getInjectedProps()
-      await updateResourceItem(requestObject)
-      const {
-         adminStore: {
-            getUpdateResourceItemAPIStatus,
-            getUpdateResourceItemAPIError: error
-         }
-      } = this.getInjectedProps()
-      console.log(getUpdateResourceItemAPIStatus)
-      if (getUpdateResourceItemAPIStatus) {
-         this.displayToaster('Added Successfully')
-         // const { resourceId, history } = this.getInjectedProps()
-         const { history } = this.getInjectedProps()
-         const resourceId = 1234543
-         goToResourceDetails(history, resourceId)
-      } else {
-         this.displayToaster(getUserDisplayableErrorMessage(error))
-      }
-   }
-   displayToaster(status) {
-      toast(<div className='text-black font-bold'>{status}</div>, {
-         position: 'top-center',
-         autoClose: 3000,
-         closeButton: false,
-         hideProgressBar: true
-      })
    }
    renderSuccessUI = () => {
       return (

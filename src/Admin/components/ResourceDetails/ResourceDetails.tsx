@@ -34,8 +34,9 @@ interface ResourceDetailsProps extends RouteComponentProps {
    onClickDeleteResource: () => void
    onClickResourcesButton: () => void
    onClickAddResourceItem: () => void
-   onClickDeleteResourceItems: (resourceId) => void
-   onClickUpdateResourceItem: () => void
+   onClickDeleteResourceItems: () => void
+   onClickCheckBox: (resourceItemId) => void
+   onClickUpdateResourceItem: (resourceItemId) => void
    resourceId: number
    resourcesDetailsResponse: any
    getResourceDetailsAPIStatus: any
@@ -76,11 +77,12 @@ class ResourceDetails extends Component<ResourceDetailsProps> {
          onClickUpdateResource,
          onClickDeleteResource,
          onClickAddResourceItem,
-         onClickDeleteResourceItems,
+         onClickCheckBox,
          doNetWorkCallForResourceItems,
          doNetWorkCallForResourceDetails,
          selectedResourceItemsCount,
-         onClickUpdateResourceItem
+         onClickUpdateResourceItem,
+         onClickDeleteResourceItems
       } = this.props
       return (
          <ResourceDetailsPage>
@@ -116,11 +118,12 @@ class ResourceDetails extends Component<ResourceDetailsProps> {
                </FooterButtons>
                <ResourceItemsList
                   onClickAddResourceItem={onClickAddResourceItem}
-                  onClickDeleteResourceItems={onClickDeleteResourceItems}
                   resourceItemsDetails={resourceDetailsPaginationStore}
                   doNetWorkCallForResourceItems={doNetWorkCallForResourceItems}
                   selectedResourceItemsCount={selectedResourceItemsCount}
                   onClickUpdateResourceItem={onClickUpdateResourceItem}
+                  onClickDeleteResourceItems={onClickDeleteResourceItems}
+                  onClickCheckBox={onClickCheckBox}
                />
             </ResourceDetailsPageStyle>
          </ResourceDetailsPage>

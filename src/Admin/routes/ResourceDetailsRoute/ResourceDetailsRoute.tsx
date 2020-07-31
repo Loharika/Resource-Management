@@ -100,12 +100,12 @@ class ResourceDetailsRoute extends Component<ResourceDetailsProps> {
       goToAddResourceItem(history)
    }
    @action.bound
-   onClickUpdateResourceItem() {
+   onClickUpdateResourceItem(resourceItemId) {
       const { history } = this.props
+      goToUpdateResourceItem(history, resourceItemId)
       window.localStorage.setItem('isOpenedUpdateResourceItemPage', 'yes')
-      goToUpdateResourceItem(history, this.getResourceItemId())
    }
-   onClickDeleteResourceItems = selectedItemId => {
+   onClickCheckBox = selectedItemId => {
       if (this.selectedResourceItems.includes(selectedItemId)) {
          this.selectedResourceItems = this.selectedResourceItems.filter(
             itemId => itemId !== selectedItemId
@@ -116,7 +116,28 @@ class ResourceDetailsRoute extends Component<ResourceDetailsProps> {
             selectedItemId
          ]
       }
-      console.log(this.selectedResourceItems)
+   }
+   @action.bound
+   async onClickDeleteResourceItems() {
+      const {
+         adminStore: { deleteResourceItem }
+      } = this.getInjectedProps()
+      const requestObject = {
+         item_ids: this.selectedResourceItems
+      }
+      await deleteResourceItem(requestObject)
+      const {
+         adminStore: {
+            getDeleteResourceItemAPIError,
+            getDeleteResourceItemAPIStatus,
+            resourceDetailsPaginationStore
+         }
+      } = this.getInjectedProps()
+      console.log(getDeleteResourceItemAPIStatus)
+      if (getDeleteResourceItemAPIStatus === 200) {
+         resourceDetailsPaginationStore.getData()
+         console.log('log')
+      }
    }
 
    displayToaster(status) {
@@ -160,6 +181,7 @@ class ResourceDetailsRoute extends Component<ResourceDetailsProps> {
             resourceDetailsPaginationStore={resourceDetailsPaginationStore}
             onClickAddResourceItem={this.onClickAddResourceItem}
             onClickDeleteResourceItems={this.onClickDeleteResourceItems}
+            onClickCheckBox={this.onClickCheckBox}
             selectedResourceItemsCount={this.selectedResourceItemsCount}
             onClickUpdateResourceItem={this.onClickUpdateResourceItem}
          />

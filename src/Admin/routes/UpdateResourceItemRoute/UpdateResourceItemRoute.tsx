@@ -1,8 +1,13 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import AdminStore from '../../stores/AdminStore'
 import UpdateResourceItem from '../../components/UpdateResourceItem'
+import { action } from 'mobx'
+import { goToResourceDetails } from '../../utils/NavigationalUtils'
+import { getUserDisplayableErrorMessage } from '../../../Common/utils/APIUtils'
 
 interface UpdateResourceRouteProps extends RouteComponentProps {}
 
@@ -46,6 +51,35 @@ class UpdateResourceItemRoute extends Component<UpdateResourceRouteProps> {
       let resourceId = params['resourceId']
       return resourceId
    }
+   @action.bound
+   async updateResourceItemDetails(requestObject) {
+      const {
+         adminStore: { updateResource }
+      } = this.getInjectedProps()
+      await updateResource(requestObject)
+      const {
+         adminStore: {
+            getUpdateResourceAPIStatus,
+            getUpdateResourceAPIError: error
+         }
+      } = this.getInjectedProps()
+      if (getUpdateResourceAPIStatus === 200) {
+         this.displayToaster('Added Successfully')
+         const { history } = this.props
+
+         goToResourceDetails(history, this.getResourceItemId())
+      } else {
+         this.displayToaster(getUserDisplayableErrorMessage(error))
+      }
+   }
+   displayToaster(status) {
+      toast(<div className='text-black font-bold'>{status}</div>, {
+         position: 'top-center',
+         autoClose: 3000,
+         closeButton: false,
+         hideProgressBar: true
+      })
+   }
    render() {
       const {
          adminStore: {
@@ -62,6 +96,7 @@ class UpdateResourceItemRoute extends Component<UpdateResourceRouteProps> {
             getResourceItemDetailsAPIStatus={getResourceItemDetailsAPIStatus}
             resourceItemId={this.getResourceItemId()}
             resourcesItemDetailsResponse={resourcesItemDetailsResponse}
+            updateResourceItemDetails={this.updateResourceItemDetails}
          />
       )
    }

@@ -60,6 +60,7 @@ class AdminService implements AdminServiceInterface {
       return resolveWithTimeout({})
    }
    deleteResourceItemAPI(requestObject) {
+      console.log(requestObject)
       return resolveWithTimeout({})
    }
 }
