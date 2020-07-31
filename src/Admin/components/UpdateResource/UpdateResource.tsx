@@ -47,12 +47,7 @@ class UpdateResource extends Component<UpdateResourceProps> {
 
    constructor(props) {
       super(props)
-
       this.updateDetails()
-   }
-
-   componentDidMount() {
-      console.log(this.props.resourcesDetailsResponse, 'component')
    }
 
    updateDetails = () => {

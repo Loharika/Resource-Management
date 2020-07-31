@@ -72,10 +72,11 @@ class ResourcesList extends Component<ResourcesListProps> {
          resourcesListInstance: {
             getApiStatus,
             getApiError,
-            getListOfItems,
+            getData,
             searchInput
          }
       } = this.props
+      
       const { renderResourceCards } = this
       return (
          <ResourceListStyle>
@@ -88,7 +89,7 @@ class ResourcesList extends Component<ResourcesListProps> {
             <LoadingWrapperWithFailure
                apiStatus={getApiStatus}
                renderSuccessUI={renderResourceCards}
-               onRetryClick={getListOfItems}
+               onRetryClick={getData}
                apiError={getApiError}
             />
             {this.renderPagination()}

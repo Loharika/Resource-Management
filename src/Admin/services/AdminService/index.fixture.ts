@@ -20,7 +20,16 @@ class AdminService implements AdminServiceInterface {
       return resolveWithTimeout(getResourceDetails)
    }
    getResourceItemsAPI(requestObject) {
-      return resolveWithTimeout(getResourceItemsList)
+      let endIndex = requestObject.limit + requestObject.offset + 1
+      let startIndex = requestObject.offset
+      let response = {
+         resource_items: getResourceItemsList.resource_items.slice(
+            startIndex,
+            endIndex
+         ),
+         total_count: getResourceItemsList.total_count
+      }
+      return resolveWithTimeout(response)
    }
    addResourceAPI(requestObject) {
       console.log(requestObject)

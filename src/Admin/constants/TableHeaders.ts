@@ -1,4 +1,4 @@
-export const ResourceItemsHeaders = ['TITLE', 'DESCRIPTION', 'LINK']
+export const ResourceItemsHeaders = ['', 'TITLE', 'DESCRIPTION', 'LINK']
 export const RequestsTableHeader = [
    'PERSON NAME',
    'RESOURCE',

@@ -10,7 +10,7 @@ export const ResourceListStyle = styled.div`
    align-self: center;
 `
 export const SearchFieldCss = css`
-   width: 45%;
+   width: 60%;
    margin-left: 35px;
 `
 export const ResourceListCards = styled.div`

@@ -4,6 +4,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom'
 import AdminStore from '../../stores/AdminStore'
 import UpdateResource from '../../components/UpdateResource'
 import { observable } from 'mobx'
+import { goToResourceDetails } from '../../utils/NavigationalUtils'
 
 interface UpdateResourceRouteProps extends RouteComponentProps {}
 
@@ -14,15 +15,17 @@ interface InjectedProps extends UpdateResourceRouteProps {
 @inject('adminStore')
 @observer
 class UpdateResourceRoute extends Component<UpdateResourceRouteProps> {
-   @observable data
-   constructor(props) {
-      super(props)
-      this.data = ''
-   }
    componentDidMount() {
-      console.log('route')
       this.doNetWorkCallForResourceDetails()
-      // console.log(this.getInjectedProps().adminStore.resourcesDetailsResponse)
+      if (window.localStorage.getItem('isOpenedUpdateResourcePage') !== 'yes') {
+         const {
+            match: { params },
+            history
+         } = this.getInjectedProps()
+         goToResourceDetails(history, params['resourceId'])
+      } else {
+         window.localStorage.clear()
+      }
    }
    getInjectedProps = () => this.props as InjectedProps
    doNetWorkCallForResourceDetails = async () => {
@@ -33,7 +36,7 @@ class UpdateResourceRoute extends Component<UpdateResourceRouteProps> {
          resource_id: this.getResourceId()
       }
       await getResourceDetails(requestObject)
-      this.data = this.getInjectedProps().adminStore.resourcesDetailsResponse
+      this.getInjectedProps().adminStore.resourcesDetailsResponse
    }
    getResourceId = () => {
       const {

@@ -60,7 +60,7 @@ class RequestsList extends Component {
                icon={<Filter />}
             />
             <DateTime onChangeTime={() => {}} label={'DATE AND TIME'} />
-            <DisplayTable headers={ResourceItemsHeaders} />
+            {/* <DisplayTable headers={ResourceItemsHeaders} /> */}
             <ModalClose />
             <Pagination
                onChangePageNumber={(pageNumber: number) => {}}

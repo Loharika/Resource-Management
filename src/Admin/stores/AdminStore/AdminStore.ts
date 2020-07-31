@@ -3,6 +3,7 @@ import { bindPromiseWithOnSuccess } from '@ib/mobx-promise'
 import { API_INITIAL } from '@ib/api-constants'
 import PaginationStore from '../../../Common/stores/PaginationStore'
 import ResourceCardModel from '../Model/ResourceCardModel'
+import ResourceItemModel from '../Model/ResourceItemModel'
 
 class AdminStore {
    @observable getResourceDetailsAPIStatus
@@ -28,6 +29,8 @@ class AdminStore {
 
    @observable getDeleteResourceItemAPIStatus
    @observable getDeleteResourceItemAPIError
+
+   @observable isOpened
    adminService
    resourcesListPaginationStore
    resourceDetailsPaginationStore
@@ -39,9 +42,12 @@ class AdminStore {
          ['resources_list', 'total_count'],
          9
       )
-      // this.resourceDetailsPaginationStore = new PaginationStore(
-      //    ResourceItemModel,
-      // )
+      this.resourceDetailsPaginationStore = new PaginationStore(
+         ResourceItemModel,
+         this.adminService.getResourceItemsAPI,
+         ['resource_items', 'total_count'],
+         5
+      )
       this.init()
    }
    @action.bound
@@ -109,7 +115,6 @@ class AdminStore {
    }
    @action.bound
    getResourceDetails(requestObject) {
-      console.log('store')
       const getResourcesPromise = this.adminService.getResourceDetailsAPI(
          requestObject
       )

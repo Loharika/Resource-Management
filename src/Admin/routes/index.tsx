@@ -13,7 +13,7 @@ import {
 
 import { ProtectedRoute } from '../../Common/components/ProtectedRoute'
 import DashboardRoute from './DashboardRoute'
-import ResourceDetails from '../components/ResourceDetails'
+import ResourceDetailsRoute from './ResourceDetailsRoute'
 import AddResource from '../components/AddResource'
 import UpdateResource from '../components/UpdateResource'
 import UpdateResourceItem from '../components/UpdateResourceItem/UpdateResourceItem'
@@ -61,7 +61,7 @@ export const AdminDashboardRoutes = [
       key={ADMIN_DASHBOARD_RESOURCES}
       exact
       path={ADMIN_DASHBOARD_RESOURCES + '/:resourceId'}
-      component={ResourceDetails}
+      component={ResourceDetailsRoute}
    />,
    <ProtectedRoute
       key={UPDATE_RESOURCE_ITEM}
