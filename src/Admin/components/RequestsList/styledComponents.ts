@@ -22,3 +22,29 @@ export const Header = styled.div`
 export const SortAndFilter = styled.div`
    display: flex;
 `
+export const Buttons = styled.div`
+   display: flex;
+   align-self: center;
+`
+export const AcceptButtonCss = css`
+   width: 80%;
+   height: 35px;
+   border-radius: 4px;
+   background-color: ${colors.greenishTeal};
+   color: white;
+   margin: 3px;
+   padding: 10px;
+   border: none;
+   font-weight: bold;
+`
+export const RejectButtonCss = css`
+   width: 80%;
+   height: 35px;
+   border-radius: 4px;
+   background-color: ${colors.neonRed};
+   color: white;
+   margin: 3px;
+   padding: 10px;
+   border: none;
+   font-weight: bold;
+`

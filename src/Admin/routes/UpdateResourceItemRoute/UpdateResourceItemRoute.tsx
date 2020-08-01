@@ -64,11 +64,11 @@ class UpdateResourceItemRoute extends Component<UpdateResourceRouteProps> {
          }
       } = this.getInjectedProps()
       if (getUpdateResourceAPIStatus === 200) {
-         this.displayToaster('Added Successfully')
+         this.displayToaster('Updated Successfully')
          const { history } = this.props
          const resourceId = window.localStorage.getItem('resourceId')
-         console.log(resourceId)
-         goToResourceDetails(history, resourceId)
+         // console.log(window.localStorage.getItem('resourceId'))
+         goToResourceDetails(history, this.getResourceItemId())
       } else {
          this.displayToaster(getUserDisplayableErrorMessage(error))
       }

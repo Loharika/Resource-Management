@@ -59,17 +59,17 @@ export const AdminDashboardRoutes = [
       path={ADD_RESOURCE_ITEM}
       component={AddResourceItem}
    />,
-   // <ProtectedRoute
-   //    key={ADMIN_DASHBOARD_RESOURCES}
-   //    exact
-   //    path={ADMIN_DASHBOARD_RESOURCES + '/:resourceId'}
-   //    component={ResourceDetailsRoute}
-   // />,
    <ProtectedRoute
       key={ADMIN_DASHBOARD_RESOURCES}
-      path={ADMIN_RESOURCE_DETAILS}
+      exact
+      path={ADMIN_DASHBOARD_RESOURCES + '/:resourceId'}
       component={ResourceDetailsRoute}
    />,
+   // <ProtectedRoute
+   //    key={ADMIN_DASHBOARD_RESOURCES}
+   //    path={ADMIN_RESOURCE_DETAILS}
+   //    component={ResourceDetailsRoute}
+   // />,
    <ProtectedRoute
       key={UPDATE_RESOURCE_ITEM}
       exact

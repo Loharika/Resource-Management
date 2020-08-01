@@ -10,7 +10,7 @@ class RequestsListRoute extends Component<RequestsListRouteProps> {
    render() {
       const { requestsListInstance } = this.props
 
-      return <RequestsList requestsListInstance={requestsListInstance} />
+      return <div>Route</div>
    }
 }
 

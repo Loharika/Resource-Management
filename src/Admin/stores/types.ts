@@ -27,6 +27,7 @@ export interface RequestsListRequestObject {
    filter: string
 }
 export interface RequestsListResponseObject {
+   request_id: number
    person_name: string
    resource: string
    item: string

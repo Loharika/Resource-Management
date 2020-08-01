@@ -30,9 +30,6 @@ class ResourceDetailsRoute extends Component<ResourceDetailsProps> {
    }
    getInjectedProps = () => this.props as InjectedProps
    componentDidMount() {
-      this.getResourceId()
-      window.localStorage.setItem('resourceId', this.getResourceId())
-
       this.doNetWorkCallForResourceDetails()
       this.doNetWorkCallForResourceItems()
    }
@@ -77,6 +74,8 @@ class ResourceDetailsRoute extends Component<ResourceDetailsProps> {
    @action.bound
    onClickUpdateResource() {
       const { history } = this.props
+      window.localStorage.setItem('resourceId', this.getResourceId())
+      // console.log(window.localStorage.getItem('resourceId'))
       window.localStorage.setItem('isOpenedUpdateResourcePage', 'yes')
       goToUpdateResource(history, this.getResourceId())
    }
@@ -107,8 +106,8 @@ class ResourceDetailsRoute extends Component<ResourceDetailsProps> {
    }
    @action.bound
    onClickUpdateResourceItem(resourceItemId) {
-      console.log(resourceItemId)
-      console.log(this.getResourceId())
+      // console.log(resourceItemId)
+      // console.log(this.getResourceId())
 
       const { history } = this.props
       goToUpdateResourceItem(history, resourceItemId)
@@ -143,10 +142,10 @@ class ResourceDetailsRoute extends Component<ResourceDetailsProps> {
             resourceDetailsPaginationStore
          }
       } = this.getInjectedProps()
-      console.log(getDeleteResourceItemAPIStatus)
+      // console.log(getDeleteResourceItemAPIStatus)
       if (getDeleteResourceItemAPIStatus === 200) {
          resourceDetailsPaginationStore.getData()
-         console.log('log')
+         // console.log('log')
       }
    }
 

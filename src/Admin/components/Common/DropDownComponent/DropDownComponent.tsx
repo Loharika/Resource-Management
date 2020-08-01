@@ -13,6 +13,7 @@ type DisplayDropDownProps = {
    }
    icon?: any
    css?: any
+   disabled?: boolean
 }
 @observer
 class DropDownComponent extends Component<DisplayDropDownProps> {
@@ -23,18 +24,21 @@ class DropDownComponent extends Component<DisplayDropDownProps> {
    }
    @action.bound
    onClickDropDownItem(value) {
-      console.log(value)
       this.isClicked = true
       const { onChange } = this.props
       onChange(value)
    }
 
    render() {
-      const { data, icon, css } = this.props
+      const { data, icon, css, disabled } = this.props
       return (
          <DropDownStyle css={css}>
             <DropDownIcon>{icon}</DropDownIcon>
-            <Dropdown text={data.listTitle}>
+            <Dropdown
+               text={data.listTitle}
+               defaultValue={'harika'}
+               disabled={disabled}
+            >
                <Dropdown.Menu>
                   {data.listItems.map(option => {
                      return (

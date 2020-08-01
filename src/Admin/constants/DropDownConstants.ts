@@ -32,3 +32,25 @@ export const FilterOptions = [
       value: 'RESOURCE'
    }
 ]
+export const RequestsAccessLevelOptions = [
+   {
+      key: 'READ',
+      text: 'Read',
+      value: 'READ'
+   },
+   {
+      key: 'WRITE',
+      text: 'Write',
+      value: 'WRITE'
+   },
+   {
+      key: 'ADMIN',
+      text: 'Admin',
+      value: 'ADMIN'
+   }
+]
+export const AccessLevelData = {
+   listTitle: 'Read',
+   listItems: RequestsAccessLevelOptions,
+   placeholder: 'Access Level'
+}
