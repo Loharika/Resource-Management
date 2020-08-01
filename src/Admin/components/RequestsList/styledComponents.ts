@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import colors from '../../../Common/Theme/Colors.json'
 import { css } from '@emotion/core'
+import { Typo12RubikMedium } from '../../../Common/styleGuides/Typos'
 export const TableStyle = styled.div``
 export const RequestsListStyle = styled.div`
    width: 90%;
@@ -47,4 +48,14 @@ export const RejectButtonCss = css`
    padding: 10px;
    border: none;
    font-weight: bold;
+`
+export const Reason = styled.textarea`
+   width: 100%;
+   height: 50px;
+   padding: 5px;
+   border: 1px solid ${colors.lightBlueGrey};
+   border-radius: 3px;
+`
+export const Label = styled(Typo12RubikMedium)`
+   color: ${colors.lightBlueGrey};
 `

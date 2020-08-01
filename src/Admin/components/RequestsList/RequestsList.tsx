@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Table, Checkbox } from 'semantic-ui-react'
 import { observer } from 'mobx-react'
+import { Button, Icon, Modal } from 'semantic-ui-react'
 import LoadingWrapperWithFailure from '../../../Common/components/common/LoadingWrapperWithFailure'
 import { RequestsTableHeader } from '../../constants/TableHeaders'
 import {
@@ -24,7 +25,9 @@ import {
    Header,
    Buttons,
    AcceptButtonCss,
-   RejectButtonCss
+   RejectButtonCss,
+   Reason,
+   Label
 } from './styledComponents'
 import { action, observable, computed } from 'mobx'
 
@@ -32,16 +35,22 @@ interface RequestsListProps {
    requestsListInstance: any
 
    onClickAcceptButton: (acceptedRequests) => void
-   onClickRejectButton: (rejectedRequests) => void
+   onClickRejectButton: (rejectedRequests, reason) => void
 }
 @observer
 class RequestsList extends Component<RequestsListProps> {
    @observable selectedRequests: any
+   @observable displayAcceptModal: boolean
+   @observable displayRejectModal: boolean
+   @observable reason: string
    constructor(props) {
       super(props)
       this.selectedRequests = []
+      this.displayAcceptModal = false
+      this.displayRejectModal = false
+      this.reason = 'Are you sure you want to delete your account'
    }
-   onClickCheckbox = requestId => {
+   onSelectRequest = requestId => {
       if (this.selectedRequests.includes(requestId)) {
          this.selectedRequests = this.selectedRequests.filter(
             itemId => itemId !== requestId
@@ -63,38 +72,104 @@ class RequestsList extends Component<RequestsListProps> {
       onChangePageNumber(pageNumber)
    }
    @action.bound
-   onSelectRequest = requestId => {}
-   onClickAcceptButton = () => {
-      const { onClickAcceptButton } = this.props
-      onClickAcceptButton(this.selectedRequests)
-   }
-   onClickRejectButton = () => {
-      const { onClickRejectButton } = this.props
-      onClickRejectButton(this.selectedRequests)
+   onClickAcceptModal(value, isAccepted) {
+      this.displayAcceptModal = value
+      if (isAccepted) {
+         const { onClickAcceptButton } = this.props
+         onClickAcceptButton(this.selectedRequests)
+      }
    }
    @action.bound
-   renderButtons() {
+   onClickRejectModal(value, isRejected) {
+      this.displayRejectModal = value
+      if (isRejected) {
+         const { onClickRejectButton } = this.props
+         onClickRejectButton(this.selectedRequests, this.reason)
+      }
+   }
+   @action.bound
+   onChangeReason(event) {
+      this.reason = event.target.value
+   }
+   renderAcceptmodal = () => {
+      const { displayAcceptModal } = this
+      return (
+         <Modal
+            size={'mini'}
+            open={displayAcceptModal}
+            onClose={() => this.onClickAcceptModal(false, false)}
+         >
+            <Modal.Header>Do you want to Accept?</Modal.Header>
+
+            <Modal.Actions>
+               <Button onClick={() => this.onClickAcceptModal(false, false)}>
+                  Cancel
+               </Button>
+               <Button
+                  color='blue'
+                  onClick={() => this.onClickAcceptModal(false, true)}
+               >
+                  OK
+               </Button>
+            </Modal.Actions>
+         </Modal>
+      )
+   }
+   renderRejectModal = () => {
+      const { displayRejectModal } = this
+      return (
+         <Modal
+            size={'mini'}
+            open={displayRejectModal}
+            onClose={() => this.onClickRejectModal(false, false)}
+         >
+            <Modal.Header>Do you want to Reject?</Modal.Header>
+            <Modal.Content>
+               <Label>REASON FOR REJECTION</Label>
+               <Reason
+                  defaultValue={this.reason}
+                  onChange={this.onChangeReason}
+               />
+            </Modal.Content>
+            <Modal.Actions>
+               <Button onClick={() => this.onClickRejectModal(false, false)}>
+                  CANCEL
+               </Button>
+               <Button
+                  color='red'
+                  onClick={() => this.onClickRejectModal(false, true)}
+               >
+                  REJECT
+               </Button>
+            </Modal.Actions>
+         </Modal>
+      )
+   }
+   renderButtons = () => {
       const {
          requestsListInstance: { getApiStatus }
       } = this.props
+
       return (
          <Buttons>
             <AcceptButton
                text={'ACCEPT'}
-               onClick={this.onClickAcceptButton}
+               onClick={() => this.onClickAcceptModal(true, false)}
                buttonType={'rectangular'}
                buttonVariant={'outline'}
                css={AcceptButtonCss}
                disabled={getApiStatus !== 200}
             />
+            {this.renderAcceptmodal()}
             <RejectButton
                text={'REJECT'}
-               onClick={this.onClickRejectButton}
+               onClick={() => this.onClickRejectModal(true, false)}
                buttonType={'rectangular'}
                buttonVariant={'outline'}
                css={RejectButtonCss}
                disabled={getApiStatus !== 200}
             />
+            {this.renderRejectModal()}
          </Buttons>
       )
    }
@@ -170,7 +245,7 @@ class RequestsList extends Component<RequestsListProps> {
                         <Table.Cell>
                            <Checkbox
                               onClick={() =>
-                                 this.onClickCheckbox(option['requestId'])
+                                 this.onSelectRequest(option['requestId'])
                               }
                            />
                         </Table.Cell>

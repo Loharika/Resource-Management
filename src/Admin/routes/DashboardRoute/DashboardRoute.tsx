@@ -134,7 +134,8 @@ class DashboardRoute extends Component<DashboardRouteProps> {
    onClickAcceptButton = acceptedRequests => {
       console.log(acceptedRequests)
    }
-   onClickRejectButton = rejectedRequests => {
+   onClickRejectButton = (rejectedRequests, reason) => {
+      console.log(reason)
       console.log(rejectedRequests)
    }
    render() {

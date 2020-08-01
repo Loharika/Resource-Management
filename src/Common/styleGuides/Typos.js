@@ -82,3 +82,14 @@ export const Typo14SteelHKGroteskRegular = styled.span`
    letter-spacing: normal;
    color: var(--steel);
 `
+export const Typo12RubikMedium = styled.span`
+   font-family: Rubik;
+   font-size: 12px;
+   font-weight: 500;
+   font-stretch: normal;
+   font-style: normal;
+   line-height: 2;
+   letter-spacing: 0.12px;
+   color: ${colors.steel};
+   font-weight: bold;
+`
