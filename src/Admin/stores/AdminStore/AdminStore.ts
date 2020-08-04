@@ -35,6 +35,12 @@ class AdminStore {
    @observable getDeleteResourceItemAPIStatus
    @observable getDeleteResourceItemAPIError
 
+   @observable getPostAcceptedRequestsAPIStatus
+   @observable getPostAcceptedRequestsAPIError
+
+   @observable getPostRejectedRequestsAPIStatus
+   @observable getPostRejectedRequestsAPIError
+
    adminService
    resourcesListPaginationStore
    resourceDetailsPaginationStore
@@ -73,6 +79,9 @@ class AdminStore {
       this.initAddResourceItemAPI()
       this.initUpdateResourceItemAPI()
       this.initDeleteResourceItemAPI()
+
+      this.initAcceptedRequestsAPI()
+      this.initRejectedRequestsAPI()
    }
    @action.bound
    intiResourceDetailsAPI() {
@@ -119,7 +128,16 @@ class AdminStore {
       this.getDeleteResourceItemAPIStatus = API_INITIAL
       this.getDeleteResourceItemAPIError = null
    }
-
+   @action.bound
+   initAcceptedRequestsAPI() {
+      this.getPostAcceptedRequestsAPIStatus = API_INITIAL
+      this.getPostAcceptedRequestsAPIError = null
+   }
+   @action.bound
+   initRejectedRequestsAPI() {
+      this.getPostRejectedRequestsAPIStatus = API_INITIAL
+      this.getPostRejectedRequestsAPIError = null
+   }
    @action.bound
    setGetResourceDetailsAPIStatus(apiStatus) {
       this.getResourceDetailsAPIStatus = apiStatus
@@ -264,6 +282,7 @@ class AdminStore {
          .to(this.setGetUpdateResourceItemAPIStatus, () => {})
          .catch(this.setGetUpdateResourceItemAPIError)
    }
+
    @action.bound
    setGetDeleteResourceItemAPIStatus(apiStatus) {
       this.getDeleteResourceItemAPIStatus = apiStatus
@@ -280,6 +299,40 @@ class AdminStore {
       return bindPromiseWithOnSuccess(deleteResourceItemPromise)
          .to(this.setGetDeleteResourceAPIStatus, () => {})
          .catch(this.setGetDeleteResourceAPIError)
+   }
+   @action.bound
+   setGetPostAcceptedRequestsAPIStatus(apiStatus) {
+      this.getPostAcceptedRequestsAPIStatus = apiStatus
+   }
+   @action.bound
+   setGetPostAcceptedRequestsAPIError(apiError) {
+      this.getPostAcceptedRequestsAPIError = apiError
+   }
+   @action.bound
+   postAcceptedRequests(requestObject) {
+      const acceptedRequestsPromise = this.adminService.postAcceptedRequestsAPI(
+         requestObject
+      )
+      return bindPromiseWithOnSuccess(acceptedRequestsPromise)
+         .to(this.setGetPostAcceptedRequestsAPIStatus, () => {})
+         .catch(this.setGetPostAcceptedRequestsAPIError)
+   }
+   @action.bound
+   setGetPostRejectedRequestsAPIStatus(apiStatus) {
+      this.getPostRejectedRequestsAPIStatus = apiStatus
+   }
+   @action.bound
+   setGetPostRejectedRequestsAPIError(apiError) {
+      this.getPostRejectedRequestsAPIError = apiError
+   }
+   @action.bound
+   postRejectedRequests(requestObject) {
+      const rejectedRequestsPromise = this.adminService.postRejectedRequestsAPI(
+         requestObject
+      )
+      return bindPromiseWithOnSuccess(rejectedRequestsPromise)
+         .to(this.setGetPostRejectedRequestsAPIStatus, () => {})
+         .catch(this.setGetPostRejectedRequestsAPIError)
    }
 }
 export default AdminStore

@@ -93,6 +93,7 @@ class DashboardRoute extends Component<DashboardRouteProps> {
             requestsListPaginationStore
          }
       } = this.getInjectedProps()
+
       const { onClickResourceCard } = this
       switch (this.selector) {
          case 'resources': {
@@ -132,14 +133,31 @@ class DashboardRoute extends Component<DashboardRouteProps> {
       goToAddResourcePage(history)
    }
    onClickAcceptButton = acceptedRequests => {
-      console.log(acceptedRequests)
+      const {
+         adminStore: { postAcceptedRequests }
+      } = this.getInjectedProps()
+      postAcceptedRequests(acceptedRequests)
    }
    onClickRejectButton = (rejectedRequests, reason) => {
-      console.log(reason)
-      console.log(rejectedRequests)
+      const {
+         adminStore: { postRejectedRequests }
+      } = this.getInjectedProps()
+
+      const requestObject = {
+         reason: reason,
+         request_ids: rejectedRequests
+      }
+      postRejectedRequests(requestObject)
    }
    render() {
       const { onClickAddResource } = this
+      const {
+         adminStore: {
+            getPostAcceptedRequestsAPIStatus,
+            getPostRejectedRequestsAPIStatus
+         }
+      } = this.getInjectedProps()
+
       return (
          <Dashboard
             onClickResources={this.onClickResources}
@@ -148,6 +166,8 @@ class DashboardRoute extends Component<DashboardRouteProps> {
             onClickAddResource={onClickAddResource}
             renderChildComponent={this.renderChildComponent}
             selector={this.selector}
+            getPostAcceptedRequestsAPIStatus={getPostAcceptedRequestsAPIStatus}
+            getPostRejectedRequestsAPIStatus={getPostRejectedRequestsAPIStatus}
          />
       )
    }

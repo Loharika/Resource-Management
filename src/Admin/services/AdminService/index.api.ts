@@ -41,5 +41,11 @@ class AdminService implements AdminServiceInterface {
    deleteResourceItemAPI(requestObject) {
       return networkCallWithApisauce(this.baseApi, '___', {}, apiMethods.delete)
    }
+   postAcceptedRequestsAPI(requestObject) {
+      return networkCallWithApisauce(this.baseApi, '___', {}, apiMethods.get)
+   }
+   postRejectedRequestsAPI(requestObject) {
+      return networkCallWithApisauce(this.baseApi, '___', {}, apiMethods.get)
+   }
 }
 export default AdminService

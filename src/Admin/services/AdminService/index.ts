@@ -14,7 +14,9 @@ import {
    AddResourceItemRequestObject,
    AddResourceItemResponse,
    UpdateResourceItemObject,
-   DeleteResourceItemsRequestObject
+   DeleteResourceItemsRequestObject,
+   PostAcceptedRequestsRequestObject,
+   PostRejectedRequestsRequestObject
 } from '../../stores/types'
 
 export interface AdminServiceInterface {
@@ -47,5 +49,11 @@ export interface AdminServiceInterface {
    ) => Promise<{}>
    deleteResourceItemAPI: (
       requestObject: DeleteResourceItemsRequestObject
+   ) => Promise<{}>
+   postAcceptedRequestsAPI: (
+      requestObject: PostAcceptedRequestsRequestObject
+   ) => Promise<{}>
+   postRejectedRequestsAPI: (
+      requestObject: PostRejectedRequestsRequestObject
    ) => Promise<{}>
 }

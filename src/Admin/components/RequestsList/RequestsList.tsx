@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Table, Checkbox } from 'semantic-ui-react'
+import { Table, Checkbox, Loader, Dimmer } from 'semantic-ui-react'
 import { observer } from 'mobx-react'
 import { Button, Icon, Modal } from 'semantic-ui-react'
 import LoadingWrapperWithFailure from '../../../Common/components/common/LoadingWrapperWithFailure'
@@ -43,12 +43,14 @@ class RequestsList extends Component<RequestsListProps> {
    @observable displayAcceptModal: boolean
    @observable displayRejectModal: boolean
    @observable reason: string
+   @observable displayLoader: boolean
    constructor(props) {
       super(props)
       this.selectedRequests = []
       this.displayAcceptModal = false
       this.displayRejectModal = false
       this.reason = 'Are you sure you want to delete your account'
+      this.displayLoader = false
    }
    onSelectRequest = requestId => {
       if (this.selectedRequests.includes(requestId)) {
@@ -74,23 +76,28 @@ class RequestsList extends Component<RequestsListProps> {
    @action.bound
    onClickAcceptModal(value, isAccepted) {
       this.displayAcceptModal = value
+      this.displayLoader = false
       if (isAccepted) {
          const { onClickAcceptButton } = this.props
          onClickAcceptButton(this.selectedRequests)
+         this.displayLoader = true
       }
    }
    @action.bound
    onClickRejectModal(value, isRejected) {
       this.displayRejectModal = value
+      this.displayLoader = false
       if (isRejected) {
          const { onClickRejectButton } = this.props
          onClickRejectButton(this.selectedRequests, this.reason)
+         this.displayLoader = true
       }
    }
    @action.bound
    onChangeReason(event) {
       this.reason = event.target.value
    }
+
    renderAcceptmodal = () => {
       const { displayAcceptModal } = this
       return (
@@ -294,12 +301,7 @@ class RequestsList extends Component<RequestsListProps> {
    }
    render() {
       const {
-         requestsListInstance: {
-            getApiStatus,
-            getApiError,
-            getData,
-            pageNumber
-         }
+         requestsListInstance: { getApiStatus, getApiError, getData }
       } = this.props
 
       return (
@@ -318,11 +320,3 @@ class RequestsList extends Component<RequestsListProps> {
 }
 
 export default RequestsList
-
-// [
-//    {
-//    request_id: 1234,
-//       access_level:'READ'
-// },
-
-// ]

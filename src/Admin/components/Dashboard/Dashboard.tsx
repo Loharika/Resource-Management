@@ -6,6 +6,8 @@ import React, {
 import { observer } from 'mobx-react'
 import { Header } from '../../../Common/components/Header'
 import { DashboardStyle, SelectorTab, Selectors } from './styledComponents'
+import { action } from 'mobx'
+import { Dimmer, Loader } from 'semantic-ui-react'
 interface DashboardProps {
    renderChildComponent: () => any
    selector: string
@@ -13,6 +15,8 @@ interface DashboardProps {
    onClickRequests: () => void
    onClickUsers: () => void
    onClickAddResource: () => void
+   getPostAcceptedRequestsAPIStatus: any
+   getPostRejectedRequestsAPIStatus: any
 }
 @observer
 class Dashboard extends Component<DashboardProps> {
@@ -22,8 +26,14 @@ class Dashboard extends Component<DashboardProps> {
          onClickUsers,
          onClickResources,
          onClickRequests,
-         selector
+         selector,
+         getPostAcceptedRequestsAPIStatus: acceptStatus,
+         getPostRejectedRequestsAPIStatus: rejectStatus
       } = this.props
+      const isLoading =
+         (acceptStatus > 0 && acceptStatus < 200) ||
+         (rejectStatus > 0 && rejectStatus < 200)
+
       return (
          <DashboardStyle>
             <Header />

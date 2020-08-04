@@ -101,7 +101,13 @@ export interface UpdateResourceItemObject {
 export interface DeleteResourceItemsRequestObject {
    item_ids: Array<number>
 }
-
+export interface PostAcceptedRequestsRequestObject {
+   request_ids: Array<String>
+}
+export interface PostRejectedRequestsRequestObject {
+   reason: string
+   request_ids: Array<String>
+}
 //Keys
 //limit
 //offset

@@ -65,15 +65,23 @@ class AdminService implements AdminServiceInterface {
       return resolveWithTimeout({})
    }
    addResourceItemAPI(requestObject) {
-      console.log(requestObject)
+      // console.log(requestObject)
       return resolveWithTimeout({ item_id: 5678909 })
    }
    updateResourceItemAPI(requestObject) {
-      console.log(requestObject)
+      // console.log(requestObject)
       return resolveWithTimeout({})
    }
    deleteResourceItemAPI(requestObject) {
-      console.log(requestObject)
+      // console.log(requestObject)
+      return resolveWithTimeout({})
+   }
+   postAcceptedRequestsAPI(requestObject) {
+      // console.log(requestObject)
+      return resolveWithTimeout({})
+   }
+   postRejectedRequestsAPI(requestObject) {
+      // console.log(requestObject)
       return resolveWithTimeout({})
    }
 }
