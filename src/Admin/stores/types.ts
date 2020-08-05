@@ -108,6 +108,23 @@ export interface PostRejectedRequestsRequestObject {
    reason: string
    request_ids: Array<String>
 }
+
+export interface UsersListRequestObject {
+   limit: number
+   offset: number
+   sort: string
+   filter: string
+}
+export interface UsersListResponseObject {
+   user_id: number
+   name: string
+   department: string
+   job_role: string
+}
+export interface UsersListResponse {
+   users_list: Array<UsersListResponseObject>
+   total_count: number
+}
 //Keys
 //limit
 //offset

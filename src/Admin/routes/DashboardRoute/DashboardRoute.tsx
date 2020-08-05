@@ -55,6 +55,14 @@ class DashboardRoute extends Component<DashboardRouteProps> {
       } = this.props
       getData()
    }
+   doNetWorkCallsForUsersList() {
+      const {
+         adminStore: {
+            usersListPaginationStore: { getData }
+         }
+      } = this.props
+      getData()
+   }
    @action.bound
    getSelectedTab() {
       const {
@@ -83,6 +91,7 @@ class DashboardRoute extends Component<DashboardRouteProps> {
       const { history } = this.getInjectedProps()
       goToAdminDashboardUsers(history)
       this.selector = this.getSelectedTab()
+      this.doNetWorkCallsForUsersList()
    }
 
    @action.bound
@@ -90,13 +99,15 @@ class DashboardRoute extends Component<DashboardRouteProps> {
       const {
          adminStore: {
             resourcesListPaginationStore,
-            requestsListPaginationStore
+            requestsListPaginationStore,
+            usersListPaginationStore
          }
       } = this.getInjectedProps()
 
       const { onClickResourceCard } = this
       switch (this.selector) {
          case 'resources': {
+            this.doNetWorkCallsForUsersList()
             return (
                <ResourcesList
                   resourcesListInstance={resourcesListPaginationStore}
@@ -115,7 +126,10 @@ class DashboardRoute extends Component<DashboardRouteProps> {
             )
          }
          case 'users': {
-            return <UsersList />
+            this.doNetWorkCallsForUsersList()
+            return <UsersList
+               usersListInstance={usersListPaginationStore}
+            />
          }
       }
    }

@@ -5,7 +5,7 @@ import PaginationStore from '../../../Common/stores/PaginationStore'
 import ResourceCardModel from '../Model/ResourceCardModel'
 import ResourceItemModel from '../Model/ResourceItemModel'
 import RequestModel from '../Model/RequestModel'
-
+import UserModel from '../Model/UserModel'
 class AdminStore {
    @observable getResourceDetailsAPIStatus
    @observable getResourceDetailsAPIError
@@ -45,6 +45,7 @@ class AdminStore {
    resourcesListPaginationStore
    resourceDetailsPaginationStore
    requestsListPaginationStore
+   usersListPaginationStore
    constructor(adminService) {
       this.adminService = adminService
       this.resourcesListPaginationStore = new PaginationStore(
@@ -63,6 +64,12 @@ class AdminStore {
          ResourceItemModel,
          this.adminService.getResourceItemsAPI,
          ['resource_items', 'total_count'],
+         5
+      )
+      this.usersListPaginationStore = new PaginationStore(
+         UserModel,
+         this.adminService.getUsersListAPI,
+         ['users_list', 'total_count'],
          5
       )
       this.init()

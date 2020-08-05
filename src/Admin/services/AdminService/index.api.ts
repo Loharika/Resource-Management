@@ -13,6 +13,9 @@ class AdminService implements AdminServiceInterface {
    getRequestListAPI(requestObject) {
       return networkCallWithApisauce(this.baseApi, '___', {}, apiMethods.get)
    }
+   getUsersListAPI(requestObject) {
+      return networkCallWithApisauce(this.baseApi, '___', {}, apiMethods.get)
+   }
    getResourceDetailsAPI(requestObject) {
       return networkCallWithApisauce(this.baseApi, '___', {}, apiMethods.get)
    }

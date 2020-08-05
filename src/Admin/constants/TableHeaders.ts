@@ -16,4 +16,4 @@ export const UserDetailsHeaders = [
    'DESCRIPTION',
    'LINK'
 ]
-export const ResourceUsersHeaders = UserListHeaders.push('ACCESS LEVEL')
+export const ResourceUsersHeaders = UserListHeaders.concat['ACCESS LEVEL']

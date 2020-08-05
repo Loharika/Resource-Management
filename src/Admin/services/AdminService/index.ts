@@ -16,7 +16,10 @@ import {
    UpdateResourceItemObject,
    DeleteResourceItemsRequestObject,
    PostAcceptedRequestsRequestObject,
-   PostRejectedRequestsRequestObject
+   PostRejectedRequestsRequestObject,
+   UsersListRequestObject,
+   UsersListResponse
+
 } from '../../stores/types'
 
 export interface AdminServiceInterface {
@@ -26,6 +29,7 @@ export interface AdminServiceInterface {
    getRequestListAPI: (
       requestObject: RequestsListRequestObject
    ) => Promise<RequestsListResponse>
+   getUsersListAPI: (requestObject: UsersListRequestObject) => Promise<UsersListResponse>
    getResourceDetailsAPI: (
       requestObject: ResourceDetailsRequestObject
    ) => Promise<ResourcesDetailsResponse>

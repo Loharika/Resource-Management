@@ -3,6 +3,8 @@ import { Table, Checkbox, Loader, Dimmer } from 'semantic-ui-react'
 import { observer } from 'mobx-react'
 import { Button, Icon, Modal } from 'semantic-ui-react'
 import LoadingWrapperWithFailure from '../../../Common/components/common/LoadingWrapperWithFailure'
+import Filter from '../../../Common/Icons/Filter'
+import Sort from '../../../Common/Icons/Sort'
 import { RequestsTableHeader } from '../../constants/TableHeaders'
 import {
    SortOptions,
@@ -201,11 +203,13 @@ class RequestsList extends Component<RequestsListProps> {
                onChange={onChangeSort}
                data={SortData}
                disabled={getApiStatus !== 200}
+               icon={<Sort />}
             />
             <DropDownComponent
                onChange={onChangeFilter}
                data={FilterData}
                disabled={getApiStatus !== 200}
+               icon={<Filter />}
             />
          </SortAndFilter>
       )

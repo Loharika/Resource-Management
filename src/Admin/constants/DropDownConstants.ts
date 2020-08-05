@@ -49,8 +49,42 @@ export const RequestsAccessLevelOptions = [
       value: 'ADMIN'
    }
 ]
+export const UserListSortOptions = [
+   {
+      key: 'DEPARTMENT',
+      text: 'Department',
+      value: 'DEPARTMENT'
+   },
+   {
+      key: 'JOB_ROLE',
+      text: 'Job Role',
+      value: 'JOB_ROLE'
+   }
+]
+export const UserListFilterOptions = [
+   {
+      key: 'DEPARTMENT',
+      text: 'Department',
+      value: 'DEPARTMENT'
+   },
+   {
+      key: 'JOB_ROLE',
+      text: 'Job Role',
+      value: 'JOB_ROLE'
+   }
+]
 export const AccessLevelData = {
    listTitle: 'Read',
    listItems: RequestsAccessLevelOptions,
    placeholder: 'Access Level'
+}
+export const SortData = {
+   listTitle: 'Sort',
+   listItems: UserListSortOptions,
+   placeholder: 'SORT'
+}
+export const FilterData = {
+   listTitle: 'Filter',
+   listItems: UserListFilterOptions,
+   placeholder: 'FILTER'
 }
