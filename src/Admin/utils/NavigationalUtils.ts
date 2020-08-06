@@ -34,3 +34,7 @@ export function goToAddResourceItem(history) {
 export function goToUpdateResourceItem(history, resourceItemId) {
    history.push(`${UPDATE_RESOURCE_ITEM}/${resourceItemId}`)
 }
+export function goToUserPage(history, userId) {
+   console.log(history, userId)
+   history.push(`${ADMIN_DASHBOARD_USERS}/${userId}`)
+}

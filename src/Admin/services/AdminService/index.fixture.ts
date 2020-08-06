@@ -33,6 +33,7 @@ class AdminService implements AdminServiceInterface {
       return resolveWithTimeout(response)
    }
    getUsersListAPI(requestObject) {
+      // console.log(requestObject)
       let endIndex = requestObject.limit + requestObject.offset + 1
       let startIndex = requestObject.offset
       let response = {

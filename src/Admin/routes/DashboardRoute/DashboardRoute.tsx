@@ -15,7 +15,8 @@ import {
    goToAdminDashboardRequests,
    goToAdminDashboardUsers,
    goToAddResourcePage,
-   goToResourceDetails
+   goToResourceDetails,
+   goToUserPage
 } from '../../utils/NavigationalUtils'
 import RequestsList from '../../components/RequestsList'
 import { Typo14WhiteHKGroteskSemiBold } from '../../../Common/styleGuides/Typos'
@@ -127,9 +128,12 @@ class DashboardRoute extends Component<DashboardRouteProps> {
          }
          case 'users': {
             this.doNetWorkCallsForUsersList()
-            return <UsersList
-               usersListInstance={usersListPaginationStore}
-            />
+            return (
+               <UsersList
+                  usersListInstance={usersListPaginationStore}
+                  onClickEachUser={this.onClickEachUser}
+               />
+            )
          }
       }
    }
@@ -141,6 +145,10 @@ class DashboardRoute extends Component<DashboardRouteProps> {
       //    search: `?resourceId=${resourceId}`
       // })
       goToResourceDetails(history, resourceId)
+   }
+   onClickEachUser = userId => {
+      const { history } = this.getInjectedProps()
+      goToUserPage(history, userId)
    }
    onClickAddResource = () => {
       const { history } = this.getInjectedProps()

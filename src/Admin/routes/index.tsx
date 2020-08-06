@@ -21,6 +21,7 @@ import UpdateResourceItem from '../components/UpdateResourceItem/UpdateResourceI
 import AddResourceItem from '../components/AddResourceItem'
 import UpdateResourceRoute from './UpdateResourceRoute'
 import UpdateResourceItemRoute from './UpdateResourceItemRoute'
+import UserDetailsRoute from './UserDetailsRoute'
 
 export const AdminDashboardRoutes = [
    <ProtectedRoute
@@ -35,12 +36,19 @@ export const AdminDashboardRoutes = [
       path={ADMIN_DASHBOARD_REQUESTS}
       component={DashboardRoute}
    />,
+
+   <ProtectedRoute
+      key={ADMIN_DASHBOARD_USERS + 'userId'}
+      exact
+      path={ADMIN_DASHBOARD_USERS + '/:userId'}
+      component={UserDetailsRoute}
+   />,
    <ProtectedRoute
       key={ADMIN_DASHBOARD_USERS}
-      exact
       path={ADMIN_DASHBOARD_USERS}
       component={DashboardRoute}
    />,
+
    <ProtectedRoute
       key={ADD_RESOURCE}
       exact
@@ -65,11 +73,6 @@ export const AdminDashboardRoutes = [
       path={ADMIN_DASHBOARD_RESOURCES + '/:resourceId'}
       component={ResourceDetailsRoute}
    />,
-   // <ProtectedRoute
-   //    key={ADMIN_DASHBOARD_RESOURCES}
-   //    path={ADMIN_RESOURCE_DETAILS}
-   //    component={ResourceDetailsRoute}
-   // />,
    <ProtectedRoute
       key={UPDATE_RESOURCE_ITEM}
       exact

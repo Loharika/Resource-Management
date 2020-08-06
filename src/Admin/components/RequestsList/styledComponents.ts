@@ -5,7 +5,7 @@ import { Typo12RubikMedium } from '../../../Common/styleGuides/Typos'
 export const TableStyle = styled.div``
 export const RequestsListStyle = styled.div`
    width: 90%;
-   min-height: 700px;
+   min-height: 500px;
    display: flex;
    flex-direction: column;
    background-color: ${colors.whiteTwo};

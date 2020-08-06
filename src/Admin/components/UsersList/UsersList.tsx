@@ -17,12 +17,13 @@ import Pagination from '../Common/Pagination'
 import { UserListHeaders } from '../../constants/TableHeaders'
 import DropDownComponent from '../Common/DropDownComponent'
 import { PaginationCss } from '../ResourcesList/styledComponents'
-import { Table } from 'semantic-ui-react'
 import { TableStyle } from '../RequestsList/styledComponents'
 import SortByOrder from '../Common/SortByOrder'
+import { Table } from 'semantic-ui-react'
 
 interface UsersListProps {
    usersListInstance: any
+   onClickEachUser: (userId) => void
 }
 @observer
 class UsersList extends Component<UsersListProps> {
@@ -101,21 +102,23 @@ class UsersList extends Component<UsersListProps> {
 
       return (
          <TableStyle>
-            <Table textAlign={'center'}>
+            <Table>
                <Table.Header>
                   <Table.Row>
-                     <Table.HeaderCell textAlign={'center'}>
-                        NAME
-                     </Table.HeaderCell>
-                     <Table.HeaderCell textAlign={'center'}>
+                     <Table.HeaderCell>NAME</Table.HeaderCell>
+                     <Table.HeaderCell>
                         <SortByOrder
                            label={'DEPARTMENT'}
                            onClickAscending={this.onClickAscending}
                            onClickDescending={this.onClickDescending}
                         />
                      </Table.HeaderCell>
-                     <Table.HeaderCell textAlign={'center'}>
-                        <SortByOrder label={'JOB ROLE'} />
+                     <Table.HeaderCell>
+                        <SortByOrder
+                           label={'JOB ROLE'}
+                           onClickAscending={this.onClickAscending}
+                           onClickDescending={this.onClickDescending}
+                        />
                      </Table.HeaderCell>
                   </Table.Row>
                </Table.Header>
@@ -155,12 +158,16 @@ class UsersList extends Component<UsersListProps> {
    }
    renderTableBody = () => {
       const {
-         usersListInstance: { results, pageNumber }
+         usersListInstance: { results, pageNumber },
+         onClickEachUser
       } = this.props
       return (
-         <Table.Body textAlign={'center'}>
+         <Table.Body>
             {results.get(pageNumber).map(option => (
-               <Table.Row key={option['userId'] + '099'}>
+               <Table.Row
+                  key={option['userId'] + '099'}
+                  onClick={() => onClickEachUser(option['userId'])}
+               >
                   <Table.Cell>{option.name}</Table.Cell>
                   <Table.Cell>{option.department}</Table.Cell>
                   <Table.Cell>{option.jobRole}</Table.Cell>
@@ -182,12 +189,6 @@ class UsersList extends Component<UsersListProps> {
          <UsersListStyle>
             {this.renderHeaderUI()}
             {this.renderSuccessUI()}
-            {/* <LoadingWrapperWithFailure
-               apiStatus={getApiStatus}
-               renderSuccessUI={this.renderSuccessUI}
-               onRetryClick={getData}
-               apiError={getApiError}
-            /> */}
             {this.renderPagination()}
          </UsersListStyle>
       )
