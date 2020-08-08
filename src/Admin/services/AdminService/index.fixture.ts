@@ -6,6 +6,8 @@ import getResourceItemsList from '../../fixtures/getResourceItemsList.json'
 import getResourceItemDetails from '../../fixtures/getResourceItemDetails.json'
 import getRequestsListDetails from '../../fixtures/getRequestsListDetails.json'
 import getUsersListResponse from '../../fixtures/getUsersListResponse.json'
+import getUserDetails from '../../fixtures/getUserDetails.json'
+import getUserAccessableResourceItems from '../../fixtures/getUserAccessableResourceItems.json'
 class AdminService implements AdminServiceInterface {
    getResourceListAPI(requestObject) {
       // console.log(requestObject)
@@ -97,6 +99,21 @@ class AdminService implements AdminServiceInterface {
    postRejectedRequestsAPI(requestObject) {
       // console.log(requestObject)
       return resolveWithTimeout({})
+   }
+   getUserDetailsAPI(requestObject) {
+      return resolveWithTimeout(getUserDetails)
+   }
+   getUserAccessableResourcesAPI(requestObject) {
+      let endIndex = requestObject.limit + requestObject.offset + 1
+      let startIndex = requestObject.offset
+      let response = {
+         resource_items: getUserAccessableResourceItems.resource_items.slice(
+            startIndex,
+            endIndex
+         ),
+         total_count: getUserAccessableResourceItems.total_count
+      }
+      return resolveWithTimeout(response)
    }
 }
 export default AdminService

@@ -18,8 +18,11 @@ import {
    PostAcceptedRequestsRequestObject,
    PostRejectedRequestsRequestObject,
    UsersListRequestObject,
-   UsersListResponse
-
+   UsersListResponse,
+   GetUserDetailsRequestObject,
+   GetUserDetailsResponseObject,
+   GetUserAccessibleResourcesRequestObject,
+   GetUserAccessibleResourcesResponse
 } from '../../stores/types'
 
 export interface AdminServiceInterface {
@@ -29,7 +32,9 @@ export interface AdminServiceInterface {
    getRequestListAPI: (
       requestObject: RequestsListRequestObject
    ) => Promise<RequestsListResponse>
-   getUsersListAPI: (requestObject: UsersListRequestObject) => Promise<UsersListResponse>
+   getUsersListAPI: (
+      requestObject: UsersListRequestObject
+   ) => Promise<UsersListResponse>
    getResourceDetailsAPI: (
       requestObject: ResourceDetailsRequestObject
    ) => Promise<ResourcesDetailsResponse>
@@ -60,4 +65,10 @@ export interface AdminServiceInterface {
    postRejectedRequestsAPI: (
       requestObject: PostRejectedRequestsRequestObject
    ) => Promise<{}>
+   getUserDetailsAPI: (
+      requestObject: GetUserDetailsRequestObject
+   ) => Promise<GetUserDetailsResponseObject>
+   getUserAccessableResourcesAPI: (
+      requestObject: GetUserAccessibleResourcesRequestObject
+   ) => Promise<GetUserAccessibleResourcesResponse>
 }

@@ -93,3 +93,13 @@ export const Typo12RubikMedium = styled.span`
    color: ${colors.steel};
    font-weight: bold;
 `
+export const Typo12DarkBlueGreyHKGroteskSemiBold = styled.span`
+   font-family: HKGrotesk;
+   font-size: 12px;
+   font-weight: 600;
+   font-stretch: normal;
+   font-style: normal;
+   line-height: 1.33;
+   letter-spacing: 0.12px;
+   color: var(--dark-blue-grey);
+`

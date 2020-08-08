@@ -50,5 +50,11 @@ class AdminService implements AdminServiceInterface {
    postRejectedRequestsAPI(requestObject) {
       return networkCallWithApisauce(this.baseApi, '___', {}, apiMethods.get)
    }
+   getUserDetailsAPI(requestObject) {
+      return networkCallWithApisauce(this.baseApi, '___', {}, apiMethods.get)
+   }
+   getUserAccessableResourcesAPI(requestObject) {
+      return networkCallWithApisauce(this.baseApi, '___', {}, apiMethods.get)
+   }
 }
 export default AdminService

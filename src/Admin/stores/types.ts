@@ -125,6 +125,33 @@ export interface UsersListResponse {
    users_list: Array<UsersListResponseObject>
    total_count: number
 }
+export interface GetUserDetailsRequestObject {
+   user_id: number
+}
+export interface GetUserDetailsResponseObject {
+   user_id: number
+   user_name: string
+   user_image: string
+   department: string
+   job_role: string
+}
+export interface GetUserAccessibleResourcesRequestObject {
+   limit: number
+   offset: number
+   sort: string
+   filter: string
+}
+export interface GetUserAccessableResourcesResponseObject {
+   resource_id: number
+   resource_name: string
+   access: string
+   description: string
+   link: string
+}
+export interface GetUserAccessibleResourcesResponse {
+   resource_items: Array<GetUserAccessableResourcesResponseObject>
+   total_count: number
+}
 //Keys
 //limit
 //offset

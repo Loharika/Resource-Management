@@ -6,6 +6,7 @@ import ResourceCardModel from '../Model/ResourceCardModel'
 import ResourceItemModel from '../Model/ResourceItemModel'
 import RequestModel from '../Model/RequestModel'
 import UserModel from '../Model/UserModel'
+import ResourceModel from '../Model/ResourceModel'
 class AdminStore {
    @observable getResourceDetailsAPIStatus
    @observable getResourceDetailsAPIError
@@ -41,11 +42,16 @@ class AdminStore {
    @observable getPostRejectedRequestsAPIStatus
    @observable getPostRejectedRequestsAPIError
 
+   @observable getUserDetailsAPIStatus
+   @observable getUserDetailsAPIError
+   @observable userDetailsResponse
+
    adminService
    resourcesListPaginationStore
    resourceDetailsPaginationStore
    requestsListPaginationStore
    usersListPaginationStore
+   userAccessableResourcesPaginationStore
    constructor(adminService) {
       this.adminService = adminService
       this.resourcesListPaginationStore = new PaginationStore(
@@ -72,6 +78,12 @@ class AdminStore {
          ['users_list', 'total_count'],
          5
       )
+      this.userAccessableResourcesPaginationStore = new PaginationStore(
+         ResourceModel,
+         this.adminService.getUserAccessableResourcesAPI,
+         ['resource_items', 'total_count'],
+         5
+      )
       this.init()
    }
    @action.bound
@@ -89,6 +101,8 @@ class AdminStore {
 
       this.initAcceptedRequestsAPI()
       this.initRejectedRequestsAPI()
+
+      this.initUserDetailsAPI()
    }
    @action.bound
    intiResourceDetailsAPI() {
@@ -144,6 +158,12 @@ class AdminStore {
    initRejectedRequestsAPI() {
       this.getPostRejectedRequestsAPIStatus = API_INITIAL
       this.getPostRejectedRequestsAPIError = null
+   }
+   @action.bound
+   initUserDetailsAPI() {
+      this.getUserDetailsAPIStatus = API_INITIAL
+      this.getUserDetailsAPIError = null
+      this.userDetailsResponse = ''
    }
    @action.bound
    setGetResourceDetailsAPIStatus(apiStatus) {
@@ -340,6 +360,27 @@ class AdminStore {
       return bindPromiseWithOnSuccess(rejectedRequestsPromise)
          .to(this.setGetPostRejectedRequestsAPIStatus, () => {})
          .catch(this.setGetPostRejectedRequestsAPIError)
+   }
+   @action.bound
+   setGetUserDetailsAPIStatus(apiStatus) {
+      this.getUserDetailsAPIStatus = apiStatus
+   }
+   @action.bound
+   setGetUserDetailsAPIResponse(apiResponse) {
+      this.userDetailsResponse = apiResponse
+   }
+   @action.bound
+   setGetUserDetailsAPIError(apiError) {
+      this.getUserDetailsAPIError = apiError
+   }
+   @action.bound
+   getUserDetails(requestObject) {
+      const getUserDetailsPromise = this.adminService.getUserDetailsAPI(
+         requestObject
+      )
+      return bindPromiseWithOnSuccess(getUserDetailsPromise)
+         .to(this.setGetUserDetailsAPIStatus, this.setGetUserDetailsAPIResponse)
+         .catch(this.setGetUserDetailsAPIError)
    }
 }
 export default AdminStore
