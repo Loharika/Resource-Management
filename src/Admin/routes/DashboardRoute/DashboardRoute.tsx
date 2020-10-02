@@ -101,7 +101,8 @@ class DashboardRoute extends Component<DashboardRouteProps> {
          adminStore: {
             resourcesListPaginationStore,
             requestsListPaginationStore,
-            usersListPaginationStore
+            usersListPaginationStore,
+            userAccessableResourcesPaginationStore
          }
       } = this.getInjectedProps()
 
@@ -132,6 +133,7 @@ class DashboardRoute extends Component<DashboardRouteProps> {
                <UsersList
                   usersListInstance={usersListPaginationStore}
                   onClickEachUser={this.onClickEachUser}
+                  userAccessableResources={userAccessableResourcesPaginationStore}
                />
             )
          }

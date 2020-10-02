@@ -24,6 +24,7 @@ import { Table } from 'semantic-ui-react'
 interface UsersListProps {
    usersListInstance: any
    onClickEachUser: (userId) => void
+   userAccessableResources:any
 }
 @observer
 class UsersList extends Component<UsersListProps> {

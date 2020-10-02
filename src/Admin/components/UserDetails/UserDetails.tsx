@@ -59,17 +59,11 @@ class UserDetails extends Component<UserDetailsProps> {
                   onRetryClick={doNetWorkCalls}
                />
                <UserAccessableResourcesList
+               onClickAcceptButton={()=>{}
+               }
+               onClickRejectButton={()=>{}}
                
                />
-               {/* <ResourceItemsList
-               onClickAddResourceItem={onClickAddResourceItem}
-               resourceItemsDetails={resourceDetailsPaginationStore}
-               doNetWorkCallForResourceItems={doNetWorkCallForResourceItems}
-               selectedResourceItemsCount={selectedResourceItemsCount}
-               onClickUpdateResourceItem={onClickUpdateResourceItem}
-               onClickDeleteResourceItems={onClickDeleteResourceItems}
-               onClickCheckBox={onClickCheckBox}
-            /> */}
             </UserDetailsPageStyle>
          </UserDetailsPage>
       )

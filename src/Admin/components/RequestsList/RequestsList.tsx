@@ -154,34 +154,8 @@ class RequestsList extends Component<RequestsListProps> {
          </Modal>
       )
    }
-   renderButtons = () => {
-      const {
-         requestsListInstance: { getApiStatus }
-      } = this.props
-
-      return (
-         <Buttons>
-            <AcceptButton
-               text={'ACCEPT'}
-               onClick={() => this.onClickAcceptModal(true, false)}
-               buttonType={'rectangular'}
-               buttonVariant={'outline'}
-               css={AcceptButtonCss}
-               disabled={getApiStatus !== 200}
-            />
-            {this.renderAcceptmodal()}
-            <RejectButton
-               text={'REJECT'}
-               onClick={() => this.onClickRejectModal(true, false)}
-               buttonType={'rectangular'}
-               buttonVariant={'outline'}
-               css={RejectButtonCss}
-               disabled={getApiStatus !== 200}
-            />
-            {this.renderRejectModal()}
-         </Buttons>
-      )
-   }
+   
+   
    @action.bound
    renderSortFilter() {
       const {
@@ -279,6 +253,34 @@ class RequestsList extends Component<RequestsListProps> {
       )
    }
 
+   renderButtons = () => {
+      const {
+         requestsListInstance: { getApiStatus }
+      } = this.props
+
+      return (
+         <Buttons>
+            <AcceptButton
+               text={'ACCEPT'}
+               onClick={() => this.onClickAcceptModal(true, false)}
+               buttonType={'rectangular'}
+               buttonVariant={'outline'}
+               css={AcceptButtonCss}
+               disabled={getApiStatus !== 200}
+            />
+            {this.renderAcceptmodal()}
+            <RejectButton
+               text={'REJECT'}
+               onClick={() => this.onClickRejectModal(true, false)}
+               buttonType={'rectangular'}
+               buttonVariant={'outline'}
+               css={RejectButtonCss}
+               disabled={getApiStatus !== 200}
+            />
+            {this.renderRejectModal()}
+         </Buttons>
+      )
+   }
    renderHeaderUI = () => {
       const {
          requestsListInstance: {
